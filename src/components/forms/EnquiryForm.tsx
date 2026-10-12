@@ -8,7 +8,17 @@ import type { FormKind } from '@/lib/forms/kinds';
 import { initialEnquiryState, submitEnquiry } from '@/lib/forms/submit';
 import { Field } from './Field';
 
-export function EnquiryForm({ kind, context, headingId }: { kind: FormKind; context: string; headingId?: string }) {
+export function EnquiryForm({
+  kind,
+  context,
+  defaults,
+  headingId,
+}: {
+  kind: FormKind;
+  context: string;
+  defaults?: Record<string, string>;
+  headingId?: string;
+}) {
   const definition = formDefinition(kind);
   const [state, action, pending] = useActionState(submitEnquiry, initialEnquiryState);
   const summaryRef = useRef<HTMLDivElement>(null);
@@ -64,7 +74,13 @@ export function EnquiryForm({ kind, context, headingId }: { kind: FormKind; cont
         </div>
       ) : null}
       {definition.fields.map((field) => (
-        <Field key={field.name} idPrefix={formKey} field={field} error={state.fieldErrors[field.name]} defaultValue={state.values[field.name]} />
+        <Field
+          key={field.name}
+          idPrefix={formKey}
+          field={field}
+          error={state.fieldErrors[field.name]}
+          defaultValue={state.values[field.name] || (state.status === 'idle' ? defaults?.[field.name] : undefined)}
+        />
       ))}
       <Button type="submit" disabled={pending}>
         {pending ? 'Sending…' : definition.submitLabel}
