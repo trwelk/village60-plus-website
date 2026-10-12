@@ -29,3 +29,26 @@ export function formatAddress(address: SiteAddress | null | undefined): string {
   if (!address) return '';
   return [address.line1, address.line2, address.city, address.postcode, address.country].filter(Boolean).join('\n');
 }
+
+const EMPTY_CONTACT: SiteContact = {
+  phone: '',
+  phoneDisplay: '',
+  whatsapp: '',
+  email: '',
+  responseTime: 'as soon as we can',
+};
+
+export function contactFromSettings(
+  settings: Pick<SiteSettings, 'phone' | 'phoneDisplay' | 'whatsapp' | 'email' | 'responseTime'> | null | undefined,
+): SiteContact {
+  if (!settings?.phone || !settings.phoneDisplay || !settings.whatsapp || !settings.email || !settings.responseTime) {
+    return EMPTY_CONTACT;
+  }
+  return toSiteContact({
+    phone: settings.phone,
+    phoneDisplay: settings.phoneDisplay,
+    whatsapp: settings.whatsapp,
+    email: settings.email,
+    responseTime: settings.responseTime,
+  });
+}

@@ -7,6 +7,7 @@ export function ContactActions({
   onDark = false,
   size = 'md',
   showNumber = true,
+  includeWhatsApp = true,
   className,
 }: {
   contact: SiteContact;
@@ -14,6 +15,7 @@ export function ContactActions({
   onDark?: boolean;
   size?: 'md' | 'lg';
   showNumber?: boolean;
+  includeWhatsApp?: boolean;
   className?: string;
 }) {
   return (
@@ -21,9 +23,11 @@ export function ContactActions({
       <Button href={telHref(contact.phone)} variant="primary" size={size} onDark={onDark} data-track="call_click">
         {showNumber ? `Call ${contact.phoneDisplay}` : 'Call'}
       </Button>
-      <Button href={whatsappHref(contact.whatsapp, context)} variant="secondary" size={size} onDark={onDark} data-track="whatsapp_click" target="_blank" rel="noopener noreferrer">
-        WhatsApp
-      </Button>
+      {includeWhatsApp ? (
+        <Button href={whatsappHref(contact.whatsapp, context)} variant="secondary" size={size} onDark={onDark} data-track="whatsapp_click" target="_blank" rel="noopener noreferrer">
+          WhatsApp
+        </Button>
+      ) : null}
     </div>
   );
 }

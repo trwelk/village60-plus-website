@@ -1,6 +1,8 @@
 import 'server-only';
 import type { SiteContact } from '@/lib/contact';
-import { formatAddress, toSiteContact } from '@/lib/site-settings';
+import { getPublicEnv } from '@/lib/env';
+import { isSanityProjectConfigured } from '@/lib/sanity-project';
+import { contactFromSettings, formatAddress } from '@/lib/site-settings';
 import { fetchPublished } from '@/sanity/fetch';
 import { SITE_SETTINGS_QUERY } from '@/sanity/queries';
 
@@ -12,20 +14,13 @@ export type SiteChrome = {
   openingHours: string | null;
 };
 
-const emptyContact: SiteContact = {
-  phone: '',
-  phoneDisplay: '',
-  whatsapp: '',
-  email: '',
-  responseTime: 'as soon as we can',
-};
-
 export async function getSiteChrome(): Promise<SiteChrome> {
-  const settings = await fetchPublished(SITE_SETTINGS_QUERY, {}, ['siteSettings']);
-  const contact =
-    settings?.phone && settings.phoneDisplay && settings.whatsapp && settings.email && settings.responseTime
-      ? toSiteContact(settings)
-      : emptyContact;
+  const { sanityProjectId } = getPublicEnv();
+  const settings =
+    isSanityProjectConfigured(sanityProjectId)
+      ? await fetchPublished(SITE_SETTINGS_QUERY, {}, ['siteSettings']).catch(() => null)
+      : null;
+  const contact = contactFromSettings(settings);
   return {
     contact,
     legalName: settings?.legalName ?? 'Village 60 Plus',
