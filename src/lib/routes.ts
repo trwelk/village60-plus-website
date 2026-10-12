@@ -52,4 +52,8 @@ export function careStaticParams(): Array<{ slug: string }> {
   return CARE_SERVICE_SLUGS.map((slug) => ({ slug }));
 }
 
+export function isLegalSlug(value: string): value is LegalSlug {
+  return (LEGAL_SLUGS as readonly string[]).includes(value);
+}
+
 export const ORACLE_HOMES_REDIRECT = { source: '/homes/oracle', destination: '/oracle', permanent: true } as const;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CARE_SERVICE_SLUGS, LEGAL_SLUGS, ORACLE_HOMES_REDIRECT, PAGE_SLUGS, RESIDENCE_SLUGS, careStaticParams, residencePath, residenceStaticParams } from './routes';
+import { CARE_SERVICE_SLUGS, LEGAL_SLUGS, ORACLE_HOMES_REDIRECT, PAGE_SLUGS, RESIDENCE_SLUGS, careStaticParams, isLegalSlug, residencePath, residenceStaticParams } from './routes';
 
 describe('routes', () => {
   it('lists the six residences from the spec sitemap', () => {
@@ -20,5 +20,11 @@ describe('routes', () => {
   });
   it('builds a static param for each care service', () => {
     expect(careStaticParams().map((item) => item.slug)).toEqual(['independent-living', 'residential-care', 'respite-care', 'recovery', 'rehabilitation']);
+  });
+  it('allow-lists the three legal pages', () => {
+    expect(isLegalSlug('privacy')).toBe(true);
+    expect(isLegalSlug('terms')).toBe(true);
+    expect(isLegalSlug('accessibility')).toBe(true);
+    expect(isLegalSlug('homes')).toBe(false);
   });
 });
