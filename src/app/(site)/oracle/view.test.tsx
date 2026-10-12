@@ -1,0 +1,75 @@
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { contactFixture } from '@/test/contact-fixture';
+import { imageFixture } from '@/test/fixtures';
+import type { ResidenceContent } from '../homes/[slug]/view';
+import { OracleView } from './view';
+
+vi.mock('@/lib/forms/submit', () => ({
+  submitEnquiry: vi.fn(),
+  initialEnquiryState: { status: 'idle', fieldErrors: {}, formErrors: [], values: {}, whatsappHref: null, responseTime: null },
+}));
+
+const block = (text: string) => [
+  { _type: 'block' as const, _key: 'b', style: 'normal' as const, markDefs: [], children: [{ _type: 'span' as const, _key: 's', text, marks: [] }] },
+];
+
+const oracle: ResidenceContent = {
+  name: 'Oracle',
+  slug: 'oracle',
+  status: 'limited',
+  shortLocation: 'Pepiliyana',
+  summary: 'Ten rooms for independent adults, with support available when wanted.',
+  heroImage: imageFixture('Oracle exterior'),
+  description: block('A private residence for independent adults.'),
+  careTypes: [{ _id: 'care.independent-living', name: 'Independent Living', slug: 'independent-living' }],
+  audienceFit: ['Independent adults who want privacy without isolation'],
+  atmosphere: block('The day follows the resident, not a timetable.'),
+  sharedSpaces: ['Dining room', 'Garden'],
+  rooms: [
+    { _key: 'jade', name: 'Jade', house: 'House 1', summary: 'Room facts will be added once verified.', facts: [], image: imageFixture('Jade') },
+    { _key: 'pearl', name: 'Pearl', house: 'House 2', summary: null, facts: ['Aspect to be confirmed'], image: imageFixture('Pearl') },
+  ],
+  careAndSupport: [
+    { _key: 'assist', title: 'Everyday assistance', description: 'Help on request.', provision: 'included', status: 'available' },
+    { _key: 'partner', title: 'Appointment transport', description: 'Arranged with a partner.', provision: 'partner-arranged', status: 'available' },
+  ],
+  everydayLife: [{ _key: 'meals', title: 'Dining', description: 'Meals in the shared dining room or in the room.', provision: 'included', status: 'available' }],
+  gallery: [],
+  team: [],
+  address: { line1: 'Pepiliyana Road', city: 'Pepiliyana', country: 'Sri Lanka' },
+  faqs: [],
+  formKind: 'oracle-visit',
+  comingSoonNote: null,
+};
+
+describe('OracleView', () => {
+  it('lists the rooms it is given and repeats the visit form', () => {
+    const { container } = render(<OracleView residence={oracle} contact={contactFixture} mapsKey={null} />);
+    expect([...container.querySelectorAll('[data-oracle-section]')].map((node) => node.getAttribute('data-oracle-section'))).toEqual([
+      'hero', 'rooms', 'spaces', 'daily-life', 'everyday', 'optional', 'independence', 'map', 'visit',
+    ]);
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+    expect(screen.getByRole('heading', { level: 1, name: 'Oracle' })).toHaveAttribute('id', 'page-title');
+    expect(screen.getByText('Jade')).toBeInTheDocument();
+    expect(screen.getByText('Pearl')).toBeInTheDocument();
+    expect(screen.queryByText('Onyx')).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Live your day, your way.' })).toBeInTheDocument();
+    expect(screen.getByText(/arranged separately/i)).toBeInTheDocument();
+    expect(screen.getAllByRole('heading', { name: 'Arrange a private visit' })).toHaveLength(2);
+    expect(screen.queryByText(/international standard/i)).not.toBeInTheDocument();
+  });
+
+  it('shows the coming-soon badge and does not describe a future Oracle as open', () => {
+    render(
+      <OracleView
+        residence={{ ...oracle, status: 'coming-soon', comingSoonNote: 'Dates will be published only once confirmed.' }}
+        contact={contactFixture}
+        mapsKey={null}
+      />,
+    );
+    expect(screen.getByText('Coming soon')).toBeInTheDocument();
+    expect(screen.getByText('Dates will be published only once confirmed.')).toBeInTheDocument();
+    expect(document.body.textContent).not.toMatch(/now open|open now|is open/i);
+  });
+});
