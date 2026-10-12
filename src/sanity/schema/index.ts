@@ -1,4 +1,4 @@
-// objects and documents are added in Tasks 7 and 8
 import type { SchemaTypeDefinition } from 'sanity';
+import { objectTypes } from './objects';
 
-export const schemaTypes: SchemaTypeDefinition[] = [];
+export const schemaTypes: SchemaTypeDefinition[] = [...objectTypes];
