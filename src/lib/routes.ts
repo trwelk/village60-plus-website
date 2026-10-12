@@ -48,4 +48,8 @@ export function residenceStaticParams(): Array<{ slug: string }> {
   return RESIDENCE_SLUGS.filter((slug) => slug !== ORACLE_SLUG).map((slug) => ({ slug }));
 }
 
+export function careStaticParams(): Array<{ slug: string }> {
+  return CARE_SERVICE_SLUGS.map((slug) => ({ slug }));
+}
+
 export const ORACLE_HOMES_REDIRECT = { source: '/homes/oracle', destination: '/oracle', permanent: true } as const;
