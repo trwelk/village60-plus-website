@@ -22,6 +22,13 @@ describe('env', () => {
     expect(env.sanityProjectId).toBe('testproject'); // set in vitest.setup.ts
   });
 
+  it('Search Console verification is optional', () => {
+    vi.stubEnv('NEXT_PUBLIC_GSC_VERIFICATION', '');
+    expect(getPublicEnv().gscVerification).toBeNull();
+    vi.stubEnv('NEXT_PUBLIC_GSC_VERIFICATION', 'abc123');
+    expect(getPublicEnv().gscVerification).toBe('abc123');
+  });
+
   it('getServerEnv is lazy: constructing it never throws, reading a missing secret does', () => {
     vi.stubEnv('RESEND_API_KEY', '');
     const server = getServerEnv();

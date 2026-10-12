@@ -17,6 +17,7 @@ export function getPublicEnv() {
     sanityDataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'development',
     gaId: process.env.NEXT_PUBLIC_GA_ID || null,
     mapsKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY || null,
+    gscVerification: process.env.NEXT_PUBLIC_GSC_VERIFICATION || null,
   };
 }
 
