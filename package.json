@@ -12,7 +12,7 @@
     "test:watch": "vitest",
     "e2e": "playwright test",
     "typegen": "sanity schema extract --enforce-required-fields && sanity typegen generate",
-    "seed": "tsx scripts/seed.ts",
+    "seed": "tsx --env-file=.env.local scripts/seed.ts",
     "report:placeholders": "tsx scripts/placeholder-report.ts"
   },
   "dependencies": {
