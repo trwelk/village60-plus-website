@@ -641,3 +641,1110 @@ export type AllSanitySchemaTypes =
   | SanityFileAsset
   | SanityAssetSourceData
   | SanityImageAsset;
+
+// Source: src/sanity/queries.ts
+// Variable: SITE_SETTINGS_QUERY
+// Query: *[_type == "siteSettings" && _id == "siteSettings"][0]{    brandName, tagline, legalName, foundedYear,    phone, phoneDisplay, whatsapp, email, openingHours, responseTime, emergencyNotice,    headOffice, socialLinks, formRecipients,    defaultSeo{ ..., image{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } } }  }
+export type SITE_SETTINGS_QUERY_RESULT = {
+  brandName: string;
+  tagline: string | null;
+  legalName: string;
+  foundedYear: number | null;
+  phone: string;
+  phoneDisplay: string;
+  whatsapp: string;
+  email: string;
+  openingHours: string | null;
+  responseTime: string;
+  emergencyNotice: string | null;
+  headOffice: Address | null;
+  socialLinks: Array<
+    {
+      _key: string;
+    } & Link
+  > | null;
+  formRecipients: Array<{
+    kind:
+      | "destination-retirement"
+      | "find-care"
+      | "general"
+      | "grove-interest"
+      | "oracle-visit"
+      | "silver-roots-partner";
+    to: Array<string>;
+    _type: "formRecipient";
+    _key: string;
+  }> | null;
+  defaultSeo: {
+    _type: "seo";
+    title?: string;
+    description?: string;
+    canonical?: string;
+    image: {
+      _type: "mediaImage";
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      caption?: string;
+      source: string;
+      license:
+        | "client-owned"
+        | "creative-commons"
+        | "licensed-stock"
+        | "other"
+        | "public-domain";
+      licenseNotes?: string;
+      consent: "not-required" | "obtained" | "pending";
+      consentRecord?: string;
+      placeholder?: boolean;
+      replaceBy?: string;
+    } | null;
+    noIndex?: boolean;
+  } | null;
+} | null;
+
+// Source: src/sanity/queries.ts
+// Variable: PAGE_QUERY
+// Query: *[_type == "page" && slug.current == $slug][0]{    _id, title, "slug": slug.current, intro, body, lastReviewed,    heroImage{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },    heroVideo{ description, poster{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }, "videoUrl": video.asset->url, "captionsUrl": captions.asset->url },    sections[]{ _key, eyebrow, heading, body, tone, cta, status, image{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } } },    faqs[]->{ _id, question, answer },    seo{ ..., image{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } } }  }
+export type PAGE_QUERY_RESULT = {
+  _id: string;
+  title: string;
+  slug: string;
+  intro: string | null;
+  body: BlockContent | null;
+  lastReviewed: string | null;
+  heroImage: {
+    _type: "mediaImage";
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+          aspectRatio: number;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    caption?: string;
+    source: string;
+    license:
+      | "client-owned"
+      | "creative-commons"
+      | "licensed-stock"
+      | "other"
+      | "public-domain";
+    licenseNotes?: string;
+    consent: "not-required" | "obtained" | "pending";
+    consentRecord?: string;
+    placeholder?: boolean;
+    replaceBy?: string;
+  } | null;
+  heroVideo: {
+    description: string;
+    poster: {
+      _type: "mediaImage";
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      caption?: string;
+      source: string;
+      license:
+        | "client-owned"
+        | "creative-commons"
+        | "licensed-stock"
+        | "other"
+        | "public-domain";
+      licenseNotes?: string;
+      consent: "not-required" | "obtained" | "pending";
+      consentRecord?: string;
+      placeholder?: boolean;
+      replaceBy?: string;
+    };
+    videoUrl: string | null;
+    captionsUrl: string | null;
+  } | null;
+  sections: Array<{
+    _key: string;
+    eyebrow: string | null;
+    heading: string;
+    body: BlockContent | null;
+    tone: "green" | "ivory" | "mist" | "night" | "paper" | "sand" | null;
+    cta: Link | null;
+    status:
+      | "available"
+      | "coming-soon"
+      | "in-development"
+      | "limited"
+      | "pilot"
+      | "planned"
+      | null;
+    image: {
+      _type: "mediaImage";
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      caption?: string;
+      source: string;
+      license:
+        | "client-owned"
+        | "creative-commons"
+        | "licensed-stock"
+        | "other"
+        | "public-domain";
+      licenseNotes?: string;
+      consent: "not-required" | "obtained" | "pending";
+      consentRecord?: string;
+      placeholder?: boolean;
+      replaceBy?: string;
+    } | null;
+  }> | null;
+  faqs: Array<{
+    _id: string;
+    question: string;
+    answer: BlockContent;
+  }> | null;
+  seo: {
+    _type: "seo";
+    title?: string;
+    description?: string;
+    canonical?: string;
+    image: {
+      _type: "mediaImage";
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      caption?: string;
+      source: string;
+      license:
+        | "client-owned"
+        | "creative-commons"
+        | "licensed-stock"
+        | "other"
+        | "public-domain";
+      licenseNotes?: string;
+      consent: "not-required" | "obtained" | "pending";
+      consentRecord?: string;
+      placeholder?: boolean;
+      replaceBy?: string;
+    } | null;
+    noIndex?: boolean;
+  } | null;
+} | null;
+
+// Source: src/sanity/queries.ts
+// Variable: RESIDENCES_QUERY
+// Query: *[_type == "residence"] | order(isFlagship desc, name asc){   _id, name, "slug": slug.current, status, isFlagship, shortLocation, summary,  heroImage{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },  careTypes[]->{ _id, name, "slug": slug.current, status } }
+export type RESIDENCES_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  slug: string;
+  status:
+    | "available"
+    | "coming-soon"
+    | "in-development"
+    | "limited"
+    | "pilot"
+    | "planned";
+  isFlagship: boolean | null;
+  shortLocation: string;
+  summary: string;
+  heroImage: {
+    _type: "mediaImage";
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+          aspectRatio: number;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    caption?: string;
+    source: string;
+    license:
+      | "client-owned"
+      | "creative-commons"
+      | "licensed-stock"
+      | "other"
+      | "public-domain";
+    licenseNotes?: string;
+    consent: "not-required" | "obtained" | "pending";
+    consentRecord?: string;
+    placeholder?: boolean;
+    replaceBy?: string;
+  } | null;
+  careTypes: Array<{
+    _id: string;
+    name: string;
+    slug: string;
+    status:
+      | "available"
+      | "coming-soon"
+      | "in-development"
+      | "limited"
+      | "pilot"
+      | "planned";
+  }> | null;
+}>;
+
+// Source: src/sanity/queries.ts
+// Variable: RESIDENCE_QUERY
+// Query: *[_type == "residence" && slug.current == $slug][0]{      _id, name, "slug": slug.current, status, isFlagship, shortLocation, summary,  heroImage{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },  careTypes[]->{ _id, name, "slug": slug.current, status },    description, audienceFit, atmosphere, sharedSpaces, formKind, comingSoonNote,    rooms[]{ _key, name, house, summary, facts, image{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } } },    careAndSupport[]{ _key, title, description, provision, status },    everydayLife[]{ _key, title, description, provision, status },    gallery[]{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },    team[]->[approvedForPublication == true]{ _id, name, role, credentials, bio, image{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } } },    address,    faqs[]->{ _id, question, answer },    seo{ ..., image{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } } },    "testimonials": *[_type == "testimonial" && approved == true && residence._ref == ^._id]{ _id, quote, displayName, relationship }  }
+export type RESIDENCE_QUERY_RESULT = {
+  _id: string;
+  name: string;
+  slug: string;
+  status:
+    | "available"
+    | "coming-soon"
+    | "in-development"
+    | "limited"
+    | "pilot"
+    | "planned";
+  isFlagship: boolean | null;
+  shortLocation: string;
+  summary: string;
+  heroImage: {
+    _type: "mediaImage";
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+          aspectRatio: number;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    caption?: string;
+    source: string;
+    license:
+      | "client-owned"
+      | "creative-commons"
+      | "licensed-stock"
+      | "other"
+      | "public-domain";
+    licenseNotes?: string;
+    consent: "not-required" | "obtained" | "pending";
+    consentRecord?: string;
+    placeholder?: boolean;
+    replaceBy?: string;
+  } | null;
+  careTypes: Array<{
+    _id: string;
+    name: string;
+    slug: string;
+    status:
+      | "available"
+      | "coming-soon"
+      | "in-development"
+      | "limited"
+      | "pilot"
+      | "planned";
+  }> | null;
+  description: BlockContent | null;
+  audienceFit: Array<string> | null;
+  atmosphere: BlockContent | null;
+  sharedSpaces: Array<string> | null;
+  formKind:
+    | "destination-retirement"
+    | "find-care"
+    | "general"
+    | "grove-interest"
+    | "oracle-visit"
+    | "silver-roots-partner";
+  comingSoonNote: string | null;
+  rooms: Array<{
+    _key: string;
+    name: string;
+    house: string | null;
+    summary: string | null;
+    facts: Array<string> | null;
+    image: {
+      _type: "mediaImage";
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      caption?: string;
+      source: string;
+      license:
+        | "client-owned"
+        | "creative-commons"
+        | "licensed-stock"
+        | "other"
+        | "public-domain";
+      licenseNotes?: string;
+      consent: "not-required" | "obtained" | "pending";
+      consentRecord?: string;
+      placeholder?: boolean;
+      replaceBy?: string;
+    } | null;
+  }> | null;
+  careAndSupport: Array<{
+    _key: string;
+    title: string;
+    description: string | null;
+    provision: "included" | "optional-extra" | "partner-arranged";
+    status:
+      | "available"
+      | "coming-soon"
+      | "in-development"
+      | "limited"
+      | "pilot"
+      | "planned";
+  }> | null;
+  everydayLife: Array<{
+    _key: string;
+    title: string;
+    description: string | null;
+    provision: "included" | "optional-extra" | "partner-arranged";
+    status:
+      | "available"
+      | "coming-soon"
+      | "in-development"
+      | "limited"
+      | "pilot"
+      | "planned";
+  }> | null;
+  gallery: Array<{
+    _key: string;
+    _type: "mediaImage";
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+          aspectRatio: number;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    caption?: string;
+    source: string;
+    license:
+      | "client-owned"
+      | "creative-commons"
+      | "licensed-stock"
+      | "other"
+      | "public-domain";
+    licenseNotes?: string;
+    consent: "not-required" | "obtained" | "pending";
+    consentRecord?: string;
+    placeholder?: boolean;
+    replaceBy?: string;
+  }> | null;
+  team: Array<{
+    _id: string;
+    name: string;
+    role: string;
+    credentials: Array<string> | null;
+    bio: BlockContent | null;
+    image: {
+      _type: "mediaImage";
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      caption?: string;
+      source: string;
+      license:
+        | "client-owned"
+        | "creative-commons"
+        | "licensed-stock"
+        | "other"
+        | "public-domain";
+      licenseNotes?: string;
+      consent: "not-required" | "obtained" | "pending";
+      consentRecord?: string;
+      placeholder?: boolean;
+      replaceBy?: string;
+    } | null;
+  }> | null;
+  address: Address | null;
+  faqs: Array<{
+    _id: string;
+    question: string;
+    answer: BlockContent;
+  }> | null;
+  seo: {
+    _type: "seo";
+    title?: string;
+    description?: string;
+    canonical?: string;
+    image: {
+      _type: "mediaImage";
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      caption?: string;
+      source: string;
+      license:
+        | "client-owned"
+        | "creative-commons"
+        | "licensed-stock"
+        | "other"
+        | "public-domain";
+      licenseNotes?: string;
+      consent: "not-required" | "obtained" | "pending";
+      consentRecord?: string;
+      placeholder?: boolean;
+      replaceBy?: string;
+    } | null;
+    noIndex?: boolean;
+  } | null;
+  testimonials: Array<{
+    _id: string;
+    quote: string;
+    displayName: string;
+    relationship: string;
+  }>;
+} | null;
+
+// Source: src/sanity/queries.ts
+// Variable: CARE_SERVICES_QUERY
+// Query: *[_type == "careService"] | order(name asc){   _id, name, "slug": slug.current, status, summary, typicalDuration,  heroImage{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } } }
+export type CARE_SERVICES_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  slug: string;
+  status:
+    | "available"
+    | "coming-soon"
+    | "in-development"
+    | "limited"
+    | "pilot"
+    | "planned";
+  summary: string;
+  typicalDuration: string | null;
+  heroImage: {
+    _type: "mediaImage";
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+          aspectRatio: number;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    caption?: string;
+    source: string;
+    license:
+      | "client-owned"
+      | "creative-commons"
+      | "licensed-stock"
+      | "other"
+      | "public-domain";
+    licenseNotes?: string;
+    consent: "not-required" | "obtained" | "pending";
+    consentRecord?: string;
+    placeholder?: boolean;
+    replaceBy?: string;
+  } | null;
+}>;
+
+// Source: src/sanity/queries.ts
+// Variable: CARE_SERVICE_QUERY
+// Query: *[_type == "careService" && slug.current == $slug][0]{      _id, name, "slug": slug.current, status, summary, typicalDuration,  heroImage{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },    whoItSuits, notRightFit, formKind,    included[]{ _key, title, description, provision, status },    process[]{ _key, title, description },    faqs[]->{ _id, question, answer },    seo{ ..., image{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } } },    "residences": *[_type == "residence" && references(^._id)] | order(isFlagship desc, name asc){      _id, name, "slug": slug.current, status, shortLocation    }  }
+export type CARE_SERVICE_QUERY_RESULT = {
+  _id: string;
+  name: string;
+  slug: string;
+  status:
+    | "available"
+    | "coming-soon"
+    | "in-development"
+    | "limited"
+    | "pilot"
+    | "planned";
+  summary: string;
+  typicalDuration: string | null;
+  heroImage: {
+    _type: "mediaImage";
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+          aspectRatio: number;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    caption?: string;
+    source: string;
+    license:
+      | "client-owned"
+      | "creative-commons"
+      | "licensed-stock"
+      | "other"
+      | "public-domain";
+    licenseNotes?: string;
+    consent: "not-required" | "obtained" | "pending";
+    consentRecord?: string;
+    placeholder?: boolean;
+    replaceBy?: string;
+  } | null;
+  whoItSuits: Array<string> | null;
+  notRightFit: string | null;
+  formKind:
+    | "destination-retirement"
+    | "find-care"
+    | "general"
+    | "grove-interest"
+    | "oracle-visit"
+    | "silver-roots-partner";
+  included: Array<{
+    _key: string;
+    title: string;
+    description: string | null;
+    provision: "included" | "optional-extra" | "partner-arranged";
+    status:
+      | "available"
+      | "coming-soon"
+      | "in-development"
+      | "limited"
+      | "pilot"
+      | "planned";
+  }> | null;
+  process: Array<{
+    _key: string;
+    title: string;
+    description: string | null;
+  }> | null;
+  faqs: Array<{
+    _id: string;
+    question: string;
+    answer: BlockContent;
+  }> | null;
+  seo: {
+    _type: "seo";
+    title?: string;
+    description?: string;
+    canonical?: string;
+    image: {
+      _type: "mediaImage";
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      caption?: string;
+      source: string;
+      license:
+        | "client-owned"
+        | "creative-commons"
+        | "licensed-stock"
+        | "other"
+        | "public-domain";
+      licenseNotes?: string;
+      consent: "not-required" | "obtained" | "pending";
+      consentRecord?: string;
+      placeholder?: boolean;
+      replaceBy?: string;
+    } | null;
+    noIndex?: boolean;
+  } | null;
+  residences: Array<{
+    _id: string;
+    name: string;
+    slug: string;
+    status:
+      | "available"
+      | "coming-soon"
+      | "in-development"
+      | "limited"
+      | "pilot"
+      | "planned";
+    shortLocation: string;
+  }>;
+} | null;
+
+// Source: src/sanity/queries.ts
+// Variable: OFFERINGS_QUERY
+// Query: *[_type == "ecosystemOffering"] | order(name asc){   _id, name, "slug": slug.current, status, tagline, distinction, summary, heroTone, ctaLabel, formKind,  heroImage{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } } }
+export type OFFERINGS_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  slug: string;
+  status:
+    | "available"
+    | "coming-soon"
+    | "in-development"
+    | "limited"
+    | "pilot"
+    | "planned";
+  tagline: string | null;
+  distinction: string;
+  summary: string;
+  heroTone: "ivory" | "night" | null;
+  ctaLabel: string | null;
+  formKind:
+    | "destination-retirement"
+    | "find-care"
+    | "general"
+    | "grove-interest"
+    | "oracle-visit"
+    | "silver-roots-partner";
+  heroImage: {
+    _type: "mediaImage";
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+          aspectRatio: number;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    caption?: string;
+    source: string;
+    license:
+      | "client-owned"
+      | "creative-commons"
+      | "licensed-stock"
+      | "other"
+      | "public-domain";
+    licenseNotes?: string;
+    consent: "not-required" | "obtained" | "pending";
+    consentRecord?: string;
+    placeholder?: boolean;
+    replaceBy?: string;
+  } | null;
+}>;
+
+// Source: src/sanity/queries.ts
+// Variable: OFFERING_QUERY
+// Query: *[_type == "ecosystemOffering" && slug.current == $slug][0]{      _id, name, "slug": slug.current, status, tagline, distinction, summary, heroTone, ctaLabel, formKind,  heroImage{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },    currentCapabilities[]{ _key, title, description, provision, status },    plannedCapabilities[]{ _key, title, description, provision, status },    howItWorks[]{ _key, title, description },    benefitGroups[]{ _key, audience, points },    sections[]{ _key, eyebrow, heading, body, tone, cta, status, image{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } } },    faqs[]->{ _id, question, answer },    seo{ ..., image{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } } }  }
+export type OFFERING_QUERY_RESULT = {
+  _id: string;
+  name: string;
+  slug: string;
+  status:
+    | "available"
+    | "coming-soon"
+    | "in-development"
+    | "limited"
+    | "pilot"
+    | "planned";
+  tagline: string | null;
+  distinction: string;
+  summary: string;
+  heroTone: "ivory" | "night" | null;
+  ctaLabel: string | null;
+  formKind:
+    | "destination-retirement"
+    | "find-care"
+    | "general"
+    | "grove-interest"
+    | "oracle-visit"
+    | "silver-roots-partner";
+  heroImage: {
+    _type: "mediaImage";
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+          aspectRatio: number;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    caption?: string;
+    source: string;
+    license:
+      | "client-owned"
+      | "creative-commons"
+      | "licensed-stock"
+      | "other"
+      | "public-domain";
+    licenseNotes?: string;
+    consent: "not-required" | "obtained" | "pending";
+    consentRecord?: string;
+    placeholder?: boolean;
+    replaceBy?: string;
+  } | null;
+  currentCapabilities: Array<{
+    _key: string;
+    title: string;
+    description: string | null;
+    provision: "included" | "optional-extra" | "partner-arranged";
+    status:
+      | "available"
+      | "coming-soon"
+      | "in-development"
+      | "limited"
+      | "pilot"
+      | "planned";
+  }> | null;
+  plannedCapabilities: Array<{
+    _key: string;
+    title: string;
+    description: string | null;
+    provision: "included" | "optional-extra" | "partner-arranged";
+    status:
+      | "available"
+      | "coming-soon"
+      | "in-development"
+      | "limited"
+      | "pilot"
+      | "planned";
+  }> | null;
+  howItWorks: Array<{
+    _key: string;
+    title: string;
+    description: string | null;
+  }> | null;
+  benefitGroups: Array<{
+    _key: string;
+    audience: string;
+    points: Array<string>;
+  }> | null;
+  sections: Array<{
+    _key: string;
+    eyebrow: string | null;
+    heading: string;
+    body: BlockContent | null;
+    tone: "green" | "ivory" | "mist" | "night" | "paper" | "sand" | null;
+    cta: Link | null;
+    status:
+      | "available"
+      | "coming-soon"
+      | "in-development"
+      | "limited"
+      | "pilot"
+      | "planned"
+      | null;
+    image: {
+      _type: "mediaImage";
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      caption?: string;
+      source: string;
+      license:
+        | "client-owned"
+        | "creative-commons"
+        | "licensed-stock"
+        | "other"
+        | "public-domain";
+      licenseNotes?: string;
+      consent: "not-required" | "obtained" | "pending";
+      consentRecord?: string;
+      placeholder?: boolean;
+      replaceBy?: string;
+    } | null;
+  }> | null;
+  faqs: Array<{
+    _id: string;
+    question: string;
+    answer: BlockContent;
+  }> | null;
+  seo: {
+    _type: "seo";
+    title?: string;
+    description?: string;
+    canonical?: string;
+    image: {
+      _type: "mediaImage";
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      caption?: string;
+      source: string;
+      license:
+        | "client-owned"
+        | "creative-commons"
+        | "licensed-stock"
+        | "other"
+        | "public-domain";
+      licenseNotes?: string;
+      consent: "not-required" | "obtained" | "pending";
+      consentRecord?: string;
+      placeholder?: boolean;
+      replaceBy?: string;
+    } | null;
+    noIndex?: boolean;
+  } | null;
+} | null;
+
+// Source: src/sanity/queries.ts
+// Variable: TEAM_QUERY
+// Query: *[_type == "teamMember" && approvedForPublication == true] | order(order asc, name asc){    _id, name, role, credentials, bio, image{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }  }
+export type TEAM_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  role: string;
+  credentials: Array<string> | null;
+  bio: BlockContent | null;
+  image: {
+    _type: "mediaImage";
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+          aspectRatio: number;
+        } | null;
+      } | null;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    caption?: string;
+    source: string;
+    license:
+      | "client-owned"
+      | "creative-commons"
+      | "licensed-stock"
+      | "other"
+      | "public-domain";
+    licenseNotes?: string;
+    consent: "not-required" | "obtained" | "pending";
+    consentRecord?: string;
+    placeholder?: boolean;
+    replaceBy?: string;
+  } | null;
+}>;
+
+// Source: src/sanity/queries.ts
+// Variable: FAQS_FOR_PAGE_QUERY
+// Query: *[_type == "faq" && $page in pages] | order(question asc){ _id, question, answer }
+export type FAQS_FOR_PAGE_QUERY_RESULT = Array<{
+  _id: string;
+  question: string;
+  answer: BlockContent;
+}>;
+
+// Source: src/sanity/queries.ts
+// Variable: SITEMAP_QUERY
+// Query: {  "residences": *[_type == "residence" && defined(slug.current)]{ "slug": slug.current, _updatedAt },  "careServices": *[_type == "careService" && defined(slug.current)]{ "slug": slug.current, _updatedAt },  "offerings": *[_type == "ecosystemOffering" && defined(slug.current)]{ "slug": slug.current, _updatedAt },  "pages": *[_type == "page" && defined(slug.current)]{ "slug": slug.current, _updatedAt, "noIndex": seo.noIndex }}
+export type SITEMAP_QUERY_RESULT = {
+  residences: Array<{
+    slug: string;
+    _updatedAt: string;
+  }>;
+  careServices: Array<{
+    slug: string;
+    _updatedAt: string;
+  }>;
+  offerings: Array<{
+    slug: string;
+    _updatedAt: string;
+  }>;
+  pages: Array<{
+    slug: string;
+    _updatedAt: string;
+    noIndex: boolean | null;
+  }>;
+};
+
+// Source: src/sanity/queries.ts
+// Variable: SLUGS_QUERY
+// Query: *[_type == $type && defined(slug.current)].slug.current
+export type SLUGS_QUERY_RESULT = Array<string>;
+
+// Query TypeMap
+declare global {
+  interface SanityQueries {
+    '\n  *[_type == "siteSettings" && _id == "siteSettings"][0]{\n    brandName, tagline, legalName, foundedYear,\n    phone, phoneDisplay, whatsapp, email, openingHours, responseTime, emergencyNotice,\n    headOffice, socialLinks, formRecipients,\n    defaultSeo{ ..., image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } }\n  }\n': SITE_SETTINGS_QUERY_RESULT;
+    '\n  *[_type == "page" && slug.current == $slug][0]{\n    _id, title, "slug": slug.current, intro, body, lastReviewed,\n    heroImage{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n },\n    heroVideo{ description, poster{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n }, "videoUrl": video.asset->url, "captionsUrl": captions.asset->url },\n    sections[]{ _key, eyebrow, heading, body, tone, cta, status, image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } },\n    faqs[]->{ _id, question, answer },\n    seo{ ..., image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } }\n  }\n': PAGE_QUERY_RESULT;
+    '\n  *[_type == "residence"] | order(isFlagship desc, name asc){ \n  _id, name, "slug": slug.current, status, isFlagship, shortLocation, summary,\n  heroImage{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n },\n  careTypes[]->{ _id, name, "slug": slug.current, status }\n }\n': RESIDENCES_QUERY_RESULT;
+    '\n  *[_type == "residence" && slug.current == $slug][0]{\n    \n  _id, name, "slug": slug.current, status, isFlagship, shortLocation, summary,\n  heroImage{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n },\n  careTypes[]->{ _id, name, "slug": slug.current, status }\n,\n    description, audienceFit, atmosphere, sharedSpaces, formKind, comingSoonNote,\n    rooms[]{ _key, name, house, summary, facts, image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } },\n    careAndSupport[]{ _key, title, description, provision, status },\n    everydayLife[]{ _key, title, description, provision, status },\n    gallery[]{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n },\n    team[]->[approvedForPublication == true]{ _id, name, role, credentials, bio, image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } },\n    address,\n    faqs[]->{ _id, question, answer },\n    seo{ ..., image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } },\n    "testimonials": *[_type == "testimonial" && approved == true && residence._ref == ^._id]{ _id, quote, displayName, relationship }\n  }\n': RESIDENCE_QUERY_RESULT;
+    '\n  *[_type == "careService"] | order(name asc){ \n  _id, name, "slug": slug.current, status, summary, typicalDuration,\n  heroImage{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n }\n }\n': CARE_SERVICES_QUERY_RESULT;
+    '\n  *[_type == "careService" && slug.current == $slug][0]{\n    \n  _id, name, "slug": slug.current, status, summary, typicalDuration,\n  heroImage{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n }\n,\n    whoItSuits, notRightFit, formKind,\n    included[]{ _key, title, description, provision, status },\n    process[]{ _key, title, description },\n    faqs[]->{ _id, question, answer },\n    seo{ ..., image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } },\n    "residences": *[_type == "residence" && references(^._id)] | order(isFlagship desc, name asc){\n      _id, name, "slug": slug.current, status, shortLocation\n    }\n  }\n': CARE_SERVICE_QUERY_RESULT;
+    '\n  *[_type == "ecosystemOffering"] | order(name asc){ \n  _id, name, "slug": slug.current, status, tagline, distinction, summary, heroTone, ctaLabel, formKind,\n  heroImage{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n }\n }\n': OFFERINGS_QUERY_RESULT;
+    '\n  *[_type == "ecosystemOffering" && slug.current == $slug][0]{\n    \n  _id, name, "slug": slug.current, status, tagline, distinction, summary, heroTone, ctaLabel, formKind,\n  heroImage{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n }\n,\n    currentCapabilities[]{ _key, title, description, provision, status },\n    plannedCapabilities[]{ _key, title, description, provision, status },\n    howItWorks[]{ _key, title, description },\n    benefitGroups[]{ _key, audience, points },\n    sections[]{ _key, eyebrow, heading, body, tone, cta, status, image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } },\n    faqs[]->{ _id, question, answer },\n    seo{ ..., image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } }\n  }\n': OFFERING_QUERY_RESULT;
+    '\n  *[_type == "teamMember" && approvedForPublication == true] | order(order asc, name asc){\n    _id, name, role, credentials, bio, image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n }\n  }\n': TEAM_QUERY_RESULT;
+    '\n  *[_type == "faq" && $page in pages] | order(question asc){ _id, question, answer }\n': FAQS_FOR_PAGE_QUERY_RESULT;
+    '{\n  "residences": *[_type == "residence" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n  "careServices": *[_type == "careService" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n  "offerings": *[_type == "ecosystemOffering" && defined(slug.current)]{ "slug": slug.current, _updatedAt },\n  "pages": *[_type == "page" && defined(slug.current)]{ "slug": slug.current, _updatedAt, "noIndex": seo.noIndex }\n}': SITEMAP_QUERY_RESULT;
+    "\n  *[_type == $type && defined(slug.current)].slug.current\n": SLUGS_QUERY_RESULT;
+  }
+}
+// Lets @sanity/client releases that predate the global registry read it too
+declare module "@sanity/client" {
+  interface SanityQueries extends globalThis.SanityQueries {}
+}
