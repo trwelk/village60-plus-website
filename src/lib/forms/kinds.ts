@@ -13,3 +13,7 @@ export type FormKind = (typeof FORM_KINDS)[number]['value'];
 export function formKindLabel(kind: FormKind): string {
   return FORM_KINDS.find((k) => k.value === kind)?.label ?? kind;
 }
+
+export function asFormKind(value: string | null | undefined, fallback: FormKind = 'general'): FormKind {
+  return FORM_KINDS.some((item) => item.value === value) ? (value as FormKind) : fallback;
+}

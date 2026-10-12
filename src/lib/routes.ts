@@ -43,3 +43,9 @@ export function offeringPath(slug: string): string {
 export function pagePath(slug: string): string {
   return slug === 'home' ? '/' : `/${slug}`;
 }
+
+export function residenceStaticParams(): Array<{ slug: string }> {
+  return RESIDENCE_SLUGS.filter((slug) => slug !== ORACLE_SLUG).map((slug) => ({ slug }));
+}
+
+export const ORACLE_HOMES_REDIRECT = { source: '/homes/oracle', destination: '/oracle', permanent: true } as const;
