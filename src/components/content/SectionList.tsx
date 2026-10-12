@@ -1,0 +1,60 @@
+import type { PortableTextBlock } from '@portabletext/react';
+import { SanityImage, type CmsImage } from '@/components/media/SanityImage';
+import { Button } from '@/components/ui/Button';
+import { Heading } from '@/components/ui/Heading';
+import { Section, isDarkTone, type SectionTone } from '@/components/ui/Section';
+import { StatusBadge } from '@/components/ui/StatusBadge';
+import { isContentStatus } from '@/lib/content-status';
+import { PortableText, safeHref } from './PortableText';
+
+const TONES: SectionTone[] = ['ivory', 'sand', 'paper', 'mist', 'green', 'night'];
+
+function asTone(value: string | null | undefined): SectionTone {
+  return TONES.includes(value as SectionTone) ? (value as SectionTone) : 'ivory';
+}
+
+export type ContentSectionData = {
+  _key: string;
+  eyebrow?: string | null;
+  heading?: string | null;
+  body?: PortableTextBlock[] | null;
+  tone?: string | null;
+  status?: string | null;
+  image?: CmsImage | null;
+  cta?: { label?: string | null; href?: string | null } | null;
+};
+
+export function SectionList({ sections }: { sections: Array<ContentSectionData | null> | null | undefined }) {
+  const rows = (sections ?? []).filter((section): section is ContentSectionData & { heading: string } => Boolean(section?.heading));
+  return (
+    <>
+      {rows.map((section) => {
+        const tone = asTone(section.tone);
+        const onDark = isDarkTone(tone);
+        const href = safeHref(section.cta?.href);
+        const showImage = Boolean(section.image?.asset?.url && section.image?.alt?.trim());
+        return (
+          <Section key={section._key} tone={tone}>
+            <div className="flex flex-col gap-4">
+              {isContentStatus(section.status) && <StatusBadge status={section.status} tone={onDark ? 'dark' : 'light'} />}
+              <Heading as="h2" eyebrow={section.eyebrow ?? undefined} onDark={onDark}>
+                {section.heading}
+              </Heading>
+            </div>
+            <div className={showImage ? 'mt-8 grid items-start gap-8 lg:grid-cols-2' : 'mt-8'}>
+              <PortableText value={section.body} onDark={onDark} />
+              {showImage && <SanityImage image={section.image} width={640} height={400} sizes="(min-width: 1200px) 560px, 100vw" />}
+            </div>
+            {section.cta?.label && href && (
+              <div className="mt-6">
+                <Button href={href} onDark={onDark}>
+                  {section.cta.label}
+                </Button>
+              </div>
+            )}
+          </Section>
+        );
+      })}
+    </>
+  );
+}
