@@ -13,6 +13,10 @@ export function statusLabel(status: ContentStatus): string {
   return CONTENT_STATUSES.find((s) => s.value === status)?.label ?? status;
 }
 
+export function isContentStatus(value: string | null | undefined): value is ContentStatus {
+  return CONTENT_STATUSES.some((s) => s.value === value);
+}
+
 /** Operating now — safe to describe in present tense and to mark up as LocalBusiness/Service. */
 export function isOperating(status: ContentStatus): boolean {
   return status === 'available' || status === 'limited';
