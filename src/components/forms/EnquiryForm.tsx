@@ -5,7 +5,8 @@ import { useActionState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { formDefinition, summaryLines } from '@/lib/forms/definitions';
 import type { FormKind } from '@/lib/forms/kinds';
-import { initialEnquiryState, submitEnquiry } from '@/lib/forms/submit';
+import { initialEnquiryState } from '@/lib/forms/process';
+import { submitEnquiry } from '@/lib/forms/submit';
 import { Field } from './Field';
 
 export function EnquiryForm({
