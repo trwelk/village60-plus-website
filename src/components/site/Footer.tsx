@@ -39,21 +39,27 @@ export function Footer({
         </nav>
         <address className="not-italic">
           <p className="whitespace-pre-line">{address}</p>
-          <p className="mt-3">
-            <a href={telHref(contact.phone)} className="text-ivory no-underline hover:text-pale-gold" data-track="call_click">
-              {contact.phoneDisplay}
-            </a>
-          </p>
-          <p>
-            <WhatsAppLink contact={contact} className="text-ivory no-underline hover:text-pale-gold">
-              WhatsApp {contact.whatsapp}
-            </WhatsAppLink>
-          </p>
-          <p>
-            <a href={mailtoHref(contact.email)} className="text-ivory no-underline hover:text-pale-gold">
-              {contact.email}
-            </a>
-          </p>
+          {contact.phone ? (
+            <p className="mt-3">
+              <a href={telHref(contact.phone)} className="text-ivory no-underline hover:text-pale-gold" data-track="call_click">
+                {contact.phoneDisplay}
+              </a>
+            </p>
+          ) : null}
+          {contact.whatsapp ? (
+            <p>
+              <WhatsAppLink contact={contact} className="text-ivory no-underline hover:text-pale-gold">
+                WhatsApp {contact.whatsapp}
+              </WhatsAppLink>
+            </p>
+          ) : null}
+          {contact.email ? (
+            <p>
+              <a href={mailtoHref(contact.email)} className="text-ivory no-underline hover:text-pale-gold">
+                {contact.email}
+              </a>
+            </p>
+          ) : null}
           {openingHours ? <p className="mt-3 text-ivory/80">{openingHours}</p> : null}
           <p className="mt-1 text-ivory/80">We aim to respond {contact.responseTime}.</p>
         </address>

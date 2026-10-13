@@ -36,15 +36,19 @@ export function Header({ contact, enquiryTrigger }: { contact: SiteContact; enqu
         </nav>
 
         <div className="flex items-center gap-3">
-          <a href={telHref(contact.phone)} className="hidden items-center font-semibold text-green no-underline md:inline-flex" data-track="call_click">
-            Call {contact.phoneDisplay}
-          </a>
-          <WhatsAppLink
-            contact={contact}
-            className="hidden items-center rounded-full border border-green px-4 py-2 font-semibold text-green no-underline hover:bg-mist md:inline-flex"
-          >
-            WhatsApp
-          </WhatsAppLink>
+          {contact.phone ? (
+            <a href={telHref(contact.phone)} className="hidden items-center font-semibold text-green no-underline md:inline-flex" data-track="call_click">
+              Call {contact.phoneDisplay}
+            </a>
+          ) : null}
+          {contact.whatsapp ? (
+            <WhatsAppLink
+              contact={contact}
+              className="hidden items-center rounded-full border border-green px-4 py-2 font-semibold text-green no-underline hover:bg-mist md:inline-flex"
+            >
+              WhatsApp
+            </WhatsAppLink>
+          ) : null}
           {enquiryTrigger}
           <details className="lg:hidden">
             <summary className="list-none rounded-input border border-stone px-3 py-2 font-semibold [&::-webkit-details-marker]:hidden">Menu</summary>

@@ -34,7 +34,12 @@ export async function sanityFetch<const Q extends string>(
   return client.fetch(query, params, { perspective: 'published', useCdn: true, next: { revalidate, tags } });
 }
 
-/** Published content only; safe outside a request scope. */
-export function fetchPublished<const Q extends string>(query: Q, params: QueryParams = {}, tags: string[] = []): Promise<ClientReturn<Q>> {
-  return client.fetch(query, params, { perspective: 'published', useCdn: true, next: { revalidate: DEFAULT_REVALIDATE, tags } });
+/** Published content only; safe outside a request scope. A failed request renders the empty state instead of throwing. */
+export async function fetchPublished<const Q extends string>(query: Q, params: QueryParams = {}, tags: string[] = []): Promise<ClientReturn<Q> | null> {
+  try {
+    return await client.fetch(query, params, { perspective: 'published', useCdn: true, next: { revalidate: DEFAULT_REVALIDATE, tags } });
+  } catch (error: unknown) {
+    console.error('Published Sanity fetch failed', error instanceof Error ? error.name : 'Error');
+    return null;
+  }
 }

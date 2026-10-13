@@ -19,4 +19,15 @@ describe('Header', () => {
     expect(screen.getByRole('link', { name: 'WhatsApp' })).toHaveAttribute('href', expect.stringContaining('Serenity'));
     expect(await axe(container)).toHaveNoViolations();
   });
+
+  it('does not render a tel link when the phone number is empty', () => {
+    render(
+      <Header
+        contact={{ phone: '', phoneDisplay: '', whatsapp: '', email: '', responseTime: 'as soon as we can' }}
+        enquiryTrigger={<button type="button">Enquire</button>}
+      />,
+    );
+    expect(screen.queryByRole('link', { name: /^Call/ })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Enquire' })).toBeInTheDocument();
+  });
 });
