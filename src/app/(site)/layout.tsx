@@ -1,8 +1,10 @@
-import { SkipLink } from '@/components/site/SkipLink';
+import { Analytics } from '@/components/analytics/Analytics';
+import { EnquiryButton, EnquiryProvider } from '@/components/forms/EnquiryPanel';
+import { Footer } from '@/components/site/Footer';
 import { Header } from '@/components/site/Header';
 import { MobileActionBar } from '@/components/site/MobileActionBar';
-import { Footer } from '@/components/site/Footer';
-import { EnquiryButton, EnquiryProvider } from '@/components/forms/EnquiryPanel';
+import { SkipLink } from '@/components/site/SkipLink';
+import { getPublicEnv } from '@/lib/env';
 import { getSiteChrome } from '@/lib/site-chrome';
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
@@ -20,6 +22,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         openingHours={chrome.openingHours}
       />
       <MobileActionBar contact={chrome.contact} />
+      <Analytics gaId={getPublicEnv().gaId} />
     </EnquiryProvider>
   );
 }

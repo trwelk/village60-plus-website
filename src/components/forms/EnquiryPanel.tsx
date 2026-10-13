@@ -59,7 +59,7 @@ export function EnquiryProvider({ contact, children }: { contact: SiteContact; c
 export function EnquiryButton({ kind, context, children }: { kind: FormKind; context: string; children: ReactNode }) {
   const { open } = useEnquiry();
   return (
-    <button type="button" className="inline-flex min-h-11 items-center rounded-full bg-green px-5 font-semibold text-ivory" onClick={() => open(kind, context)}>
+    <button type="button" className="inline-flex min-h-11 items-center rounded-full bg-green px-5 font-semibold text-ivory" data-track="enquiry_open" onClick={() => open(kind, context)}>
       {children}
     </button>
   );

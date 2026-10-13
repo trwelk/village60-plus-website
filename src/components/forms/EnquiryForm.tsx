@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useId, useRef } from 'react';
+import { type FocusEvent, useEffect, useId, useRef } from 'react';
+import { dispatchTrack } from '@/lib/analytics';
 import { useActionState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { formDefinition, summaryLines } from '@/lib/forms/definitions';
@@ -23,11 +24,23 @@ export function EnquiryForm({
   const definition = formDefinition(kind);
   const [state, action, pending] = useActionState(submitEnquiry, initialEnquiryState);
   const summaryRef = useRef<HTMLDivElement>(null);
+  const started = useRef(false);
   const formKey = useId();
+
+  function onFocusCapture(event: FocusEvent<HTMLFormElement>) {
+    if (started.current) return;
+    if (event.currentTarget.closest('dialog')) return;
+    started.current = true;
+    dispatchTrack('enquiry_open');
+  }
 
   useEffect(() => {
     if (state.status === 'error' || state.status === 'delivery-failed') {
       summaryRef.current?.focus();
+      dispatchTrack('form_error');
+    }
+    if (state.status === 'success') {
+      dispatchTrack('enquiry_submit');
     }
   }, [state]);
 
@@ -51,7 +64,7 @@ export function EnquiryForm({
   }
 
   return (
-    <form action={action} className="flex flex-col gap-4" noValidate>
+    <form action={action} className="flex flex-col gap-4" noValidate onFocusCapture={onFocusCapture}>
       <h2 id={headingId ?? formKey} className="text-[28px]">
         {definition.heading}
       </h2>

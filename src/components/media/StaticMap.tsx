@@ -27,7 +27,7 @@ export function StaticMap({
       {landmarks.length > 0 && <p>Nearby: {landmarks.join(', ')}</p>}
       {address?.visitingNotes && <p className="max-w-prose-site">{address.visitingNotes}</p>}
       {directions && (
-        <a href={directions} className="font-semibold text-green underline underline-offset-4" target="_blank" rel="noopener noreferrer">
+        <a href={directions} className="font-semibold text-green underline underline-offset-4" target="_blank" rel="noopener noreferrer" data-track="directions_click">
           Get directions
         </a>
       )}
