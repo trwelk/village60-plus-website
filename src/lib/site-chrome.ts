@@ -16,13 +16,11 @@ export type SiteChrome = {
 
 export async function getSiteChrome(): Promise<SiteChrome> {
   const { sanityProjectId } = getPublicEnv();
-  const settings =
-    isSanityProjectConfigured(sanityProjectId)
-      ? await fetchPublished(SITE_SETTINGS_QUERY, {}, ['siteSettings']).catch(() => null)
-      : null;
-  const contact = contactFromSettings(settings);
+  const settings = isSanityProjectConfigured(sanityProjectId)
+    ? await fetchPublished(SITE_SETTINGS_QUERY, {}, ['siteSettings']).catch(() => null)
+    : null;
   return {
-    contact,
+    contact: contactFromSettings(settings),
     legalName: settings?.legalName ?? 'Village 60 Plus',
     address: formatAddress(settings?.headOffice) || 'Colombo, Sri Lanka',
     foundedYear: settings?.foundedYear ?? null,

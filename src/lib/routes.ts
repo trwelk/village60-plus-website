@@ -57,3 +57,46 @@ export function isLegalSlug(value: string): value is LegalSlug {
 }
 
 export const ORACLE_HOMES_REDIRECT = { source: '/homes/oracle', destination: '/oracle', permanent: true } as const;
+
+const RESIDENCE_CONTEXT: Record<string, string> = {
+  tranquility: 'Tranquility',
+  serenity: 'Serenity',
+  'house-on-the-hill': 'House on the Hill',
+  'enchanted-fields': 'Enchanted Fields',
+  oracle: 'Oracle',
+  'the-grove': 'The Grove',
+};
+
+const CARE_CONTEXT: Record<string, string> = {
+  'independent-living': 'Independent living',
+  'residential-care': 'Residential care',
+  'respite-care': 'Respite care',
+  recovery: 'Recovery',
+  rehabilitation: 'Rehabilitation',
+};
+
+const PAGE_CONTEXT: Record<string, string> = {
+  '/': 'Village 60 Plus',
+  '/find-the-right-care': 'Find the Right Care',
+  '/homes': 'Our homes',
+  '/oracle': 'Oracle',
+  '/living-and-care': 'Living & Care',
+  '/silver-roots': 'Silver Roots',
+  '/destination-retirement': 'Destination Retirement',
+  '/sage': 'SAGE',
+  '/our-story': 'Our story',
+  '/contact': 'Contact',
+  '/privacy': 'Privacy',
+  '/terms': 'Terms',
+  '/accessibility': 'Accessibility',
+};
+
+export function contextForPath(pathname: string): string {
+  const path = (pathname.split('?')[0] || '/').replace(/\/+$/, '') || '/';
+  if (PAGE_CONTEXT[path]) return PAGE_CONTEXT[path];
+  const residence = path.match(/^\/homes\/([^/]+)$/);
+  if (residence) return RESIDENCE_CONTEXT[residence[1]] ?? 'Village 60 Plus';
+  const care = path.match(/^\/living-and-care\/([^/]+)$/);
+  if (care) return CARE_CONTEXT[care[1]] ?? 'Village 60 Plus';
+  return 'Village 60 Plus';
+}

@@ -1,6 +1,10 @@
 import { render, screen, within } from '@testing-library/react';
 import { axe } from 'vitest-axe';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+
+vi.mock('next/navigation', () => ({
+  usePathname: () => '/homes/serenity',
+}));
 import { Header } from './Header';
 import { contactFixture } from '@/test/contact-fixture';
 
@@ -12,7 +16,7 @@ describe('Header', () => {
     expect(within(nav).getByRole('link', { name: 'Oracle' })).toHaveAttribute('href', '/oracle');
     expect(within(nav).getByText('More')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Call \+94 11 250 4838/ })).toHaveAttribute('href', 'tel:+94112504838');
-    expect(screen.getByRole('link', { name: /WhatsApp/ })).toHaveAttribute('href', expect.stringContaining('https://wa.me/94741003994'));
+    expect(screen.getByRole('link', { name: 'WhatsApp' })).toHaveAttribute('href', expect.stringContaining('Serenity'));
     expect(await axe(container)).toHaveNoViolations();
   });
 });

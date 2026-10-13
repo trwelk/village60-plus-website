@@ -19,7 +19,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         foundedYear={chrome.foundedYear}
         openingHours={chrome.openingHours}
       />
-      <MobileActionBar contact={chrome.contact} context="Village 60 Plus" />
+      <MobileActionBar contact={chrome.contact} />
     </EnquiryProvider>
   );
 }

@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { LEGAL_NAV, MORE_NAV, PRIMARY_NAV } from '@/lib/navigation';
-import { mailtoHref, telHref, whatsappHref, type SiteContact } from '@/lib/contact';
+import { mailtoHref, telHref, type SiteContact } from '@/lib/contact';
+import { WhatsAppLink } from '@/components/site/WhatsAppLink';
 
 export function Footer({
   contact,
@@ -44,9 +45,9 @@ export function Footer({
             </a>
           </p>
           <p>
-            <a href={whatsappHref(contact.whatsapp, 'Village 60 Plus')} className="text-ivory no-underline hover:text-pale-gold" target="_blank" rel="noopener noreferrer" data-track="whatsapp_click">
+            <WhatsAppLink contact={contact} className="text-ivory no-underline hover:text-pale-gold">
               WhatsApp {contact.whatsapp}
-            </a>
+            </WhatsAppLink>
           </p>
           <p>
             <a href={mailtoHref(contact.email)} className="text-ivory no-underline hover:text-pale-gold">

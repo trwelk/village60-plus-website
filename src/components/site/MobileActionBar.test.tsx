@@ -1,11 +1,15 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { MobileActionBar } from './MobileActionBar';
 import { contactFixture } from '@/test/contact-fixture';
 
+vi.mock('next/navigation', () => ({
+  usePathname: () => '/homes/tranquility',
+}));
+
 describe('MobileActionBar', () => {
-  it('renders Call and WhatsApp with page context', () => {
-    render(<MobileActionBar contact={contactFixture} context="Tranquility" />);
+  it('builds WhatsApp context from the path and leaves Call unchanged', () => {
+    render(<MobileActionBar contact={contactFixture} />);
     expect(screen.getByRole('link', { name: 'Call' })).toHaveAttribute('href', 'tel:+94112504838');
     expect(screen.getByRole('link', { name: 'WhatsApp' })).toHaveAttribute('href', expect.stringContaining('Tranquility'));
   });

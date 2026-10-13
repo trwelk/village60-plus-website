@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CARE_SERVICE_SLUGS, LEGAL_SLUGS, ORACLE_HOMES_REDIRECT, PAGE_SLUGS, RESIDENCE_SLUGS, careStaticParams, isLegalSlug, residencePath, residenceStaticParams } from './routes';
+import { CARE_SERVICE_SLUGS, LEGAL_SLUGS, ORACLE_HOMES_REDIRECT, PAGE_SLUGS, RESIDENCE_SLUGS, careStaticParams, contextForPath, isLegalSlug, residencePath, residenceStaticParams } from './routes';
 
 describe('routes', () => {
   it('lists the six residences from the spec sitemap', () => {
@@ -26,5 +26,14 @@ describe('routes', () => {
     expect(isLegalSlug('terms')).toBe(true);
     expect(isLegalSlug('accessibility')).toBe(true);
     expect(isLegalSlug('homes')).toBe(false);
+  });
+  it('builds page-specific WhatsApp context from the path', () => {
+    expect(contextForPath('/')).toBe('Village 60 Plus');
+    expect(contextForPath('/oracle')).toBe('Oracle');
+    expect(contextForPath('/homes/serenity')).toBe('Serenity');
+    expect(contextForPath('/homes/the-grove')).toBe('The Grove');
+    expect(contextForPath('/living-and-care/respite-care')).toBe('Respite care');
+    expect(contextForPath('/silver-roots')).toBe('Silver Roots');
+    expect(contextForPath('/unknown')).toBe('Village 60 Plus');
   });
 });

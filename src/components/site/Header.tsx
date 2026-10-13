@@ -2,7 +2,8 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Container } from '@/components/ui/Container';
 import { MORE_NAV, PRIMARY_NAV } from '@/lib/navigation';
-import { telHref, whatsappHref, type SiteContact } from '@/lib/contact';
+import { telHref, type SiteContact } from '@/lib/contact';
+import { WhatsAppLink } from '@/components/site/WhatsAppLink';
 
 export function Header({ contact, enquiryTrigger }: { contact: SiteContact; enquiryTrigger?: ReactNode }) {
   return (
@@ -38,15 +39,12 @@ export function Header({ contact, enquiryTrigger }: { contact: SiteContact; enqu
           <a href={telHref(contact.phone)} className="hidden items-center font-semibold text-green no-underline md:inline-flex" data-track="call_click">
             Call {contact.phoneDisplay}
           </a>
-          <a
-            href={whatsappHref(contact.whatsapp, 'Village 60 Plus')}
+          <WhatsAppLink
+            contact={contact}
             className="hidden items-center rounded-full border border-green px-4 py-2 font-semibold text-green no-underline hover:bg-mist md:inline-flex"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-track="whatsapp_click"
           >
             WhatsApp
-          </a>
+          </WhatsAppLink>
           {enquiryTrigger}
           <details className="lg:hidden">
             <summary className="list-none rounded-input border border-stone px-3 py-2 font-semibold [&::-webkit-details-marker]:hidden">Menu</summary>
