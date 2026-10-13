@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { Heading } from '@/components/ui/Heading';
 import { Section, isDarkTone, type SectionTone } from '@/components/ui/Section';
 import { StatusBadge } from '@/components/ui/StatusBadge';
+import { cn } from '@/lib/cn';
 import { isContentStatus } from '@/lib/content-status';
 import { PortableText, safeHref } from './PortableText';
 
@@ -41,6 +42,7 @@ export function SectionList({
         const href = safeHref(section.cta?.href);
         const showImage = Boolean(section.image?.asset?.url && section.image?.alt?.trim());
         const split = layout === 'split' && !showImage;
+        const hasCopy = Boolean(section.body?.length) || Boolean(section.cta?.label && href);
         const copy = (
           <>
             <PortableText value={section.body} onDark={onDark} />
@@ -56,14 +58,26 @@ export function SectionList({
         return (
           <Section key={section._key} tone={tone}>
             {split ? (
-              <div className="grid items-start gap-6 lg:grid-cols-[minmax(16rem,24rem)_minmax(0,1fr)] lg:gap-x-16">
-                <div className="flex flex-col gap-4">
-                  {isContentStatus(section.status) && <StatusBadge status={section.status} tone={onDark ? 'dark' : 'light'} />}
-                  <Heading as="h2" eyebrow={section.eyebrow ?? undefined} onDark={onDark}>
-                    {section.heading}
-                  </Heading>
+              <div className={cn(!onDark && 'rounded-panel border border-stone bg-paper px-6 py-8 md:px-10 md:py-12')}>
+                <div className="grid items-center gap-6 lg:grid-cols-[minmax(16rem,24rem)_minmax(0,1fr)] lg:gap-x-14">
+                  <div className="flex flex-col gap-4">
+                    {isContentStatus(section.status) && <StatusBadge status={section.status} tone={onDark ? 'dark' : 'light'} />}
+                    <Heading as="h2" eyebrow={section.eyebrow ?? undefined} onDark={onDark}>
+                      {section.heading}
+                    </Heading>
+                  </div>
+                  {hasCopy ? (
+                    <div
+                      className={cn(
+                        'min-w-0 border-l-2 pl-6 md:pl-8',
+                        onDark ? 'border-pale-gold' : 'border-gold',
+                        '[&_p]:max-w-none [&_p]:text-[19px] [&_p]:leading-relaxed md:[&_p]:text-[22px] md:[&_p]:leading-snug',
+                      )}
+                    >
+                      {copy}
+                    </div>
+                  ) : null}
                 </div>
-                <div className={section.eyebrow ? 'lg:pt-7' : undefined}>{copy}</div>
               </div>
             ) : (
               <>

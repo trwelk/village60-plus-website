@@ -23,8 +23,8 @@ describe('FaqList', () => {
       />,
     );
     expect(screen.getByRole('heading', { level: 2, name: 'Questions' })).toBeInTheDocument();
-    const summary = screen.getByText('Do I need to know which type of care?');
-    expect(summary.tagName).toBe('SUMMARY');
+    const summary = screen.getByText('Do I need to know which type of care?').closest('summary');
+    expect(summary?.tagName).toBe('SUMMARY');
     expect(screen.getByText(/Describe the situation/)).toBeInTheDocument();
     expect(screen.getAllByText(/Describe the situation/)).toHaveLength(1);
   });

@@ -114,7 +114,7 @@ function CapabilityCards({
       );
     }
     return (
-      <div className="mt-8 border-y border-stone py-6 md:grid md:grid-cols-[minmax(16rem,22rem)_minmax(0,1fr)] md:items-center md:gap-x-12 md:py-8">
+      <div className="mt-8 border-y border-stone py-6 md:grid md:grid-cols-[minmax(16rem,22rem)_minmax(0,1fr)] md:items-end md:gap-x-12 md:py-8">
         <div>
           <CapabilityMeta item={item} suppressProvision={false} />
           <h3 className="text-[22px] leading-snug md:text-[24px]">{item.title}</h3>
@@ -146,6 +146,89 @@ function SilverFamilyActions({ contact, stacked = false }: { contact: SiteContac
   );
 }
 
+type BenefitGroup = NonNullable<NonNullable<OfferingContent['benefitGroups']>[number]> & { audience: string };
+
+function PointList({ points }: { points: Array<string | null> | null | undefined }) {
+  const rows = (points ?? []).filter((point): point is string => Boolean(point));
+  if (rows.length === 0) return null;
+  return (
+    <ul className="m-0 flex list-none flex-col gap-3.5 p-0">
+      {rows.map((point) => (
+        <li key={point} className="flex gap-3 leading-snug">
+          <span aria-hidden="true" className="mt-[0.55em] size-1.5 shrink-0 rounded-full bg-gold" />
+          <span>{point}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function AudienceBay({ group, className }: { group: BenefitGroup; className?: string }) {
+  return (
+    <li className={cn('flex h-full flex-col px-6 py-7 md:px-8 md:py-8', className)}>
+      <h3 className="text-[22px] leading-snug md:text-[26px]">{group.audience}</h3>
+      <div className="mt-5">
+        <PointList points={group.points} />
+      </div>
+    </li>
+  );
+}
+
+function AudienceBand({ groups }: { groups: BenefitGroup[] }) {
+  if (groups.length === 1) {
+    const group = groups[0];
+    return (
+      <div className="overflow-hidden rounded-panel border border-stone bg-paper lg:grid lg:grid-cols-[minmax(16rem,22rem)_minmax(0,1fr)]">
+        <div className="flex flex-col justify-center border-b border-stone px-6 py-8 md:px-8 lg:border-r lg:border-b-0 lg:py-10">
+          <span aria-hidden="true" className="mb-4 block h-0.5 w-8 bg-gold" />
+          <Heading as="h2" id="offering-audience">{group.audience}</Heading>
+        </div>
+        <div className="flex items-center px-6 py-7 md:px-8 md:py-8">
+          <PointList points={group.points} />
+        </div>
+      </div>
+    );
+  }
+
+  if (groups.length === 2) {
+    return (
+      <div className="overflow-hidden rounded-panel border border-stone bg-paper lg:grid lg:grid-cols-[minmax(13rem,16rem)_minmax(0,1fr)]">
+        <div className="flex flex-col justify-center border-b border-stone px-6 py-8 md:px-8 lg:border-r lg:border-b-0 lg:py-10">
+          <span aria-hidden="true" className="mb-4 block h-0.5 w-8 bg-gold" />
+          <Heading as="h2" id="offering-audiences">Who it helps</Heading>
+        </div>
+        <ul className="m-0 grid list-none p-0 md:grid-cols-2">
+          {groups.map((group, index) => (
+            <AudienceBay
+              key={group._key}
+              group={group}
+              className={index === 0 ? 'border-b border-stone md:border-r md:border-b-0' : undefined}
+            />
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
+  return (
+    <div className="overflow-hidden rounded-panel border border-stone bg-paper">
+      <div className="border-b border-stone px-6 py-8 md:px-8">
+        <span aria-hidden="true" className="mb-4 block h-0.5 w-8 bg-gold" />
+        <Heading as="h2" id="offering-audiences">Who it helps</Heading>
+      </div>
+      <ul className="m-0 grid list-none p-0 lg:grid-cols-3">
+        {groups.map((group, index) => (
+          <AudienceBay
+            key={group._key}
+            group={group}
+            className={index < groups.length - 1 ? 'border-b border-stone lg:border-r lg:border-b-0' : undefined}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function SectionHeading({ id, title, meta }: { id: string; title: string; meta?: string | null }) {
   return (
     <div>
@@ -172,7 +255,7 @@ export function EcosystemView({
   const current = titledCapabilities(offering?.currentCapabilities);
   const planned = titledCapabilities(labelPlanned(offering?.plannedCapabilities));
   const steps = (offering?.howItWorks ?? []).filter((step) => step?.title);
-  const groups = (offering?.benefitGroups ?? []).filter((group): group is NonNullable<typeof group> & { audience: string } => Boolean(group?.audience));
+  const groups = (offering?.benefitGroups ?? []).filter((group): group is BenefitGroup => Boolean(group?.audience));
   const sections = (offering?.sections ?? []).map((section) =>
     section && (section.tone === 'night' || section.tone === 'green') ? { ...section, tone: 'ivory' } : section,
   );
@@ -206,41 +289,22 @@ export function EcosystemView({
       ) : null}
       {groups.length > 0 ? (
         <Section tone="mist" labelledBy={groups.length === 1 ? 'offering-audience' : 'offering-audiences'}>
-          {groups.length === 1 ? (
-            <>
-              <Heading as="h2" id="offering-audience">{groups[0].audience}</Heading>
-              <ul className="m-0 mt-8 grid list-none gap-x-10 gap-y-4 p-0 sm:grid-cols-2">
-                {(groups[0].points ?? []).filter((point): point is string => Boolean(point)).map((point) => (
-                  <li key={point} className="border-t border-stone pt-4">{point}</li>
-                ))}
-              </ul>
-            </>
-          ) : (
-            <>
-              <Heading as="h2" id="offering-audiences">Who it helps</Heading>
-              <ul className={cn('m-0 mt-10 grid list-none gap-x-16 gap-y-10 p-0', groups.length >= 3 ? 'md:grid-cols-2 lg:grid-cols-3' : 'md:grid-cols-2')}>
-                {groups.map((group) => (
-                  <li key={group._key}>
-                    <span aria-hidden="true" className="block h-0.5 w-8 bg-gold" />
-                    <h3 className="mt-4 text-[22px] leading-snug md:text-[24px]">{group.audience}</h3>
-                    <ul className="mt-4 flex list-none flex-col gap-3 border-t border-stone p-0 pt-4">
-                      {(group.points ?? []).filter((point): point is string => Boolean(point)).map((point) => (
-                        <li key={point}>{point}</li>
-                      ))}
-                    </ul>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
+          <AudienceBand groups={groups} />
         </Section>
       ) : null}
       <SectionList sections={sections} layout="split" />
       {(offering?.faqs ?? []).some((item) => item?.question) ? (
         <Section tone="ivory" labelledBy="offering-questions">
-          <div className="grid items-start gap-6 lg:grid-cols-[minmax(16rem,22rem)_minmax(0,1fr)] lg:gap-x-16">
-            <Heading as="h2" id="offering-questions">Questions</Heading>
-            <FaqList items={offering?.faqs} showHeading={false} width="full" />
+          <div className="overflow-hidden rounded-panel border border-stone bg-paper lg:grid lg:grid-cols-[minmax(16rem,22rem)_minmax(0,1fr)]">
+            <div className="flex flex-col justify-center border-b border-stone px-6 py-8 md:px-8 lg:border-r lg:border-b-0 lg:px-10 lg:py-10">
+              <span aria-hidden="true" className="mb-4 block h-0.5 w-8 bg-gold" />
+              <Heading as="h2" id="offering-questions">Questions</Heading>
+            </div>
+            <div className="flex items-center px-6 md:px-8 lg:px-10">
+              <div className="min-w-0 flex-1">
+                <FaqList items={offering?.faqs} showHeading={false} width="full" embedded />
+              </div>
+            </div>
           </div>
         </Section>
       ) : null}

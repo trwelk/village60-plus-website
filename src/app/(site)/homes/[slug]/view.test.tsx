@@ -94,7 +94,7 @@ describe('ResidenceView', () => {
     expect(container.querySelector('[data-residence-section="team"]')).toBeNull();
     expect(container.querySelector('[data-residence-section="gallery"]')).toBeNull();
     expect(container.querySelector('[data-residence-section="faqs"]')).toBeNull();
-    expect(screen.queryByRole('heading', { name: 'The team', exact: true })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /^The team$/ })).not.toBeInTheDocument();
   });
 
   it('explains missing rooms and still lists shared spaces', () => {

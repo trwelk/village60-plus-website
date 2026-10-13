@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mockup — Living and care</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ivory: #f7f3ea;
+      --green: #18352d;
+      --gold: #a88a42;
+      --charcoal: #20211f;
+      --paper: #fffdf8;
+      --sand: #ede6d6;
+      --stone: #d9d1bf;
+      --bronze: #6f5a24;
+      --pale-gold: #d4b86a;
+      --night: #0f1f1b;
+      --display: "Fraunces", Georgia, serif;
+      --sans: "Source Sans 3", "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--ivory);
+      color: var(--charcoal);
+      font-family: var(--sans);
+      font-size: 18px;
+      line-height: 1.6;
+      text-wrap: pretty;
+    }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
+    .on-dark :focus-visible { outline-color: var(--pale-gold); }
+    .wrap { width: min(1280px, calc(100% - 64px)); margin-inline: auto; }
+    .note {
+      margin: 0;
+      padding: 0.7rem 1rem;
+      background: var(--sand);
+      color: var(--bronze);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-align: center;
+    }
+    .page-head { padding: 4rem 0 0; }
+    .eyebrow {
+      margin: 0 0 0.5rem;
+      color: var(--bronze);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 {
+      margin: 0;
+      font-family: var(--display);
+      font-weight: 500;
+      line-height: 1.15;
+      text-wrap: balance;
+      color: var(--green);
+    }
+    h1 { font-size: 48px; max-width: 16ch; }
+    h2 { font-size: 38px; }
+    h3 { font-size: 28px; }
+    .lede { margin: 1rem 0 0; max-width: 68ch; }
+    .block { padding-top: 4rem; }
+    .block-intro { margin: 0.75rem 0 0; max-width: 68ch; }
+    .panel {
+      margin-top: 1.75rem;
+      overflow: hidden;
+      border: 1px solid var(--stone);
+      border-radius: 20px;
+      background: var(--paper);
+    }
+    .home-row {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.05fr) minmax(0, 1fr);
+      min-height: 260px;
+      color: inherit;
+      text-decoration: none;
+    }
+    .home-row + .home-row { border-top: 1px solid var(--stone); }
+    .home-photo { background: var(--sand); min-height: 200px; }
+    .home-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 2rem 2.5rem;
+    }
+    .badge {
+      border: 1px solid var(--stone);
+      border-radius: 6px;
+      background: var(--paper);
+      color: var(--bronze);
+      padding: 0.25rem 0.6rem;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+    .home-copy p, .stay-copy p { margin: 0; max-width: 52ch; }
+    .text-link {
+      color: var(--green);
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-color: var(--gold);
+      text-underline-offset: 4px;
+    }
+    .home-row:hover .text-link,
+    .stay:hover .text-link { text-decoration-color: var(--green); }
+    .home-row:hover { background: color-mix(in srgb, var(--sand) 45%, var(--paper)); }
+    .decision {
+      margin-top: 4rem;
+      padding: 2.5rem 2.75rem;
+      border-radius: 20px;
+      border-top: 2px solid var(--gold);
+      background: var(--green);
+      color: var(--ivory);
+    }
+    .decision .eyebrow { color: var(--pale-gold); }
+    .decision h2 {
+      max-width: 22ch;
+      color: var(--ivory);
+      font-size: 32px;
+    }
+    .decision p { margin: 0.85rem 0 0; max-width: 62ch; }
+    .stay {
+      display: grid;
+      grid-template-columns: 148px minmax(0, 1fr);
+      gap: 1.25rem 1.5rem;
+      align-items: center;
+      padding: 1.25rem 1.5rem;
+      color: inherit;
+      text-decoration: none;
+    }
+    .stay + .stay { border-top: 1px solid var(--stone); }
+    .stay:hover { background: color-mix(in srgb, var(--sand) 45%, var(--paper)); }
+    .thumb {
+      width: 148px;
+      height: 112px;
+      overflow: hidden;
+      border-radius: 12px;
+      background: var(--sand);
+    }
+    .stay-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem; }
+    .meta { margin: 0; color: var(--bronze); font-size: 16px; font-weight: 600; }
+    .stay h3 { font-size: 24px; }
+    .close {
+      margin-top: 4rem;
+      padding: 2.5rem 0 4.5rem;
+      border-top: 1px solid var(--stone);
+    }
+    .close h2 { max-width: 18ch; }
+    .close p { margin: 0.75rem 0 0; max-width: 52ch; }
+    .close-links { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; margin-top: 1rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0.55rem 1.25rem;
+      border-radius: 999px;
+      font-size: 17px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .btn.primary { background: var(--green); color: var(--ivory); }
+    .btn.secondary { border: 1px solid var(--green); color: var(--green); background: transparent; }
+    .btn:hover { background: var(--night); color: var(--ivory); border-color: var(--night); }
+    @media (max-width: 800px) {
+      .wrap { width: min(1280px, calc(100% - 40px)); }
+      h1 { font-size: 34px; }
+      h2, .decision h2 { font-size: 30px; }
+      h3 { font-size: 24px; }
+      body { font-size: 17px; }
+      .home-row, .stay { grid-template-columns: 1fr; }
+      .home-copy, .decision { padding: 1.5rem; }
+      .thumb { width: 100%; height: 180px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <p class="note">Revised mockup. Same idea, one column, the site’s type sizes. The live page is unchanged.</p>
+  <main>
+    <header class="wrap page-head">
+      <p class="eyebrow">Living &amp; Care</p>
+      <h1>Living and care</h1>
+      <p class="lede">Plain explanations of independent living, residential care, respite, recovery and rehabilitation, and how the team helps you choose.</p>
+    </header>
+
+    <section class="wrap block" aria-labelledby="a-home-title">
+      <h2 id="a-home-title">A home</h2>
+      <p class="block-intro">A longer stay. A room that becomes yours, with support nearby.</p>
+      <div class="panel">
+        <a class="home-row" href="http://localhost:3000/living-and-care/residential-care">
+          <div class="home-photo">
+            <img src="https://images.unsplash.com/photo-1784308992954-6c953b02f0a0?w=1200&q=80&auto=format&fit=crop" alt="A quiet courtyard with a clay-tile roof, brick walls and a young tree" />
+          </div>
+          <div class="home-copy">
+            <span class="badge">Available</span>
+            <h3>Residential Care</h3>
+            <p>A comfortable home with a care team on hand around the clock for personal support, meals and daily routines.</p>
+            <span class="text-link">Read about residential care</span>
+          </div>
+        </a>
+        <a class="home-row" href="http://localhost:3000/living-and-care/independent-living">
+          <div class="home-photo">
+            <img src="https://images.unsplash.com/photo-1780662805447-36c9c1a6641e?w=1200&q=80&auto=format&fit=crop" alt="A sunlit bedroom with wood panelling, an open book on the bed and windows onto trees" />
+          </div>
+          <div class="home-copy">
+            <span class="badge">Limited</span>
+            <h3>Independent Living</h3>
+            <p>A private home of your own with shared spaces, everyday services and support quietly available when you want it.</p>
+            <span class="text-link">Read about independent living</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="wrap" aria-labelledby="decision-title">
+      <div class="decision on-dark">
+        <p class="eyebrow">Before you choose</p>
+        <h2 id="decision-title">You do not need to know which type before you call.</h2>
+        <p>Describe the situation. The team will explain the options in plain language. This is not a medical assessment.</p>
+      </div>
+    </section>
+
+    <section class="wrap block" aria-labelledby="a-while-title">
+      <h2 id="a-while-title">A while</h2>
+      <p class="block-intro">A stay with an end date. The length is what sets these apart.</p>
+      <div class="panel">
+        <a class="stay" href="http://localhost:3000/living-and-care/respite-care">
+          <div class="thumb">
+            <img src="https://images.unsplash.com/photo-1763878121501-97e4080c3667?w=600&q=80&auto=format&fit=crop" alt="A garden path leading to a house entrance among potted plants" />
+          </div>
+          <div class="stay-copy">
+            <h3>Respite Care</h3>
+            <p class="meta">One to four weeks</p>
+            <p>A short, planned stay that gives a family carer a break while the person they care for is looked after.</p>
+            <span class="text-link">Read about respite care</span>
+          </div>
+        </a>
+        <a class="stay" href="http://localhost:3000/living-and-care/recovery">
+          <div class="thumb">
+            <img src="https://images.unsplash.com/photo-1776417092496-a2c5c0339519?w=600&q=80&auto=format&fit=crop" alt="A long wooden verandah in warm afternoon light, with wicker chairs" />
+          </div>
+          <div class="stay-copy">
+            <h3>Recovery</h3>
+            <p class="meta">Two to six weeks</p>
+            <p>Supported time to regain strength after a hospital stay, illness or surgery before returning home.</p>
+            <span class="text-link">Read about recovery</span>
+          </div>
+        </a>
+        <a class="stay" href="http://localhost:3000/living-and-care/rehabilitation">
+          <div class="thumb">
+            <img src="https://images.unsplash.com/photo-1641149750086-b11cd21d1f60?w=600&q=80&auto=format&fit=crop" alt="Morning light over tea hills and trees in Ramboda, Sri Lanka" />
+          </div>
+          <div class="stay-copy">
+            <h3>Rehabilitation</h3>
+            <p class="meta">Agreed with your medical team</p>
+            <p>A structured programme of therapy and support, coordinated with your own medical team, to rebuild confidence and mobility.</p>
+            <span class="text-link">Read about rehabilitation</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="wrap close" aria-labelledby="close-title">
+      <div>
+        <p class="eyebrow">If it is not the right fit</p>
+        <h2 id="close-title">The team will say so.</h2>
+        <p>These pages are other places to start a conversation.</p>
+        <div class="close-links">
+          <a class="text-link" href="http://localhost:3000/silver-roots">Silver Roots</a>
+          <a class="text-link" href="http://localhost:3000/find-the-right-care">Find the Right Care</a>
+        </div>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="http://localhost:3000/contact">Call</a>
+        <a class="btn secondary" href="http://localhost:3000/contact">WhatsApp</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

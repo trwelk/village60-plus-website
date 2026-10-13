@@ -83,10 +83,9 @@ describe('HomeView', () => {
 
   it('sends the three pathways to Find the Right Care without a clinical field', () => {
     const { container } = renderHome();
-    expect(screen.getByRole('button', { name: 'Next home' })).toBeEnabled();
-    expect(screen.getByRole('button', { name: 'Previous home' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Pause automatic movement' })).toBeEnabled();
     const homes = container.querySelector('[data-home-section="homes"] ul');
-    expect(homes?.className).toContain('snap-x');
+    expect(homes?.className).toContain('animate-room-marquee');
     expect(screen.getByRole('link', { name: /For a parent or relative/i })).toHaveAttribute('href', '/find-the-right-care?for=parent');
     expect(screen.getByRole('link', { name: /For myself/i })).toHaveAttribute('href', '/find-the-right-care?for=myself');
     expect(screen.getByRole('link', { name: /After hospital or surgery/i })).toHaveAttribute('href', '/find-the-right-care?for=after-hospital');

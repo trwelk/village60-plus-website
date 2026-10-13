@@ -1,3 +1,4 @@
+import type { PortableTextBlock } from '@portabletext/react';
 import type { ReactNode } from 'react';
 import { EnquiryForm } from '@/components/forms/EnquiryForm';
 import { Button } from '@/components/ui/Button';
@@ -17,18 +18,23 @@ function Region({ name, children }: { name: string; children: ReactNode }) {
   return <div data-oracle-section={name}>{children}</div>;
 }
 
-function blockText(block: { _type?: string; children?: Array<{ text?: string | null }> | null }): string {
-  if (block._type !== 'block') return '';
-  return (block.children ?? []).map((child) => child.text ?? '').join('').replace(/\s+/g, ' ').trim();
+function blockPlainText(block: PortableTextBlock): string {
+  const children = (block as { children?: Array<{ text?: string }> }).children;
+  if (!children) return '';
+  return children
+    .map((child) => child.text ?? '')
+    .join('')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 /** Drops a leading paragraph that repeats the hero summary. */
-function withoutRepeatedLead<T extends { _type?: string; children?: Array<{ text?: string | null }> | null }>(
-  value: T[] | null | undefined,
+function withoutRepeatedLead(
+  value: PortableTextBlock[] | null | undefined,
   summary?: string | null,
-): T[] | null | undefined {
+): PortableTextBlock[] | null | undefined {
   if (!value?.length || !summary?.trim()) return value;
-  if (blockText(value[0]) !== summary.trim()) return value;
+  if (blockPlainText(value[0]) !== summary.trim().replace(/\s+/g, ' ')) return value;
   return value.slice(1);
 }
 

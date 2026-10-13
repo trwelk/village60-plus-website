@@ -17,10 +17,29 @@ import { isContentStatus, isFuture, isOperating } from '@/lib/content-status';
 import { offeringPath } from '@/lib/routes';
 
 const PATHWAYS = [
-  { title: 'For a parent or relative', body: 'You do not need to know the care category. Tell us who you are asking about.', href: '/find-the-right-care?for=parent' },
-  { title: 'For myself', body: 'Start with the kind of day you want, and a person will talk it through with you.', href: '/find-the-right-care?for=myself' },
-  { title: 'After hospital or surgery', body: 'If someone is leaving hospital, we can explain respite, recovery and rehabilitation in plain language.', href: '/find-the-right-care?for=after-hospital' },
+  {
+    title: 'For a parent or relative',
+    body: 'You do not need to know the care category. Tell us who you are asking about.',
+    href: '/find-the-right-care?for=parent',
+    careSlug: 'residential-care',
+  },
+  {
+    title: 'For myself',
+    body: 'Start with the kind of day you want, and a person will talk it through with you.',
+    href: '/find-the-right-care?for=myself',
+    careSlug: 'independent-living',
+  },
+  {
+    title: 'After hospital or surgery',
+    body: 'If someone is leaving hospital, we can explain respite, recovery and rehabilitation in plain language.',
+    href: '/find-the-right-care?for=after-hospital',
+    careSlug: 'recovery',
+  },
 ] as const;
+
+function careHeroImage(services: CareServiceCardData[], slug: string): CmsImage | null {
+  return services.find((service) => service.slug === slug)?.heroImage ?? null;
+}
 
 export type HomePageFields = {
   title?: string | null;
@@ -34,6 +53,7 @@ export type HomeOffering = {
   name: string;
   summary?: string | null;
   status?: string | null;
+  heroImage?: CmsImage | null;
 };
 
 export type HomeViewProps = {
@@ -52,8 +72,14 @@ export function toCareCards(rows: Array<CareServiceCardData | null> | null | und
   return (rows ?? []).filter((row): row is CareServiceCardData => Boolean(row?._id));
 }
 
-export function toHomeOfferings(rows: Array<{ slug?: string | null; name?: string | null; summary?: string | null; status?: string | null } | null> | null | undefined): HomeOffering[] {
-  return (rows ?? []).flatMap((row) => (row?.slug && row.name ? [{ slug: row.slug, name: row.name, summary: row.summary ?? null, status: row.status ?? null }] : []));
+export function toHomeOfferings(
+  rows: Array<{ slug?: string | null; name?: string | null; summary?: string | null; status?: string | null; heroImage?: CmsImage | null } | null> | null | undefined,
+): HomeOffering[] {
+  return (rows ?? []).flatMap((row) =>
+    row?.slug && row.name
+      ? [{ slug: row.slug, name: row.name, summary: row.summary ?? null, status: row.status ?? null, heroImage: row.heroImage ?? null }]
+      : [],
+  );
 }
 
 function Region({ name, children }: { name: string; children: ReactNode }) {
@@ -84,6 +110,7 @@ export function HomeView({ home, residences, careServices, offerings, contact }:
                   eyebrow="Find the right care"
                   description={path.body}
                   overlay={path.body}
+                  image={careHeroImage(careServices, path.careSlug)}
                   fill={['bg-green', 'bg-leaf', 'bg-night'][index]}
                 />
               </li>
@@ -156,6 +183,7 @@ export function HomeView({ home, residences, careServices, offerings, contact }:
                   eyebrow="Beyond the homes"
                   description={item.summary}
                   overlay={item.summary}
+                  image={item.heroImage}
                   fill={item.slug === 'sage' ? 'bg-night' : 'bg-leaf'}
                 >
                   {isContentStatus(item.status) && !isOperating(item.status) ? <StatusBadge status={item.status} /> : null}
