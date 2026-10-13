@@ -48,3 +48,4 @@ schema.json
 reports/
 playwright-report/
 test-results/
+scripts/.stock-cache/

@@ -25,17 +25,21 @@ export function CapabilityList({ items }: { items: Array<CapabilityItem | null> 
   const rows = (items ?? []).filter((item): item is CapabilityItem & { title: string } => Boolean(item?.title));
   if (rows.length === 0) return null;
   return (
-    <ul className="flex flex-col gap-6">
+    <ul className="border-b border-stone">
       {rows.map((item) => {
         const provision = provisionLabel(item.provision);
         return (
-          <li key={item._key} className="border-t border-stone pt-6">
-            <div className="flex flex-wrap items-center gap-2">
-              <h3>{item.title}</h3>
-              {isContentStatus(item.status) && <StatusBadge status={item.status} />}
-              {provision && <Chip>{provision}</Chip>}
+          <li key={item._key} className="grid gap-3 border-t border-stone py-6 md:grid-cols-[minmax(16rem,22rem)_minmax(0,1fr)] md:items-center md:gap-x-12">
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[22px] leading-tight md:text-[26px]">{item.title}</h3>
+              {(isContentStatus(item.status) || provision) && (
+                <div className="flex flex-wrap items-center gap-2">
+                  {isContentStatus(item.status) && <StatusBadge status={item.status} />}
+                  {provision && <Chip>{provision}</Chip>}
+                </div>
+              )}
             </div>
-            {item.description && <p className="mt-2 max-w-prose-site">{item.description}</p>}
+            {item.description ? <p className="max-w-prose-site md:pt-1">{item.description}</p> : null}
           </li>
         );
       })}

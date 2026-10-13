@@ -61,6 +61,18 @@ describe('EcosystemView', () => {
     expect(screen.queryByRole('heading', { name: 'How it works' })).not.toBeInTheDocument();
   });
 
+  it('omits an empty current-capabilities band', () => {
+    renderOffering('destination-retirement', {
+      ...silver,
+      name: 'Destination Retirement',
+      slug: 'destination-retirement',
+      currentCapabilities: [],
+      howItWorks: [],
+    });
+    expect(screen.queryByRole('heading', { name: 'What exists today' })).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Planned', level: 2 })).toBeInTheDocument();
+  });
+
   it('gives SAGE a dark hero and no product interface', () => {
     renderOffering('sage', {
       name: 'SAGE',

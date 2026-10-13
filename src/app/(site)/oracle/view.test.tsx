@@ -44,20 +44,49 @@ const oracle: ResidenceContent = {
 };
 
 describe('OracleView', () => {
-  it('lists the rooms it is given and repeats the visit form', () => {
+  it('lists the rooms it is given and places the visit form at the end', () => {
     const { container } = render(<OracleView residence={oracle} contact={contactFixture} mapsKey={null} />);
     expect([...container.querySelectorAll('[data-oracle-section]')].map((node) => node.getAttribute('data-oracle-section'))).toEqual([
       'hero', 'rooms', 'spaces', 'daily-life', 'everyday', 'optional', 'independence', 'map', 'visit',
     ]);
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
     expect(screen.getByRole('heading', { level: 1, name: 'Oracle' })).toHaveAttribute('id', 'page-title');
+    expect(screen.getByRole('img', { name: 'Jade' })).toBeInTheDocument();
     expect(screen.getByText('Jade')).toBeInTheDocument();
     expect(screen.getByText('Pearl')).toBeInTheDocument();
+    expect(screen.getByText('Aspect to be confirmed')).toBeInTheDocument();
     expect(screen.queryByText('Onyx')).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Live your day, your way.' })).toBeInTheDocument();
     expect(screen.getByText(/arranged separately/i)).toBeInTheDocument();
-    expect(screen.getAllByRole('heading', { name: 'Arrange a private visit' })).toHaveLength(2);
+    expect(screen.getAllByRole('heading', { name: 'Arrange a private visit' })).toHaveLength(1);
+    expect(screen.getByRole('heading', { name: 'Arrange a private visit' })).toHaveAttribute('id', 'oracle-visit');
     expect(screen.queryByText(/international standard/i)).not.toBeInTheDocument();
+  });
+
+  it('gives each house its own moving row of room cards', () => {
+    const { container } = render(
+      <OracleView
+        residence={{
+          ...oracle,
+          rooms: [
+            { _key: 'jade', name: 'Jade', house: 'House 1', summary: null, facts: [], image: imageFixture('Jade') },
+            { _key: 'onyx', name: 'Onyx', house: 'House 1', summary: null, facts: [], image: imageFixture('Onyx') },
+            { _key: 'pearl', name: 'Pearl', house: 'House 2', summary: null, facts: [], image: imageFixture('Pearl') },
+          ],
+        }}
+        contact={contactFixture}
+        mapsKey={null}
+      />,
+    );
+    const lists = container.querySelectorAll('[data-oracle-section="rooms"] ul');
+    expect(lists).toHaveLength(2);
+    expect(lists[0].className).toContain('animate-room-marquee');
+    expect(lists[0].querySelectorAll('article')).toHaveLength(4);
+    expect(lists[0].querySelectorAll('[aria-hidden="true"]')).toHaveLength(2);
+    expect(lists[1].className).not.toContain('animate-room-marquee');
+    expect(lists[1].querySelectorAll('article')).toHaveLength(1);
+    expect(screen.getByText('House 1')).toBeInTheDocument();
+    expect(screen.getByText('House 2')).toBeInTheDocument();
   });
 
   it('shows the coming-soon badge and does not describe a future Oracle as open', () => {

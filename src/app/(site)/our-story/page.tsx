@@ -53,6 +53,7 @@ export default async function OurStoryPage() {
         body={doc?.body as PortableTextBlock[] | null | undefined}
         sections={(doc?.sections ?? []) as ContentSectionData[]}
         foundedYear={settings?.foundedYear ?? null}
+        heroImage={doc?.heroImage}
         team={(team ?? []).flatMap((person) => (person?._id ? [{ _id: person._id, name: person.name, role: person.role, credentials: person.credentials, image: person.image }] : []))}
       />
     </>

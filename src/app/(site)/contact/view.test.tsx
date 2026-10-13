@@ -24,7 +24,7 @@ describe('ContactView', () => {
         residences={[{ name: 'Serenity', address: { line1: '12 Example Lane', city: 'Colombo', country: 'Sri Lanka' } }]}
       />,
     );
-    expect(screen.getByRole('link', { name: contactFixture.phoneDisplay })).toHaveAttribute('href', 'tel:+94112504838');
+    expect(screen.getByRole('link', { name: `Call ${contactFixture.phoneDisplay}` })).toHaveAttribute('href', 'tel:+94112504838');
     expect(screen.getByRole('link', { name: 'WhatsApp' })).toHaveAttribute('href', expect.stringContaining('Contact'));
     expect(screen.getByRole('link', { name: contactFixture.email })).toHaveAttribute('href', 'mailto:hello@example.com');
     expect(screen.getByText(/133\/19 Nawala Road/)).toBeInTheDocument();

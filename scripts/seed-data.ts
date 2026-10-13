@@ -6,10 +6,9 @@
 import type { ContentStatus } from '@/lib/content-status';
 import type { FormKind } from '@/lib/forms/kinds';
 import { type CareServiceSlug, type OfferingSlug, type PageSlug, type ResidenceSlug } from '@/lib/routes';
+import { STOCK_PHOTOS, type StockPhotoKey } from './stock-photos';
 
 export const PLACEHOLDER_REPLACE_BY = '2027-01-31';
-
-export const PLACEHOLDER_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000"><rect width="1600" height="1000" fill="#EDE6D6"/><rect x="24" y="24" width="1552" height="952" fill="none" stroke="#A88A42" stroke-width="4"/><text x="800" y="520" text-anchor="middle" font-family="Georgia, serif" font-size="56" fill="#6F5A24">Placeholder image</text></svg>`;
 
 const key = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 40);
 
@@ -20,19 +19,22 @@ const REVIEW = {
   reviewNotes: 'Seeded development content. Verify every fact against spec §20 before approving.',
 } as const;
 
-/** mediaImage without an asset; scripts/seed.ts attaches the uploaded placeholder asset. */
-export function placeholderImage(alt: string, caption?: string) {
+/** mediaImage without an asset. `seedPhoto` is stripped by scripts/seed.ts after the JPEG is uploaded. */
+export function stockImage(photoKey: StockPhotoKey, keySuffix = 'image') {
+  const photo = STOCK_PHOTOS[photoKey];
   return {
     _type: 'mediaImage' as const,
-    _key: key(alt),
-    alt,
-    caption,
-    source: 'Generated placeholder (scripts/seed.ts)',
+    _key: key(`${photoKey}-${keySuffix}`),
+    alt: photo.alt,
+    seedPhoto: photoKey,
+    source: `${photo.photographer} — Unsplash (${photo.page})`,
     license: 'other',
-    licenseNotes: 'Development-only generated graphic; no rights required.',
-    consent: 'not-required',
+    licenseNotes: 'Unsplash License (https://unsplash.com/license). Free for commercial use. Temporary development photograph, not a Village 60 Plus property, resident or staff member.',
+    consent: photo.people ? 'obtained' : 'not-required',
+    consentRecord: photo.people ? `Unsplash License model-release warranty — ${photo.page}` : undefined,
     placeholder: true,
     replaceBy: PLACEHOLDER_REPLACE_BY,
+    ...('hotspot' in photo && photo.hotspot ? { hotspot: photo.hotspot } : {}),
   };
 }
 
@@ -162,6 +164,14 @@ const careSeeds: CareSeed[] = [
   },
 ];
 
+const CARE_PHOTO: Record<CareServiceSlug, StockPhotoKey> = {
+  'independent-living': 'bedroom',
+  'residential-care': 'courtyard',
+  'respite-care': 'lush-entrance',
+  recovery: 'wicker',
+  rehabilitation: 'tea-hills',
+};
+
 const careServices = careSeeds.map((c) => ({
   _id: `careService.${c.slug}`,
   _type: 'careService',
@@ -169,7 +179,7 @@ const careServices = careSeeds.map((c) => ({
   slug: { _type: 'slug', current: c.slug },
   status: c.status,
   summary: c.summary,
-  heroImage: placeholderImage(`${c.name} at Village 60 Plus`),
+  heroImage: stockImage(CARE_PHOTO[c.slug], c.slug),
   whoItSuits: c.whoItSuits,
   typicalDuration: c.typicalDuration,
   included: c.included,
@@ -270,6 +280,17 @@ const residenceSeeds: ResidenceSeed[] = [
   },
 ];
 
+const RESIDENCE_PHOTO: Record<ResidenceSlug, { hero: StockPhotoKey; living?: StockPhotoKey; garden?: StockPhotoKey }> = {
+  tranquility: { hero: 'timber-house', living: 'courtyard', garden: 'tropical-garden' },
+  serenity: { hero: 'garden-bungalow', living: 'patio', garden: 'lush-entrance' },
+  'house-on-the-hill': { hero: 'palm-verandah', living: 'wicker', garden: 'flower-path' },
+  'enchanted-fields': { hero: 'tropical-garden', living: 'courtyard', garden: 'tea-hills' },
+  oracle: { hero: 'bungalow', living: 'patio', garden: 'flower-path' },
+  'the-grove': { hero: 'flower-path' },
+};
+
+const ORACLE_ROOM_PHOTOS: StockPhotoKey[] = ['bedroom', 'patio', 'wicker', 'courtyard'];
+
 const residences = residenceSeeds.map((r) => ({
   _id: `residence.${r.slug}`,
   _type: 'residence',
@@ -279,18 +300,18 @@ const residences = residenceSeeds.map((r) => ({
   isFlagship: r.isFlagship ?? false,
   shortLocation: r.shortLocation,
   summary: r.summary,
-  heroImage: placeholderImage(`${r.name} residence exterior`),
+  heroImage: stockImage(RESIDENCE_PHOTO[r.slug].hero, r.slug),
   description: paragraphs(r.summary, 'The right home depends on the person. This page describes who the home suits, what daily life is like and what support is available, so a family can decide whether to visit.'),
   careTypes: r.careTypes.map((slug) => ref(`careService.${slug}`)),
   audienceFit: r.audienceFit,
   atmosphere: r.status === 'coming-soon' ? undefined : paragraphs('Mornings start at your own pace. Meals are shared or taken in your room. Family are welcome to visit, and the team is nearby without hovering.'),
-  rooms: r.rooms?.map((room) => ({
+  rooms: r.rooms?.map((room, index) => ({
     _type: 'room',
     _key: key(room.name),
     name: room.name,
     house: room.house,
     summary: 'Room details and photography will be added once verified.',
-    image: placeholderImage(`${room.name} room at ${r.name}`),
+    image: stockImage(ORACLE_ROOM_PHOTOS[index % ORACLE_ROOM_PHOTOS.length], room.name),
   })),
   sharedSpaces: r.status === 'coming-soon' ? undefined : strings('Living room', 'Dining room', 'Garden or terrace'),
   careAndSupport: r.status === 'coming-soon' ? undefined : [
@@ -304,7 +325,11 @@ const residences = residenceSeeds.map((r) => ({
     capability('Activities', 'Gentle, optional activities and outings.'),
     capability('Family visits', 'Visitors welcome during agreed hours.'),
   ],
-  gallery: r.status === 'coming-soon' ? undefined : [placeholderImage(`${r.name} shared living room`), placeholderImage(`${r.name} garden`)],
+  gallery: (() => {
+    const photos = RESIDENCE_PHOTO[r.slug];
+    if (r.status === 'coming-soon' || !photos.living || !photos.garden) return undefined;
+    return [stockImage(photos.living, `${r.slug}-living`), stockImage(photos.garden, `${r.slug}-garden`)];
+  })(),
   address: {
     _type: 'address',
     line1: 'Street address to be confirmed',
@@ -378,6 +403,12 @@ const offeringSeeds: OfferingSeed[] = [
   },
 ];
 
+const OFFERING_PHOTO: Record<OfferingSlug, StockPhotoKey> = {
+  'silver-roots': 'jaffna',
+  'destination-retirement': 'tea-hills',
+  sage: 'patio',
+};
+
 const offerings = offeringSeeds.map((o) => ({
   _id: `ecosystemOffering.${o.slug}`,
   _type: 'ecosystemOffering',
@@ -387,7 +418,7 @@ const offerings = offeringSeeds.map((o) => ({
   tagline: o.tagline,
   distinction: o.distinction,
   summary: o.summary,
-  heroImage: placeholderImage(`${o.name} illustration`),
+  heroImage: stockImage(OFFERING_PHOTO[o.slug], o.slug),
   heroTone: o.heroTone,
   currentCapabilities: o.current,
   plannedCapabilities: o.planned,
@@ -431,7 +462,7 @@ const pages = pageSeeds.map((p) => ({
   title: p.title,
   slug: { _type: 'slug', current: p.slug },
   intro: p.intro,
-  heroImage: p.slug === 'home' || p.slug === 'our-story' ? placeholderImage(`${p.title} hero`) : undefined,
+  heroImage: p.slug === 'home' ? stockImage('patio', 'home') : p.slug === 'our-story' ? stockImage('jaffna', 'our-story') : undefined,
   sections: p.sections?.map((s) => ({ _type: 'contentSection', _key: key(s.heading), eyebrow: s.eyebrow, heading: s.heading, body: paragraphs(s.body), tone: s.tone ?? 'ivory' })),
   body: p.body,
   lastReviewed: p.body ? '2026-10-12' : undefined,

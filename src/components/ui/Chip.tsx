@@ -5,8 +5,8 @@ export function Chip({ children, tone = 'light', className }: { children: ReactN
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-input px-2.5 py-1 text-[14px] font-semibold leading-none',
-        tone === 'light' ? 'bg-mist text-green' : 'bg-white/10 text-ivory',
+        'inline-flex w-fit shrink-0 items-center self-start rounded-input px-2.5 py-1 text-[14px] font-semibold leading-none',
+        tone === 'light' ? 'border border-stone bg-paper text-green' : 'bg-white/10 text-ivory',
         className,
       )}
     >

@@ -37,8 +37,8 @@ export function LivingCareView({
       <PageHero title={title} intro={intro} tone="ivory">
         <ContactActions contact={contact} context="Living & Care" />
       </PageHero>
-      <Section tone="paper">
-        <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <Section tone="sand">
+        <ul className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {ordered.map((service) => (
             <li key={service._id}><CareServiceCard service={service} /></li>
           ))}

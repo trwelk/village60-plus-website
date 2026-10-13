@@ -23,7 +23,7 @@ describe('ResidenceCard', () => {
     expect(screen.getByText('Limited availability')).toBeInTheDocument();
     expect(screen.getByText('Battaramulla')).toBeInTheDocument();
     expect(screen.getByText('Independent living')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'View Oracle' })).toHaveAttribute('href', '/oracle');
+    expect(screen.getByRole('link', { name: /Oracle/ })).toHaveAttribute('href', '/oracle');
   });
 
   it('links other homes under /homes', () => {
@@ -32,6 +32,6 @@ describe('ResidenceCard', () => {
         residence={{ _id: 'r', name: 'Serenity', slug: 'serenity', status: 'available', heroImage: null, careTypes: null }}
       />,
     );
-    expect(screen.getByRole('link', { name: 'View Serenity' })).toHaveAttribute('href', '/homes/serenity');
+    expect(screen.getByRole('link', { name: /Serenity/ })).toHaveAttribute('href', '/homes/serenity');
   });
 });

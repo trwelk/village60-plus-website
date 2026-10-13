@@ -54,6 +54,7 @@ export default async function CareDetailPage({ params }: { params: Promise<{ slu
     slug: doc.slug,
     status: doc.status,
     summary: doc.summary,
+    heroImage: doc.heroImage,
     whoItSuits: doc.whoItSuits,
     typicalDuration: doc.typicalDuration,
     included: doc.included,

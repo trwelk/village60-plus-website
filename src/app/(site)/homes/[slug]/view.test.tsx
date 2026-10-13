@@ -89,6 +89,21 @@ describe('ResidenceView', () => {
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
   });
 
+  it('omits team, gallery and questions when nothing is published', () => {
+    const { container } = renderResidence({ ...operating, team: [], gallery: [], faqs: [] });
+    expect(container.querySelector('[data-residence-section="team"]')).toBeNull();
+    expect(container.querySelector('[data-residence-section="gallery"]')).toBeNull();
+    expect(container.querySelector('[data-residence-section="faqs"]')).toBeNull();
+    expect(screen.queryByRole('heading', { name: 'The team', exact: true })).not.toBeInTheDocument();
+  });
+
+  it('explains missing rooms and still lists shared spaces', () => {
+    renderResidence({ ...operating, rooms: [] });
+    expect(screen.getByText(/published once they are verified/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Shared spaces' })).toBeInTheDocument();
+    expect(screen.getByText('Dining room')).toBeInTheDocument();
+  });
+
   it('renders an empty state when the document is missing', () => {
     renderResidence(null);
     expect(screen.getByRole('heading', { level: 1, name: 'This home' })).toBeInTheDocument();

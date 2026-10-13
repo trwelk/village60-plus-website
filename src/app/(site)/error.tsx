@@ -6,7 +6,7 @@ import { Section } from '@/components/ui/Section';
 export default function SiteError({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
   return (
     <main id="main">
-      <Section tone="ivory">
+      <Section tone="ivory" className="clear-header">
         <h1 id="page-title">Something went wrong</h1>
         <p className="mt-4">Please call or WhatsApp us.</p>
         <div className="mt-6 flex flex-wrap gap-3">

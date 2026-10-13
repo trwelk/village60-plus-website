@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { CONTENT_STATUSES } from '@/lib/content-status';
 import { CARE_SERVICE_SLUGS, OFFERING_SLUGS, PAGE_SLUGS, RESIDENCE_SLUGS } from '@/lib/routes';
 import { seedDocuments } from './seed-data';
+import { STOCK_PHOTOS } from './stock-photos';
 
 type Doc = { _id: string; _type: string; [key: string]: unknown };
 const docs = seedDocuments as Doc[];
@@ -50,18 +51,24 @@ describe('seed data', () => {
 
   it('marks every image as a placeholder with rights metadata and a replacement deadline', () => {
     let images = 0;
+    const used = new Set<string>();
     walk(docs, (node) => {
       if (node._type === 'mediaImage') {
         images += 1;
+        const photo = STOCK_PHOTOS[node.seedPhoto as keyof typeof STOCK_PHOTOS];
+        expect(photo, String(node.seedPhoto)).toBeTruthy();
+        used.add(String(node.seedPhoto));
         expect(node.placeholder).toBe(true);
         expect(node.replaceBy).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-        expect(node.alt).toBeTruthy();
-        expect(node.source).toBeTruthy();
-        expect(node.license).toBeTruthy();
-        expect(node.consent).toBe('not-required');
+        expect(node.alt).toBe(photo.alt);
+        expect(node.source).toContain('Unsplash');
+        expect(node.license).toBe('other');
+        expect(node.consent).toBe(photo.people ? 'obtained' : 'not-required');
+        if (photo.people) expect(node.consentRecord).toBeTruthy();
       }
     });
     expect(images).toBeGreaterThan(0);
+    expect(used.size).toBe(Object.keys(STOCK_PHOTOS).length);
   });
 
   it('flags every public document for compliance review before publication', () => {

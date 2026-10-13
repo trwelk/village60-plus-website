@@ -1,4 +1,5 @@
 import { render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -29,5 +30,25 @@ describe('Header', () => {
     );
     expect(screen.queryByRole('link', { name: /^Call/ })).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Enquire' })).toBeInTheDocument();
+  });
+
+  it('closes the More menu after a menu item is chosen', async () => {
+    const user = userEvent.setup();
+    render(<Header contact={contactFixture} />);
+    const more = screen.getByText('More').closest('details');
+    await user.click(screen.getByText('More'));
+    expect(more).toHaveAttribute('open');
+    await user.click(within(more!).getByRole('link', { name: 'Contact' }));
+    expect(more).not.toHaveAttribute('open');
+  });
+
+  it('closes the mobile menu after a menu item is chosen', async () => {
+    const user = userEvent.setup();
+    render(<Header contact={contactFixture} />);
+    const mobile = screen.getByRole('navigation', { name: 'Mobile' }).closest('details');
+    await user.click(screen.getByText('Menu'));
+    expect(mobile).toHaveAttribute('open');
+    await user.click(within(mobile!).getByRole('link', { name: 'Contact' }));
+    expect(mobile).not.toHaveAttribute('open');
   });
 });

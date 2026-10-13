@@ -23,7 +23,7 @@ export function HomesView({
       <PageHero title={title} intro={intro} tone="ivory">
         <ContactActions contact={contact} context="Our homes" />
       </PageHero>
-      <Section tone="paper">
+      <Section tone="sand">
         <HomeFilter residences={residences} />
       </Section>
       <Section tone="sand" labelledBy="which-home">

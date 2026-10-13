@@ -5,7 +5,7 @@ export type Crumb = { label: string; href?: string };
 export function Breadcrumbs({ items }: { items: Crumb[] }) {
   if (items.length === 0) return null;
   return (
-    <nav aria-label="Breadcrumb" className="gutter mx-auto w-full max-w-site py-4">
+    <nav aria-label="Breadcrumb" className="clear-header-bar gutter mx-auto w-full max-w-site pb-4">
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[14px]">
         {items.map((item, index) => {
           const last = index === items.length - 1;

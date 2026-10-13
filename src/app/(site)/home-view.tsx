@@ -1,15 +1,17 @@
 import type { ReactNode } from 'react';
 import { EnquiryButton } from '@/components/forms/EnquiryPanel';
+import { CardCarousel } from '@/components/content/CardCarousel';
 import { CareServiceCard, type CareServiceCardData } from '@/components/content/CareServiceCard';
+import { PreviewCard } from '@/components/content/PreviewCard';
 import { ResidenceCard, type ResidenceCardData } from '@/components/content/ResidenceCard';
-import { VideoHero, type HeroVideo } from '@/components/media/VideoHero';
+import { RevealStagger } from '@/components/content/RevealStagger';
+import type { HeroVideo } from '@/components/media/VideoHero';
 import type { CmsImage } from '@/components/media/SanityImage';
-import { ContactActions } from '@/components/site/ContactActions';
+import { HomeHero } from '@/components/content/HomeHero';
 import { Button } from '@/components/ui/Button';
 import { Heading } from '@/components/ui/Heading';
 import { Section } from '@/components/ui/Section';
 import { StatusBadge } from '@/components/ui/StatusBadge';
-import { PageHero } from '@/components/content/PageHero';
 import type { SiteContact } from '@/lib/contact';
 import { isContentStatus, isFuture, isOperating } from '@/lib/content-status';
 import { offeringPath } from '@/lib/routes';
@@ -67,24 +69,23 @@ export function HomeView({ home, residences, careServices, offerings, contact }:
   return (
     <main id="main">
       <Region name="hero">
-        {video ? <VideoHero video={video} /> : null}
-        <PageHero title="Live well. Age exceptionally." intro={home?.intro} image={video ? null : home?.heroImage} tone="ivory">
-          <Button href="/find-the-right-care">Find the Right Care</Button>
-          <ContactActions contact={contact} context="Village 60 Plus" showNumber={false} includeWhatsApp={false} />
-        </PageHero>
+        <HomeHero title="Live well. Age exceptionally." intro={home?.intro} image={video ? null : home?.heroImage} video={video} contact={contact} />
       </Region>
 
       <Region name="pathways">
         <Section tone="sand" labelledBy="home-pathways">
           <Heading as="h2" id="home-pathways">Find the Right Care</Heading>
-          <ul className="mt-8 grid gap-6 md:grid-cols-3">
-            {PATHWAYS.map((path) => (
-              <li key={path.href} className="rounded-panel border border-stone bg-paper p-6">
-                <h3>{path.title}</h3>
-                <p className="mt-2 max-w-prose-site">{path.body}</p>
-                <div className="mt-4">
-                  <Button href={path.href} variant="text">{path.title}</Button>
-                </div>
+          <ul className="mt-8 grid gap-8 md:grid-cols-3">
+            {PATHWAYS.map((path, index) => (
+              <li key={path.href}>
+                <PreviewCard
+                  href={path.href}
+                  title={path.title}
+                  eyebrow="Find the right care"
+                  description={path.body}
+                  overlay={path.body}
+                  fill={['bg-green', 'bg-leaf', 'bg-night'][index]}
+                />
               </li>
             ))}
           </ul>
@@ -105,25 +106,30 @@ export function HomeView({ home, residences, careServices, offerings, contact }:
 
       <Region name="homes">
         <Section tone="ivory" labelledBy="home-homes">
-          <Heading as="h2" id="home-homes">Our homes</Heading>
-          {residences.length === 0 ? <p className="mt-4">Residence details will appear here once they are published.</p> : null}
-          <ul className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <CardCarousel
+            label="home"
+            heading={<Heading as="h2" id="home-homes">Our homes</Heading>}
+            empty={<p>Residence details will appear here once they are published.</p>}
+          >
             {residences.map((residence) => (
-              <li key={residence._id}><ResidenceCard residence={residence} /></li>
+              <ResidenceCard key={residence._id} residence={residence} />
             ))}
-          </ul>
+          </CardCarousel>
         </Section>
       </Region>
 
       <Region name="care">
-        <Section tone="paper" labelledBy="home-care">
-          <Heading as="h2" id="home-care">Living and care</Heading>
-          {careServices.length === 0 ? <p className="mt-4">Care descriptions will appear here once they are published.</p> : null}
-          <ul className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {careServices.map((service) => (
-              <li key={service._id}><CareServiceCard service={service} /></li>
-            ))}
-          </ul>
+        <Section tone="green" labelledBy="home-care">
+          <Heading as="h2" id="home-care" onDark>Living and care</Heading>
+          {careServices.length === 0 ? (
+            <p className="mt-4">Care descriptions will appear here once they are published.</p>
+          ) : (
+            <RevealStagger className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {careServices.map((service) => (
+                <CareServiceCard key={service._id} service={service} />
+              ))}
+            </RevealStagger>
+          )}
         </Section>
       </Region>
 
@@ -141,15 +147,19 @@ export function HomeView({ home, residences, careServices, offerings, contact }:
       <Region name="ecosystem">
         <Section tone="sand" labelledBy="home-ecosystem">
           <Heading as="h2" id="home-ecosystem">Destination Retirement and SAGE</Heading>
-          <ul className="mt-8 grid gap-6 md:grid-cols-2">
+          <ul className="mt-8 grid gap-8 md:grid-cols-2">
             {secondary.map((item) => (
-              <li key={item.slug} className="rounded-panel border border-stone bg-paper p-6">
-                {isContentStatus(item.status) && !isOperating(item.status) ? <StatusBadge status={item.status} /> : null}
-                <h3 className="mt-2">{item.name}</h3>
-                {item.summary ? <p className="mt-2 max-w-prose-site">{item.summary}</p> : null}
-                <div className="mt-4">
-                  <Button href={offeringPath(item.slug)} variant="text">{item.name}</Button>
-                </div>
+              <li key={item.slug}>
+                <PreviewCard
+                  href={offeringPath(item.slug)}
+                  title={item.name}
+                  eyebrow="Beyond the homes"
+                  description={item.summary}
+                  overlay={item.summary}
+                  fill={item.slug === 'sage' ? 'bg-night' : 'bg-leaf'}
+                >
+                  {isContentStatus(item.status) && !isOperating(item.status) ? <StatusBadge status={item.status} /> : null}
+                </PreviewCard>
               </li>
             ))}
           </ul>

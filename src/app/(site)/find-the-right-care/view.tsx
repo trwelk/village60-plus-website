@@ -1,8 +1,8 @@
 import { EnquiryForm } from '@/components/forms/EnquiryForm';
 import { PageHero } from '@/components/content/PageHero';
 import { ContactActions } from '@/components/site/ContactActions';
-import { Section } from '@/components/ui/Section';
 import type { SiteContact } from '@/lib/contact';
+import { CareConversation } from './conversation-path';
 
 export function pathwayDefaults(value: string | undefined): Record<string, string> {
   if (value === 'parent') return { whoFor: 'parent' };
@@ -24,16 +24,19 @@ export function FindCareView({
 }) {
   return (
     <main id="main">
-      <PageHero title={title} intro={intro} tone="ivory" />
-      <Section tone="paper">
-        <p className="max-w-prose-site">This form is not a medical assessment.</p>
-        <div className="mt-8 max-w-prose-site">
-          <EnquiryForm kind="find-care" context="Find the Right Care" defaults={defaults} />
+      <PageHero title={title} intro={intro} tone="ivory" className="hero-to-band" />
+      <CareConversation defaults={defaults}>
+        <div id="care-enquiry" className="scroll-mt-8 rounded-panel border border-stone bg-paper p-6 shadow-panel md:p-8">
+          <p className="border-t-2 border-gold pt-4">This form is not a medical assessment.</p>
+          <div className="mt-6">
+            <EnquiryForm kind="find-care" context="Find the Right Care" defaults={defaults} headingId="care-enquiry-title" />
+          </div>
+          <div className="mt-8 border-t border-stone pt-6">
+            <p className="mb-3 text-[15px] text-bronze">Prefer to talk now</p>
+            <ContactActions contact={contact} context="Find the Right Care" />
+          </div>
         </div>
-        <div className="mt-8">
-          <ContactActions contact={contact} context="Find the Right Care" />
-        </div>
-      </Section>
+      </CareConversation>
     </main>
   );
 }

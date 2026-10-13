@@ -37,6 +37,30 @@ describe('FindCareView', () => {
     expect(screen.getByRole('link', { name: 'privacy notice' })).toHaveAttribute('href', '/privacy');
     expect(screen.getByRole('link', { name: /Call/ })).toHaveAttribute('href', 'tel:+94112504838');
     expect(screen.getByRole('link', { name: 'WhatsApp' })).toHaveAttribute('href', expect.stringContaining('Find%20the%20Right%20Care'));
+    expect(screen.getByRole('heading', { level: 2, name: 'You do not have to arrive knowing the name.' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 3, name: 'Say who it is for' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 3, name: 'Name the shape of the help' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 3, name: 'A person calls you back' })).toBeInTheDocument();
+    expect(screen.queryByText('You started here')).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Begin with a few questions' })).toHaveAttribute('href', '#care-enquiry');
+  });
+
+  it('answers the pathway the visitor arrived on', () => {
+    const { rerender } = render(
+      <FindCareView title="Find the right care" intro="Tell us a little." contact={contactFixture} defaults={pathwayDefaults('myself')} />,
+    );
+    expect(screen.getByRole('heading', { level: 2, name: 'Start with the day you want.' })).toBeInTheDocument();
+    expect(screen.getByText('You started here')).toBeInTheDocument();
+
+    rerender(
+      <FindCareView title="Find the right care" intro="Tell us a little." contact={contactFixture} defaults={pathwayDefaults('parent')} />,
+    );
+    expect(screen.getByRole('heading', { level: 2, name: 'You do not need the care category.' })).toBeInTheDocument();
+
+    rerender(
+      <FindCareView title="Find the right care" intro="Tell us a little." contact={contactFixture} defaults={pathwayDefaults('after-hospital')} />,
+    );
+    expect(screen.getByRole('heading', { level: 2, name: 'Leaving hospital is enough to say.' })).toBeInTheDocument();
   });
 
   it('preselects who the enquiry is for from the homepage pathway', () => {

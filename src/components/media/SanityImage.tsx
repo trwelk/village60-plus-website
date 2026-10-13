@@ -35,6 +35,7 @@ export function SanityImage({
   priority = false,
   className,
   showCaption = false,
+  cover = false,
 }: {
   image: CmsImage | null | undefined;
   /** CSS-pixel width of the slot. Sent to the CDN and written as the width attribute. */
@@ -46,6 +47,8 @@ export function SanityImage({
   priority?: boolean;
   className?: string;
   showCaption?: boolean;
+  /** Fill the positioned parent, cropped, with no card radius. */
+  cover?: boolean;
 }) {
   const alt = image?.alt?.trim();
   if (!image?.asset?.url || !alt) return null;
@@ -66,7 +69,7 @@ export function SanityImage({
       loading={priority ? 'eager' : 'lazy'}
       fetchPriority={priority ? 'high' : 'auto'}
       decoding="async"
-      className={cn('h-auto w-full rounded-card', className)}
+      className={cn(cover ? 'h-full w-full object-cover' : 'h-auto w-full rounded-card', className)}
     />
   );
 

@@ -8,6 +8,7 @@ export function Heading({
   children,
   onDark = false,
   className,
+  titleClassName,
 }: {
   as?: 'h1' | 'h2' | 'h3';
   id?: string;
@@ -15,6 +16,7 @@ export function Heading({
   children: ReactNode;
   onDark?: boolean;
   className?: string;
+  titleClassName?: string;
 }) {
   return (
     <div className={cn('max-w-prose-site', className)}>
@@ -23,7 +25,7 @@ export function Heading({
           {eyebrow}
         </p>
       )}
-      <Tag id={id}>{children}</Tag>
+      <Tag id={id} className={titleClassName}>{children}</Tag>
     </div>
   );
 }

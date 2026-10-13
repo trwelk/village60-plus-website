@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { EnquiryProvider } from '@/components/forms/EnquiryPanel';
 import { contactFixture } from '@/test/contact-fixture';
+import { imageFixture } from '@/test/fixtures';
 import { CareDetailView, type CareDetail } from './view';
 
 vi.mock('@/lib/forms/submit', () => ({
@@ -18,6 +19,7 @@ const service: CareDetail = {
   slug: 'respite-care',
   status: 'available',
   summary: 'A short stay while the usual carer rests.',
+  heroImage: imageFixture('A quiet bedroom prepared for a short stay'),
   whoItSuits: ['Families who need a planned break'],
   typicalDuration: 'A few days to a few weeks',
   included: [
@@ -48,11 +50,22 @@ describe('CareDetailView', () => {
     expect(screen.getByText('Families who need a planned break')).toBeInTheDocument();
     expect(screen.getByText('A few days to a few weeks')).toBeInTheDocument();
     expect(screen.getByText('Arranged through a partner')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Serenity' })).toHaveAttribute('href', '/homes/serenity');
+    expect(screen.getByRole('img', { name: 'A quiet bedroom prepared for a short stay' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Serenity/ })).toHaveAttribute('href', '/homes/serenity');
     expect(screen.getByText('Coming soon')).toBeInTheDocument();
     expect(screen.getByText('Can we visit first?')).toBeInTheDocument();
     expect(screen.getByText('Respite care', { selector: '[aria-current="page"]' })).toBeInTheDocument();
     expect(document.body.textContent).not.toMatch(/guarantee/i);
+  });
+
+  it('does not invent a duration block when timing is unknown', () => {
+    const { container } = render(
+      <EnquiryProvider contact={contactFixture}>
+        <CareDetailView service={{ ...service, typicalDuration: null }} contact={contactFixture} />
+      </EnquiryProvider>,
+    );
+    expect(screen.queryByText(/talk through timing/i)).not.toBeInTheDocument();
+    expect(container.querySelector('[data-care-section="duration"]')).toBeEmptyDOMElement();
   });
 
   it('renders an empty state when the document is missing', () => {

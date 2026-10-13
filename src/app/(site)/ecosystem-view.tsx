@@ -1,15 +1,20 @@
+import type { ReactNode } from 'react';
 import { EnquiryButton } from '@/components/forms/EnquiryPanel';
 import { EnquiryForm } from '@/components/forms/EnquiryForm';
-import { CapabilityList, type CapabilityItem } from '@/components/content/CapabilityList';
+import { provisionLabel, type CapabilityItem } from '@/components/content/CapabilityList';
+import { ContactActions } from '@/components/site/ContactActions';
 import { FaqList, type FaqItem } from '@/components/content/FaqList';
 import { PageHero } from '@/components/content/PageHero';
 import { SectionList, type ContentSectionData } from '@/components/content/SectionList';
 import { StepList, type StepItem } from '@/components/content/StepList';
 import type { CmsImage } from '@/components/media/SanityImage';
+import { Chip } from '@/components/ui/Chip';
 import { Heading } from '@/components/ui/Heading';
 import { Section } from '@/components/ui/Section';
+import { StatusBadge } from '@/components/ui/StatusBadge';
 import type { SiteContact } from '@/lib/contact';
-import { isContentStatus, isOperating } from '@/lib/content-status';
+import { cn } from '@/lib/cn';
+import { isContentStatus, isFuture, isOperating } from '@/lib/content-status';
 import type { OfferingSlug } from '@/lib/routes';
 import type { OFFERING_QUERY_RESULT } from '@/sanity/types';
 
@@ -44,9 +49,116 @@ function labelPlanned(items: OfferingContent['plannedCapabilities']) {
   return (items ?? []).map((item) => (item && !isContentStatus(item.status) ? { ...item, status: 'planned' } : item));
 }
 
+function titledCapabilities(items: Array<CapabilityItem | null> | null | undefined) {
+  return (items ?? []).filter((item): item is CapabilityItem & { title: string } => Boolean(item?.title));
+}
+
+function showProvisionLabel(item: CapabilityItem, suppressProvision: boolean) {
+  const provision = provisionLabel(item.provision);
+  const future = isContentStatus(item.status) && isFuture(item.status);
+  if (suppressProvision || !provision || (provision === 'Included' && future)) return null;
+  return provision;
+}
+
+/** A provision shared by every card is stated once, beside the heading. */
+function sharedProvision(rows: Array<CapabilityItem & { title: string }>) {
+  if (rows.length < 2) return null;
+  const labels = rows.map((item) => provisionLabel(item.provision));
+  if (labels.some((label) => !label)) return null;
+  const [first] = labels;
+  if (!labels.every((label) => label === first)) return null;
+  const future = rows.every((item) => isContentStatus(item.status) && isFuture(item.status));
+  if (first === 'Included' && future) return null;
+  return first;
+}
+
+function CapabilityMeta({ item, suppressProvision }: { item: CapabilityItem & { title: string }; suppressProvision: boolean }) {
+  const provision = showProvisionLabel(item, suppressProvision);
+  const status = isContentStatus(item.status) ? item.status : null;
+  if (!status && !provision) return null;
+  return (
+    <div className="mb-4 flex flex-wrap items-center gap-2">
+      {status ? <StatusBadge status={status} /> : null}
+      {provision ? <Chip>{provision}</Chip> : null}
+    </div>
+  );
+}
+
+function CapabilityCards({
+  items,
+  surface,
+  actions,
+}: {
+  items: Array<CapabilityItem | null> | null | undefined;
+  surface: 'paper' | 'ivory';
+  actions?: ReactNode;
+}) {
+  const rows = titledCapabilities(items);
+  if (rows.length === 0) return null;
+  const repeated = sharedProvision(rows);
+  if (rows.length === 1) {
+    const item = rows[0];
+    const body = (
+      <>
+        <CapabilityMeta item={item} suppressProvision={false} />
+        <h3 className="text-[22px] leading-snug md:text-[24px]">{item.title}</h3>
+        {item.description ? <p className="mt-2 max-w-prose-site">{item.description}</p> : null}
+      </>
+    );
+    if (actions) {
+      return (
+        <div className="mt-8 overflow-hidden rounded-panel border border-stone bg-paper lg:grid lg:grid-cols-[minmax(0,1.4fr)_minmax(16rem,20rem)]">
+          <div className="flex flex-col justify-center p-6 md:p-8 lg:p-10">{body}</div>
+          <div className="flex flex-col items-stretch justify-center gap-3 border-t border-stone bg-ivory p-6 md:p-8 lg:border-t-0 lg:border-l lg:p-10">{actions}</div>
+        </div>
+      );
+    }
+    return (
+      <div className="mt-8 border-y border-stone py-6 md:grid md:grid-cols-[minmax(16rem,22rem)_minmax(0,1fr)] md:items-center md:gap-x-12 md:py-8">
+        <div>
+          <CapabilityMeta item={item} suppressProvision={false} />
+          <h3 className="text-[22px] leading-snug md:text-[24px]">{item.title}</h3>
+        </div>
+        {item.description ? <p className="mt-3 max-w-prose-site md:mt-0">{item.description}</p> : null}
+      </div>
+    );
+  }
+  const columns = rows.length >= 3 ? 'md:grid-cols-2 lg:grid-cols-3' : 'md:grid-cols-2';
+  return (
+    <ul className={cn('m-0 mt-8 grid list-none gap-4 p-0', columns)}>
+      {rows.map((item) => (
+        <li key={item._key} className={cn('flex h-full flex-col rounded-panel border border-stone p-6 md:p-8', surface === 'paper' ? 'bg-paper' : 'bg-ivory')}>
+          <CapabilityMeta item={item} suppressProvision={Boolean(repeated)} />
+          <h3 className="text-[22px] leading-snug md:text-[24px]">{item.title}</h3>
+          {item.description ? <p className="mt-2">{item.description}</p> : null}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function SilverFamilyActions({ contact, stacked = false }: { contact: SiteContact; stacked?: boolean }) {
+  return (
+    <div className={stacked ? 'flex w-full flex-col gap-3' : undefined}>
+      {stacked ? <p className="text-[14px] font-semibold uppercase tracking-[0.08em] text-bronze">Call or message</p> : null}
+      <ContactActions contact={contact} context="Silver Roots" className={stacked ? 'flex w-full flex-col gap-3' : undefined} />
+    </div>
+  );
+}
+
+function SectionHeading({ id, title, meta }: { id: string; title: string; meta?: string | null }) {
+  return (
+    <div>
+      <Heading as="h2" id={id}>{title}</Heading>
+      {meta ? <div className="mt-4"><Chip>{meta}</Chip></div> : null}
+    </div>
+  );
+}
+
 export function EcosystemView({
   slug,
   offering,
+  contact,
 }: {
   slug: OfferingSlug;
   offering: OfferingContent | null;
@@ -55,6 +167,10 @@ export function EcosystemView({
   const tone = slug === 'sage' ? 'night' : 'ivory';
   const title = offering?.name || TITLES[slug];
   const showStatus = offering?.status && isContentStatus(offering.status) && !isOperating(offering.status) ? offering.status : null;
+  const lead = offering?.distinction || offering?.summary;
+  const note = offering?.summary && offering.summary !== lead ? offering.summary : null;
+  const current = titledCapabilities(offering?.currentCapabilities);
+  const planned = titledCapabilities(labelPlanned(offering?.plannedCapabilities));
   const steps = (offering?.howItWorks ?? []).filter((step) => step?.title);
   const groups = (offering?.benefitGroups ?? []).filter((group): group is NonNullable<typeof group> & { audience: string } => Boolean(group?.audience));
   const sections = (offering?.sections ?? []).map((section) =>
@@ -63,52 +179,105 @@ export function EcosystemView({
 
   return (
     <main id="main">
-      <PageHero title={title} eyebrow={offering?.tagline} intro={offering?.distinction || offering?.summary} image={offering?.heroImage} status={showStatus} tone={tone} />
-      {offering?.summary ? (
-        <Section tone="paper">
-          <p className="max-w-prose-site">{offering.summary}</p>
+      <PageHero title={title} eyebrow={offering?.tagline} intro={lead} image={offering?.heroImage} status={showStatus} tone={tone} framed>
+        {note ? <p className="w-full max-w-prose-site border-t border-stone pt-5">{note}</p> : null}
+      </PageHero>
+      {current.length > 0 ? (
+        <Section tone="sand" labelledBy="offering-current">
+          <SectionHeading id="offering-current" title="What exists today" meta={sharedProvision(current)} />
+          <CapabilityCards
+            items={current}
+            surface="paper"
+            actions={slug === 'silver-roots' && current.length === 1 ? <SilverFamilyActions contact={contact} stacked /> : undefined}
+          />
         </Section>
       ) : null}
-      <Section tone="ivory" labelledBy="offering-current">
-        <Heading as="h2" id="offering-current">What exists today</Heading>
-        <div className="mt-4"><CapabilityList items={offering?.currentCapabilities} /></div>
-      </Section>
-      <Section tone="sand" labelledBy="offering-planned">
-        <Heading as="h2" id="offering-planned">Planned</Heading>
-        <div className="mt-4"><CapabilityList items={labelPlanned(offering?.plannedCapabilities)} /></div>
-      </Section>
+      {planned.length > 0 ? (
+        <Section tone="paper" labelledBy="offering-planned">
+          <SectionHeading id="offering-planned" title="Planned" meta={sharedProvision(planned)} />
+          <CapabilityCards items={planned} surface="ivory" />
+        </Section>
+      ) : null}
       {steps.length > 0 ? (
-        <Section tone="paper" labelledBy="offering-steps">
+        <Section tone="sand" labelledBy="offering-steps">
           <Heading as="h2" id="offering-steps">How it works</Heading>
-          <div className="mt-4"><StepList items={offering?.howItWorks} /></div>
+          <StepList items={offering?.howItWorks} />
         </Section>
       ) : null}
-      {groups.map((group) => (
-        <Section key={group._key} tone="mist">
-          <Heading as="h2">{group.audience}</Heading>
-          <ul className="mt-4 list-disc pl-6">
-            {(group.points ?? []).filter(Boolean).map((point) => <li key={point}>{point}</li>)}
-          </ul>
+      {groups.length > 0 ? (
+        <Section tone="mist" labelledBy={groups.length === 1 ? 'offering-audience' : 'offering-audiences'}>
+          {groups.length === 1 ? (
+            <>
+              <Heading as="h2" id="offering-audience">{groups[0].audience}</Heading>
+              <ul className="m-0 mt-8 grid list-none gap-x-10 gap-y-4 p-0 sm:grid-cols-2">
+                {(groups[0].points ?? []).filter((point): point is string => Boolean(point)).map((point) => (
+                  <li key={point} className="border-t border-stone pt-4">{point}</li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <>
+              <Heading as="h2" id="offering-audiences">Who it helps</Heading>
+              <ul className={cn('m-0 mt-10 grid list-none gap-x-16 gap-y-10 p-0', groups.length >= 3 ? 'md:grid-cols-2 lg:grid-cols-3' : 'md:grid-cols-2')}>
+                {groups.map((group) => (
+                  <li key={group._key}>
+                    <span aria-hidden="true" className="block h-0.5 w-8 bg-gold" />
+                    <h3 className="mt-4 text-[22px] leading-snug md:text-[24px]">{group.audience}</h3>
+                    <ul className="mt-4 flex list-none flex-col gap-3 border-t border-stone p-0 pt-4">
+                      {(group.points ?? []).filter((point): point is string => Boolean(point)).map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </Section>
-      ))}
-      <SectionList sections={sections} />
-      <Section tone="paper">
-        <FaqList items={offering?.faqs} />
-      </Section>
-      <Section tone="sand">
-        {slug === 'silver-roots' ? (
-          <div className="flex max-w-prose-site flex-col gap-10">
-            <EnquiryForm kind="silver-roots-partner" context="Silver Roots" />
-            <EnquiryButton kind="general" context="Silver Roots">Send a general enquiry</EnquiryButton>
+      ) : null}
+      <SectionList sections={sections} layout="split" />
+      {(offering?.faqs ?? []).some((item) => item?.question) ? (
+        <Section tone="ivory" labelledBy="offering-questions">
+          <div className="grid items-start gap-6 lg:grid-cols-[minmax(16rem,22rem)_minmax(0,1fr)] lg:gap-x-16">
+            <Heading as="h2" id="offering-questions">Questions</Heading>
+            <FaqList items={offering?.faqs} showHeading={false} width="full" />
           </div>
-        ) : null}
-        {slug === 'destination-retirement' ? (
-          <div className="max-w-prose-site">
-            <EnquiryForm kind="destination-retirement" context="Destination Retirement" />
-          </div>
-        ) : null}
-        {slug === 'sage' ? <EnquiryButton kind="general" context="SAGE">Enquire</EnquiryButton> : null}
-      </Section>
+        </Section>
+      ) : null}
+      {slug === 'destination-retirement' ? (
+        <Section tone="paper" labelledBy="destination-enquiry">
+          <EnquiryForm kind="destination-retirement" context="Destination Retirement" headingId="destination-enquiry" layout="aside" eyebrow="Enquiry" />
+        </Section>
+      ) : slug === 'silver-roots' ? (
+        <Section tone="paper" labelledBy="partner-enquiry">
+          {current.length !== 1 ? (
+            <div className="mb-12 border-b border-stone pb-12">
+              <SilverFamilyActions contact={contact} />
+            </div>
+          ) : null}
+          <EnquiryForm
+            kind="silver-roots-partner"
+            context="Silver Roots"
+            headingId="partner-enquiry"
+            layout="aside"
+            eyebrow="Partners"
+            asideExtra={
+              <div className="border-t border-stone pt-6">
+                <p>Looking for care for a family member?</p>
+                <div className="mt-3">
+                  <EnquiryButton kind="general" context="Silver Roots" tone="text">
+                    Send a general enquiry
+                  </EnquiryButton>
+                </div>
+              </div>
+            }
+          />
+        </Section>
+      ) : (
+        <Section tone="paper">
+          {slug === 'sage' ? <EnquiryButton kind="general" context="SAGE">Enquire</EnquiryButton> : null}
+        </Section>
+      )}
     </main>
   );
 }

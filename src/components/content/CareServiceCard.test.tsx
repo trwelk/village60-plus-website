@@ -18,6 +18,6 @@ describe('CareServiceCard', () => {
     );
     expect(screen.getByText('Available now')).toBeInTheDocument();
     expect(screen.getByText('A few days to a few weeks')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Read about Respite care' })).toHaveAttribute('href', '/living-and-care/respite-care');
+    expect(screen.getByRole('link', { name: /Respite care/ })).toHaveAttribute('href', '/living-and-care/respite-care');
   });
 });

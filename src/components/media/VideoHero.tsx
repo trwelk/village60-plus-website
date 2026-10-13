@@ -29,7 +29,7 @@ function readPrefs(): { reducedMotion: boolean; saveData: boolean } {
   return { reducedMotion, saveData: connection?.saveData === true };
 }
 
-export function VideoHero({ video, width = 1280 }: { video: HeroVideo | null | undefined; width?: number }) {
+export function VideoHero({ video, width = 1280, fill = false }: { video: HeroVideo | null | undefined; width?: number; fill?: boolean }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [showVideo, setShowVideo] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -68,11 +68,11 @@ export function VideoHero({ video, width = 1280 }: { video: HeroVideo | null | u
       : undefined;
 
   return (
-    <div className="relative">
+    <div className={fill ? 'absolute inset-0' : 'relative'}>
       {showVideo && video.videoUrl ? (
         <video
           ref={ref}
-          className="h-auto w-full rounded-card"
+          className={fill ? 'h-full w-full object-cover' : 'h-auto w-full rounded-card'}
           autoPlay
           muted
           playsInline
@@ -84,16 +84,16 @@ export function VideoHero({ video, width = 1280 }: { video: HeroVideo | null | u
           {video.captionsUrl ? <track kind="captions" src={video.captionsUrl} srcLang="en" label="English" default /> : null}
         </video>
       ) : (
-        video.poster && <SanityImage image={video.poster} width={width} priority />
+        video.poster && <SanityImage image={video.poster} width={fill ? 1920 : width} height={fill ? 1080 : undefined} priority cover={fill} sizes={fill ? '100vw' : undefined} />
       )}
       {video.videoUrl && (
-        <div className="mt-3">
+        <div className={fill ? 'absolute right-6 bottom-6 z-10' : 'mt-3'}>
           {playing ? (
-            <Button variant="secondary" onClick={pause}>
+            <Button variant="secondary" onDark={fill} onClick={pause}>
               Pause video
             </Button>
           ) : (
-            <Button variant="secondary" onClick={play}>
+            <Button variant="secondary" onDark={fill} onClick={play}>
               Play video
             </Button>
           )}

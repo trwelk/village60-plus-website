@@ -5,7 +5,7 @@ export function StatusBadge({ status, tone = 'light', className }: { status: Con
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-input border px-2.5 py-1 text-[14px] font-semibold leading-none',
+        'inline-flex w-fit shrink-0 items-center self-start rounded-input border px-2.5 py-1 text-[14px] font-semibold leading-none',
         tone === 'light' ? 'border-stone bg-paper text-bronze' : 'border-pale-gold/40 bg-white/5 text-pale-gold',
         className,
       )}

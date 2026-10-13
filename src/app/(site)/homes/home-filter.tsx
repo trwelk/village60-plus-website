@@ -56,7 +56,7 @@ export function HomeFilter({ residences }: { residences: ResidenceCardData[] }) 
       {shown.length === 0 ? (
         <p className="mt-8">No homes match those filters.</p>
       ) : (
-        <ul className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {shown.map((residence) => (
             <li key={residence._id}><ResidenceCard residence={residence} /></li>
           ))}

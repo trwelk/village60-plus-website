@@ -37,6 +37,11 @@
   --duration-fast: 150ms;
   --duration-menu: 250ms;
   --duration-panel: 400ms;
+  --animate-room-marquee: room-marquee 36s linear infinite;
+
+  @keyframes room-marquee {
+    to { transform: translateX(-50%); }
+  }
 }
 
 /* Fonts are injected as CSS variables on <html> by next/font, so they must be inline. */
@@ -93,6 +98,65 @@
       transition-duration: 0.01ms !important;
     }
   }
+
+  dialog.enquiry-panel {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    background: var(--color-ivory);
+    color: var(--color-charcoal);
+  }
+
+  dialog.enquiry-panel::backdrop {
+    background: color-mix(in srgb, var(--color-night) 46%, transparent);
+  }
+
+  @media (min-width: 900px) {
+    dialog.enquiry-panel {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: auto;
+      width: min(32rem, 100%);
+      height: 100dvh;
+      margin-left: auto;
+      border-left: 1px solid var(--color-stone);
+      box-shadow: var(--shadow-panel);
+    }
+  }
+
+  select.field-select {
+    appearance: none;
+    color: var(--color-charcoal);
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%2318352D' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 7.5 10 12.5 15 7.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    background-size: 1rem;
+  }
+
+  select.field-select:has(option[value=""]:checked) {
+    color: color-mix(in srgb, var(--color-charcoal) 68%, var(--color-paper));
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    dialog.enquiry-panel[open] {
+      animation: enquiry-panel-in 400ms ease;
+    }
+  }
+
+  @media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+    dialog.enquiry-panel[open] {
+      animation-name: enquiry-panel-in-x;
+    }
+  }
 }
 
 @utility display-text {
@@ -103,10 +167,33 @@
   text-wrap: balance;
 }
 
+/* Half the spec gap: adjacent sections add their padding, so 64+64 is the 128px desktop rhythm. */
 @utility section-space {
-  padding-block: 64px;
-  @media (min-width: 600px) { padding-block: 96px; }
-  @media (min-width: 1200px) { padding-block: 128px; }
+  padding-block: 32px;
+  @media (min-width: 600px) { padding-block: 48px; }
+  @media (min-width: 1200px) { padding-block: 64px; }
+}
+
+/* The header overlays the first screen. These replace section-space's top padding so the hero background still runs under the bar. */
+@utility clear-header {
+  padding-top: calc(5rem + 32px) !important;
+  @media (min-width: 600px) { padding-top: calc(5rem + 48px) !important; }
+  @media (min-width: 1200px) { padding-top: calc(5rem + 64px) !important; }
+}
+
+@utility clear-header-bar {
+  padding-top: calc(5rem + 1rem) !important;
+}
+
+/* section-space sets padding-block, so these longhands need priority to close the join. */
+@utility hero-to-band {
+  padding-bottom: 36px !important;
+  @media (min-width: 1200px) { padding-bottom: 48px !important; }
+}
+
+@utility band-from-hero {
+  padding-top: 28px !important;
+  @media (min-width: 1200px) { padding-top: 40px !important; }
 }
 
 @utility gutter {
@@ -136,3 +223,32 @@
   clip: auto;
   white-space: normal;
 }
+
+@keyframes care-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes enquiry-panel-in {
+  from { transform: translateY(1rem); }
+  to { transform: none; }
+}
+
+@keyframes enquiry-panel-in-x {
+  from { transform: translateX(1rem); }
+  to { transform: none; }
+}
+
+@utility care-rise {
+  animation: care-rise 680ms ease both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
