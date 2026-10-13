@@ -1,4 +1,5 @@
 import type { PortableTextBlock } from '@portabletext/react';
+import { PageHero } from '@/components/content/PageHero';
 import { PortableText, safeHref } from '@/components/content/PortableText';
 import type { ContentSectionData } from '@/components/content/SectionList';
 import { SanityImage, type CmsImage } from '@/components/media/SanityImage';
@@ -156,40 +157,26 @@ export function OurStoryView({
   const chapters = storySections(sections);
   const people = team.filter((person): person is StoryPerson & { name: string } => Boolean(person.name));
   const hasStory = chapters.length > 0 || people.length > 0;
-  const showHeroImage = hasPhoto(heroImage);
 
   return (
     <main id="main">
-      <Section tone="ivory" labelledBy="page-title" className={cn('clear-header', (hasStory || hasBody) && 'hero-to-band')}>
-        <div className={cn(showHeroImage && 'grid items-start gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(17rem,0.85fr)] lg:gap-x-16')}>
-          <div className="flex min-w-0 max-w-2xl flex-col gap-4">
-            {foundedYear != null ? <p className="text-[14px] font-semibold tracking-[0.08em] text-bronze uppercase">Established {foundedYear}</p> : null}
-            <Heading as="h1" id="page-title" titleClassName="display-text">
-              {title}
-            </Heading>
-            {intro ? (
-              <div className="flex max-w-[38rem] flex-col gap-4">
-                <span aria-hidden="true" className="block h-px w-12 bg-gold" />
-                <p className="text-[18px] leading-relaxed md:text-[21px] md:leading-snug">{intro}</p>
-              </div>
-            ) : null}
-          </div>
-          {showHeroImage ? (
-            <div className="relative aspect-[4/3] overflow-hidden rounded-panel bg-sand">
-              <SanityImage image={heroImage} width={960} height={720} priority sizes="(min-width: 1200px) 560px, 100vw" cover className="absolute inset-0" />
-            </div>
-          ) : null}
-        </div>
-      </Section>
+      <PageHero
+        layout="overlay"
+        title={title}
+        eyebrow={foundedYear != null ? `Established ${foundedYear}` : null}
+        intro={intro}
+        image={heroImage}
+        tone="night"
+      />
       {hasBody ? (
-        <Section tone="ivory" className="band-from-hero">
+        <Section tone="ivory">
           <div className="max-w-prose-site">
             <PortableText value={body} />
           </div>
         </Section>
       ) : null}
       {hasStory ? (
-        <Section tone="sand" className={hasBody ? undefined : 'band-from-hero'} labelledBy={chapters.length === 0 ? 'leadership' : undefined}>
+        <Section tone="sand" labelledBy={chapters.length === 0 ? 'leadership' : undefined}>
           <div className="flex flex-col gap-10 lg:gap-14">
             {chapters.length > 0 ? (
               <ol className="m-0 flex list-none flex-col gap-5 p-0 lg:gap-6">

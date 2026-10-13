@@ -15,6 +15,7 @@ describe('OurStoryView', () => {
         intro="We started with a home."
         body={block('People should grow older with dignity.')}
         foundedYear={null}
+        heroImage={imageFixture('The first home')}
         sections={[
           { _key: 'a', heading: 'A home first', body: block('A single residence.'), tone: 'ivory' },
           { _key: 'b', heading: 'The next chapter', body: block('Each new service is labelled.'), tone: 'green' },
@@ -28,6 +29,8 @@ describe('OurStoryView', () => {
       />,
     );
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+    expect(screen.getByRole('heading', { name: 'Our story' }).closest('section')?.className).toContain('bg-night');
+    expect(screen.getByRole('img', { name: 'The first home' })).toBeInTheDocument();
     expect(screen.getByText('People should grow older with dignity.')).toBeInTheDocument();
     expect(screen.queryByText(/Established/)).not.toBeInTheDocument();
     expect(container.querySelectorAll('.bg-green')).toHaveLength(1);
