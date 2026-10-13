@@ -1,5 +1,7 @@
 import { EnquiryForm } from '@/components/forms/EnquiryForm';
+import { PageHero } from '@/components/content/PageHero';
 import { StaticMap } from '@/components/media/StaticMap';
+import type { CmsImage } from '@/components/media/SanityImage';
 import { Button } from '@/components/ui/Button';
 import { Heading } from '@/components/ui/Heading';
 import { Section } from '@/components/ui/Section';
@@ -13,6 +15,7 @@ const kicker = 'text-[14px] font-semibold uppercase tracking-[0.08em] text-bronz
 export function ContactView({
   title,
   intro,
+  image,
   contact,
   openingHours,
   emergencyNotice,
@@ -22,6 +25,7 @@ export function ContactView({
 }: {
   title: string;
   intro?: string | null;
+  image?: CmsImage | null;
   contact: SiteContact;
   openingHours?: string | null;
   emergencyNotice?: string | null;
@@ -35,10 +39,9 @@ export function ContactView({
 
   return (
     <main id="main">
-      <Section tone="ivory" labelledBy="page-title" className="clear-header">
-        <Heading as="h1" id="page-title">{title}</Heading>
-        {intro ? <p className="mt-4 max-w-prose-site">{intro}</p> : null}
-        <div className="mt-10 rounded-panel border border-stone bg-paper p-6 shadow-panel md:p-8 lg:p-10">
+      <PageHero layout="overlay" title={title} intro={intro} image={image} tone="night" />
+      <Section tone="ivory">
+        <div className="rounded-panel border border-stone bg-paper p-6 shadow-panel md:p-8 lg:p-10">
           {showReach ? (
             <div>
               <p className={kicker}>Call or message</p>

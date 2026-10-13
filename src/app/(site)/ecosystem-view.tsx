@@ -192,10 +192,10 @@ function AudienceBand({ groups }: { groups: BenefitGroup[] }) {
 
   if (groups.length === 2) {
     return (
-      <div className="overflow-hidden rounded-panel border border-stone bg-paper lg:grid lg:grid-cols-[minmax(13rem,16rem)_minmax(0,1fr)]">
-        <div className="flex flex-col justify-center border-b border-stone px-6 py-8 md:px-8 lg:border-r lg:border-b-0 lg:py-10">
+      <div className="overflow-hidden rounded-panel border border-stone bg-paper lg:grid lg:grid-cols-[auto_minmax(0,1fr)]">
+        <div className="flex flex-col justify-center border-b border-stone px-6 py-8 md:px-8 lg:border-r lg:border-b-0 lg:px-10 lg:py-10">
           <span aria-hidden="true" className="mb-4 block h-0.5 w-8 bg-gold" />
-          <Heading as="h2" id="offering-audiences">Who it helps</Heading>
+          <Heading as="h2" id="offering-audiences" titleClassName="lg:whitespace-nowrap">Who it helps</Heading>
         </div>
         <ul className="m-0 grid list-none p-0 md:grid-cols-2">
           {groups.map((group, index) => (
@@ -247,7 +247,6 @@ export function EcosystemView({
   offering: OfferingContent | null;
   contact: SiteContact;
 }) {
-  const tone = slug === 'sage' ? 'night' : 'ivory';
   const title = offering?.name || TITLES[slug];
   const showStatus = offering?.status && isContentStatus(offering.status) && !isOperating(offering.status) ? offering.status : null;
   const lead = offering?.distinction || offering?.summary;
@@ -262,8 +261,8 @@ export function EcosystemView({
 
   return (
     <main id="main">
-      <PageHero title={title} eyebrow={offering?.tagline} intro={lead} image={offering?.heroImage} status={showStatus} tone={tone} framed>
-        {note ? <p className="w-full max-w-prose-site border-t border-stone pt-5">{note}</p> : null}
+      <PageHero layout="overlay" title={title} eyebrow={offering?.tagline} intro={lead} image={offering?.heroImage} status={showStatus} tone="night">
+        {note ? <p className="w-full max-w-prose-site border-t border-ivory/30 pt-5">{note}</p> : null}
       </PageHero>
       {current.length > 0 ? (
         <Section tone="sand" labelledBy="offering-current">
@@ -296,11 +295,11 @@ export function EcosystemView({
       {(offering?.faqs ?? []).some((item) => item?.question) ? (
         <Section tone="ivory" labelledBy="offering-questions">
           <div className="overflow-hidden rounded-panel border border-stone bg-paper lg:grid lg:grid-cols-[minmax(16rem,22rem)_minmax(0,1fr)]">
-            <div className="flex flex-col justify-center border-b border-stone px-6 py-8 md:px-8 lg:border-r lg:border-b-0 lg:px-10 lg:py-10">
+            <div className="flex flex-col justify-center border-b border-stone px-6 py-8 md:px-8 lg:justify-start lg:border-r lg:border-b-0 lg:px-10 lg:py-8">
               <span aria-hidden="true" className="mb-4 block h-0.5 w-8 bg-gold" />
               <Heading as="h2" id="offering-questions">Questions</Heading>
             </div>
-            <div className="flex items-center px-6 md:px-8 lg:px-10">
+            <div className="px-6 md:px-8 lg:px-10 lg:py-8">
               <div className="min-w-0 flex-1">
                 <FaqList items={offering?.faqs} showHeading={false} width="full" embedded />
               </div>

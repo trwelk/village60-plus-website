@@ -91,4 +91,18 @@ describe('HomeView', () => {
     expect(screen.getByRole('link', { name: /After hospital or surgery/i })).toHaveAttribute('href', '/find-the-right-care?for=after-hospital');
     expect(screen.queryByLabelText(/diagnosis/i)).not.toBeInTheDocument();
   });
+
+  it('drifts living and care the opposite way from the homes row', () => {
+    const { container } = renderHome({
+      careServices: [
+        props.careServices[0],
+        { _id: 'care.recovery', name: 'Recovery', slug: 'recovery', status: 'available', summary: 'Time to regain strength.', heroImage: null },
+      ],
+    });
+    const homes = container.querySelector('[data-home-section="homes"] ul');
+    const care = container.querySelector('[data-home-section="care"] ul');
+    expect(homes).toHaveStyle({ animationDirection: 'normal' });
+    expect(care?.className).toContain('animate-room-marquee');
+    expect(care).toHaveStyle({ animationDirection: 'reverse' });
+  });
 });

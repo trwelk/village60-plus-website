@@ -4,7 +4,6 @@ import { CardCarousel } from '@/components/content/CardCarousel';
 import { CareServiceCard, type CareServiceCardData } from '@/components/content/CareServiceCard';
 import { PreviewCard } from '@/components/content/PreviewCard';
 import { ResidenceCard, type ResidenceCardData } from '@/components/content/ResidenceCard';
-import { RevealStagger } from '@/components/content/RevealStagger';
 import type { HeroVideo } from '@/components/media/VideoHero';
 import type { CmsImage } from '@/components/media/SanityImage';
 import { HomeHero } from '@/components/content/HomeHero';
@@ -147,16 +146,17 @@ export function HomeView({ home, residences, careServices, offerings, contact }:
 
       <Region name="care">
         <Section tone="green" labelledBy="home-care">
-          <Heading as="h2" id="home-care" onDark>Living and care</Heading>
-          {careServices.length === 0 ? (
-            <p className="mt-4">Care descriptions will appear here once they are published.</p>
-          ) : (
-            <RevealStagger className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {careServices.map((service) => (
-                <CareServiceCard key={service._id} service={service} />
-              ))}
-            </RevealStagger>
-          )}
+          <CardCarousel
+            label="care option"
+            reverse
+            onDark
+            heading={<Heading as="h2" id="home-care" onDark>Living and care</Heading>}
+            empty={<p>Care descriptions will appear here once they are published.</p>}
+          >
+            {careServices.map((service) => (
+              <CareServiceCard key={service._id} service={service} />
+            ))}
+          </CardCarousel>
         </Section>
       </Region>
 

@@ -17,12 +17,17 @@ export function CardCarousel({
   heading,
   label,
   empty,
+  reverse = false,
+  onDark = false,
   children,
 }: {
   heading: ReactNode;
   /** Singular noun for the control names, e.g. "home". */
   label: string;
   empty?: ReactNode;
+  /** Drift the row the opposite way. */
+  reverse?: boolean;
+  onDark?: boolean;
   children: ReactNode;
 }) {
   const scroller = useRef<HTMLUListElement>(null);
@@ -104,6 +109,7 @@ export function CardCarousel({
           <div className="ml-auto flex gap-2">
             <Button
               variant="secondary"
+              onDark={onDark}
               aria-label={`Previous ${label}`}
               onClick={() => advance(-1)}
               disabled={moving || !edges.prev}
@@ -113,6 +119,7 @@ export function CardCarousel({
             </Button>
             <Button
               variant="secondary"
+              onDark={onDark}
               aria-label={`Next ${label}`}
               onClick={() => advance(1)}
               disabled={moving || !edges.next}
@@ -123,6 +130,7 @@ export function CardCarousel({
             {reduced ? null : (
               <Button
                 variant="secondary"
+                onDark={onDark}
                 aria-label={playing ? 'Pause automatic movement' : 'Play automatic movement'}
                 aria-pressed={!playing}
                 onClick={() => setPlaying((value) => !value)}
@@ -139,7 +147,10 @@ export function CardCarousel({
         <div className="mt-8 overflow-hidden">
           <ul
             className="flex w-max gap-8 pt-2 pb-8 motion-safe:animate-room-marquee motion-safe:hover:[animation-play-state:paused]"
-            style={{ animationDuration: `${count * 8}s` }}
+            style={{
+              animationDuration: `${count * 8}s`,
+              animationDirection: reverse ? 'reverse' : 'normal',
+            }}
           >
             {cards(false)}
             {cards(true)}

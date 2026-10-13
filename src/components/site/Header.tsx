@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useRef, type MouseEvent, type ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 import { EnquiryButton } from '@/components/forms/EnquiryPanel';
-import { MORE_NAV, PRIMARY_NAV } from '@/lib/navigation';
+import { MORE_NAV, PRIMARY_NAV, overlayHeader } from '@/lib/navigation';
 import { telHref, type SiteContact } from '@/lib/contact';
 import { WhatsAppLink } from '@/components/site/WhatsAppLink';
 
@@ -15,7 +15,7 @@ function closeMenu(event: MouseEvent<HTMLAnchorElement>) {
 export function Header({ contact, enquiryTrigger }: { contact: SiteContact; enquiryTrigger?: ReactNode }) {
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
-  const overlay = pathname === '/' || pathname === '/oracle' || pathname === '/sage';
+  const overlay = overlayHeader(pathname);
 
   useEffect(() => {
     headerRef.current?.querySelectorAll('details[open]').forEach((menu) => menu.removeAttribute('open'));

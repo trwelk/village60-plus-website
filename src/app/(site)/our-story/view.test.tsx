@@ -31,7 +31,7 @@ describe('OurStoryView', () => {
     expect(screen.getByText('People should grow older with dignity.')).toBeInTheDocument();
     expect(screen.queryByText(/Established/)).not.toBeInTheDocument();
     expect(container.querySelectorAll('.bg-green')).toHaveLength(1);
-    expect(container.querySelector('.bg-night')).toBeNull();
+    expect(screen.getByRole('heading', { name: 'Night' }).closest('.bg-night')).toBeNull();
     expect(screen.getByRole('img', { name: 'Amara Perera' })).toBeInTheDocument();
     expect(screen.queryByRole('img', { name: 'hidden' })).not.toBeInTheDocument();
     expect(screen.getByText('Registered nurse')).toBeInTheDocument();

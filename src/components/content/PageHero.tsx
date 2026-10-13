@@ -7,6 +7,10 @@ import { StatusBadge } from '@/components/ui/StatusBadge';
 import { cn } from '@/lib/cn';
 import { isContentStatus } from '@/lib/content-status';
 
+export function pickHeroImage<T extends CmsImage>(...candidates: Array<T | null | undefined>): T | null {
+  return candidates.find((image) => Boolean(image?.asset?.url && image.alt?.trim())) ?? null;
+}
+
 export function PageHero({
   eyebrow,
   title,
@@ -72,7 +76,7 @@ export function PageHero({
                 {title}
               </h1>
               {intro ? <p className="max-w-prose-site text-[18px] leading-relaxed">{intro}</p> : null}
-              {children ? <div className="flex flex-wrap items-center gap-3">{children}</div> : null}
+              {children ? <div className="flex w-full flex-col items-start gap-5">{children}</div> : null}
             </div>
           </Container>
         </div>

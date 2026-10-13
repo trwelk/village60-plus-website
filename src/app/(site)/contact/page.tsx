@@ -7,6 +7,7 @@ import { RESIDENCE_SLUGS } from '@/lib/routes';
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 import { contactFromSettings } from '@/lib/site-settings';
 import { fetchPublished } from '@/sanity/fetch';
+import { pickHeroImage } from '@/components/content/PageHero';
 import { PAGE_QUERY, RESIDENCE_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/queries';
 import { ContactView } from './view';
 
@@ -50,6 +51,7 @@ export default async function ContactPage() {
       <ContactView
         title={doc?.title || 'Contact us'}
         intro={doc?.intro}
+        image={pickHeroImage(doc?.heroImage, ...residences.map((row) => row?.heroImage))}
         contact={contactFromSettings(settings)}
         openingHours={settings?.openingHours}
         emergencyNotice={settings?.emergencyNotice}

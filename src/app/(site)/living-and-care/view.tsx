@@ -1,5 +1,6 @@
 import { PageHero } from '@/components/content/PageHero';
 import { SectionList, type ContentSectionData } from '@/components/content/SectionList';
+import type { CmsImage } from '@/components/media/SanityImage';
 import { CareServiceCard, type CareServiceCardData } from '@/components/content/CareServiceCard';
 import { ContactActions } from '@/components/site/ContactActions';
 import { Button } from '@/components/ui/Button';
@@ -17,12 +18,14 @@ function lightSections(sections: Array<ContentSectionData | null> | null | undef
 export function LivingCareView({
   title,
   intro,
+  image,
   services,
   sections,
   contact,
 }: {
   title: string;
   intro?: string | null;
+  image?: CmsImage | null;
   services: CareServiceCardData[];
   sections: Array<ContentSectionData | null> | null;
   contact: SiteContact;
@@ -34,8 +37,8 @@ export function LivingCareView({
   const ordered = [...services].sort((a, b) => rank(a.slug) - rank(b.slug));
   return (
     <main id="main">
-      <PageHero title={title} intro={intro} tone="ivory">
-        <ContactActions contact={contact} context="Living & Care" />
+      <PageHero layout="overlay" title={title} intro={intro} image={image} tone="night">
+        <ContactActions contact={contact} context="Living & Care" onDark />
       </PageHero>
       <Section tone="sand">
         <ul className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">

@@ -7,6 +7,7 @@ import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 import { contactFromSettings } from '@/lib/site-settings';
 import { fetchPublished } from '@/sanity/fetch';
 import { PAGE_QUERY, RESIDENCES_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/queries';
+import { pickHeroImage } from '@/components/content/PageHero';
 import { toResidenceCards } from '../home-view';
 import { HomesView } from './view';
 
@@ -47,7 +48,13 @@ export default async function HomesPage() {
   return (
     <>
       <JsonLd data={breadcrumbJsonLd(siteUrl, [{ label: 'Home', href: '/' }, { label: 'Our homes', href: PATH }])} />
-      <HomesView title={doc?.title || 'Our homes'} intro={doc?.intro} residences={toResidenceCards(residences)} contact={contactFromSettings(settings)} />
+      <HomesView
+        title={doc?.title || 'Our homes'}
+        intro={doc?.intro}
+        image={pickHeroImage(doc?.heroImage, ...(residences ?? []).map((row) => row?.heroImage))}
+        residences={toResidenceCards(residences)}
+        contact={contactFromSettings(settings)}
+      />
     </>
   );
 }

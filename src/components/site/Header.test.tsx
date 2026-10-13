@@ -3,9 +3,12 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
 import { describe, expect, it, vi } from 'vitest';
 
+const pathState = vi.hoisted(() => ({ value: '/homes/serenity' }));
+
 vi.mock('next/navigation', () => ({
-  usePathname: () => '/homes/serenity',
+  usePathname: () => pathState.value,
 }));
+import { EnquiryProvider } from '@/components/forms/EnquiryPanel';
 import { Header } from './Header';
 import { contactFixture } from '@/test/contact-fixture';
 
@@ -30,6 +33,31 @@ describe('Header', () => {
     );
     expect(screen.queryByRole('link', { name: /^Call/ })).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Enquire' })).toBeInTheDocument();
+  });
+
+  it('lays a light bar over main-nav heroes and keeps a solid bar on detail and legal pages', () => {
+    const light = ['/', '/find-the-right-care', '/homes', '/living-and-care', '/oracle', '/silver-roots', '/destination-retirement', '/sage', '/our-story', '/contact'];
+    const solid = ['/homes/serenity', '/living-and-care/respite-care', '/privacy', '/terms', '/accessibility'];
+    try {
+      for (const path of light) {
+        pathState.value = path;
+        const view = render(
+          <EnquiryProvider contact={contactFixture}>
+            <Header contact={contactFixture} enquiryTrigger={<button type="button">Enquire</button>} />
+          </EnquiryProvider>,
+        );
+        expect(screen.getByRole('link', { name: 'Village 60 Plus' }).className, path).toContain('text-ivory');
+        view.unmount();
+      }
+      for (const path of solid) {
+        pathState.value = path;
+        const view = render(<Header contact={contactFixture} enquiryTrigger={<button type="button">Enquire</button>} />);
+        expect(screen.getByRole('link', { name: 'Village 60 Plus' }).className, path).toContain('text-green');
+        view.unmount();
+      }
+    } finally {
+      pathState.value = '/homes/serenity';
+    }
   });
 
   it('closes the More menu after a menu item is chosen', async () => {

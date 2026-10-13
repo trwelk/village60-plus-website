@@ -36,8 +36,22 @@ describe('CardCarousel', () => {
     renderStrip(3);
     const lists = screen.getAllByRole('list');
     expect(lists[0].className).toContain('animate-room-marquee');
+    expect(lists[0]).toHaveStyle({ animationDirection: 'normal' });
     expect(lists[0].querySelectorAll('li')).toHaveLength(6);
     expect(lists[0].querySelectorAll('li[aria-hidden="true"]')).toHaveLength(3);
+  });
+
+  it('can drift the opposite way', () => {
+    mockMotion(false);
+    render(
+      <CardCarousel label="care option" reverse heading={<h2>Living and care</h2>}>
+        <article>Care 1</article>
+        <article>Care 2</article>
+      </CardCarousel>,
+    );
+    const list = screen.getByRole('list');
+    expect(list.className).toContain('animate-room-marquee');
+    expect(list).toHaveStyle({ animationDirection: 'reverse' });
   });
 
   it('stops when asked, then steps one card from the buttons', async () => {

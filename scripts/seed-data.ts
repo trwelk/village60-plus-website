@@ -310,7 +310,7 @@ const residences = residenceSeeds.map((r) => ({
     _key: key(room.name),
     name: room.name,
     house: room.house,
-    summary: 'Room details and photography will be added once verified.',
+    summary: 'Room details and photography will be added.',
     image: stockImage(ORACLE_ROOM_PHOTOS[index % ORACLE_ROOM_PHOTOS.length], room.name),
   })),
   sharedSpaces: r.status === 'coming-soon' ? undefined : strings('Living room', 'Dining room', 'Garden or terrace'),
@@ -456,19 +456,31 @@ const pageSeeds: Array<{ slug: PageSlug; title: string; intro?: string; body?: R
   { slug: 'accessibility', title: 'Accessibility statement', body: paragraphs('Village 60 Plus wants everyone to be able to use this website. It is designed to meet WCAG 2.2 Level AA.', 'If something does not work for you, call us or email and we will help you another way and fix the problem.') },
 ];
 
-const pages = pageSeeds.map((p) => ({
+const PAGE_PHOTO: Partial<Record<PageSlug, StockPhotoKey>> = {
+  home: 'patio',
+  'find-the-right-care': 'flower-path',
+  homes: 'timber-house',
+  'living-and-care': 'courtyard',
+  'our-story': 'jaffna',
+  contact: 'lush-entrance',
+};
+
+const pages = pageSeeds.map((p) => {
+  const photo = PAGE_PHOTO[p.slug];
+  return {
   _id: `page.${p.slug}`,
   _type: 'page',
   title: p.title,
   slug: { _type: 'slug', current: p.slug },
   intro: p.intro,
-  heroImage: p.slug === 'home' ? stockImage('patio', 'home') : p.slug === 'our-story' ? stockImage('jaffna', 'our-story') : undefined,
+  heroImage: photo ? stockImage(photo, p.slug) : undefined,
   sections: p.sections?.map((s) => ({ _type: 'contentSection', _key: key(s.heading), eyebrow: s.eyebrow, heading: s.heading, body: paragraphs(s.body), tone: s.tone ?? 'ivory' })),
   body: p.body,
   lastReviewed: p.body ? '2026-10-12' : undefined,
   editorial: REVIEW,
   seo: { _type: 'seo', title: p.slug === 'home' ? 'Village 60 Plus — homes, care and support for later life in Sri Lanka' : `${p.title} | Village 60 Plus`, description: (p.intro ?? p.title).slice(0, 160) },
-}));
+  };
+});
 
 // ---------- FAQs ----------
 

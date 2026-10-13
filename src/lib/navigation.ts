@@ -20,3 +20,9 @@ export const LEGAL_NAV: NavItem[] = [
   { label: 'Terms', href: '/terms' },
   { label: 'Accessibility', href: '/accessibility' },
 ];
+
+/** Light nav sitting on a full-bleed hero. Exact paths only, so residence and care detail pages stay on the solid bar. */
+export function overlayHeader(pathname: string) {
+  if (pathname === '/') return true;
+  return [...PRIMARY_NAV, ...MORE_NAV].some((item) => item.href === pathname);
+}

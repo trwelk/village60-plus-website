@@ -8,6 +8,7 @@ import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 import { contactFromSettings } from '@/lib/site-settings';
 import { fetchPublished } from '@/sanity/fetch';
 import { CARE_SERVICES_QUERY, PAGE_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/queries';
+import { pickHeroImage } from '@/components/content/PageHero';
 import { toCareCards } from '../home-view';
 import { LivingCareView } from './view';
 
@@ -51,6 +52,7 @@ export default async function LivingCarePage() {
       <LivingCareView
         title={doc?.title || 'Living and care'}
         intro={doc?.intro}
+        image={pickHeroImage(doc?.heroImage, ...(services ?? []).map((row) => row?.heroImage))}
         services={toCareCards(services)}
         sections={(doc?.sections ?? []) as ContentSectionData[]}
         contact={contactFromSettings(settings)}

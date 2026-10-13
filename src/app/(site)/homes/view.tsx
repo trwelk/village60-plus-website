@@ -1,5 +1,6 @@
 import { HomeFilter } from './home-filter';
 import { PageHero } from '@/components/content/PageHero';
+import type { CmsImage } from '@/components/media/SanityImage';
 import type { ResidenceCardData } from '@/components/content/ResidenceCard';
 import { ContactActions } from '@/components/site/ContactActions';
 import { Button } from '@/components/ui/Button';
@@ -10,18 +11,20 @@ import type { SiteContact } from '@/lib/contact';
 export function HomesView({
   title,
   intro,
+  image,
   residences,
   contact,
 }: {
   title: string;
   intro?: string | null;
+  image?: CmsImage | null;
   residences: ResidenceCardData[];
   contact: SiteContact;
 }) {
   return (
     <main id="main">
-      <PageHero title={title} intro={intro} tone="ivory">
-        <ContactActions contact={contact} context="Our homes" />
+      <PageHero layout="overlay" title={title} intro={intro} image={image} tone="night">
+        <ContactActions contact={contact} context="Our homes" onDark />
       </PageHero>
       <Section tone="sand">
         <HomeFilter residences={residences} />

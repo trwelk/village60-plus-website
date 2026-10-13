@@ -38,7 +38,7 @@ describe('EcosystemView', () => {
   it('keeps planned Silver Roots capabilities labelled and offers both enquiries', () => {
     renderOffering('silver-roots', silver);
     expect(screen.getByText('In development')).toBeInTheDocument();
-    expect(screen.getByText('In development').className).not.toContain('text-pale-gold');
+    expect(screen.getByText('In development').className).toContain('text-pale-gold');
     expect(screen.getByRole('heading', { name: 'Planned', level: 2 })).toBeInTheDocument();
     expect(screen.getByText('Planned', { selector: 'span' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'How it works' })).toBeInTheDocument();
