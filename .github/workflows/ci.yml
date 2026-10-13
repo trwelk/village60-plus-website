@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  verify:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Refuse tracked env files
+        run: |
+          if git ls-files | grep -E '(^|/)\.env$|(^|/)\.env\.local$'; then
+            echo "An env file is tracked. Remove it."
+            exit 1
+          fi
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: http://localhost:3000
+          NEXT_PUBLIC_SANITY_PROJECT_ID: testproject
+          NEXT_PUBLIC_SANITY_DATASET: test
+
+  e2e:
+    name: Playwright
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Sanity credentials present
+        id: sanity
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+        run: |
+          if [ -n "$NEXT_PUBLIC_SANITY_PROJECT_ID" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Smoke against empty content
+        if: steps.sanity.outputs.present == 'false'
+        run: npx playwright test e2e/smoke.spec.ts
+        env:
+          CI: "true"
+          NEXT_PUBLIC_SITE_URL: http://localhost:3000
+          NEXT_PUBLIC_SANITY_PROJECT_ID: testproject
+          NEXT_PUBLIC_SANITY_DATASET: test
+      - name: Full browser tests
+        if: steps.sanity.outputs.present == 'true'
+        run: npm run e2e
+        env:
+          CI: "true"
+          NEXT_PUBLIC_SITE_URL: http://localhost:3000
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
+          SANITY_API_READ_TOKEN: ${{ secrets.SANITY_API_READ_TOKEN }}

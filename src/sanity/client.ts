@@ -5,10 +5,13 @@ export const apiVersion = '2026-02-01';
 
 const { sanityProjectId, sanityDataset } = getPublicEnv();
 
+const token = process.env.SANITY_API_READ_TOKEN;
+
 export const client = createClient({
   projectId: sanityProjectId,
   dataset: sanityDataset,
   apiVersion,
-  useCdn: true,
+  useCdn: !token,
   perspective: 'published',
+  token,
 });
