@@ -6,7 +6,6 @@ import { EcosystemView, type OfferingContent } from './ecosystem-view';
 
 vi.mock('@/lib/forms/submit', () => ({
   submitEnquiry: vi.fn(),
-  initialEnquiryState: { status: 'idle', fieldErrors: {}, formErrors: [], values: {}, whatsappHref: null, responseTime: null },
 }));
 
 const silver: OfferingContent = {

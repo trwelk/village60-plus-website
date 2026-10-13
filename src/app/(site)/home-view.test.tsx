@@ -7,7 +7,6 @@ import { HomeView, type HomeOffering, type HomeViewProps } from './home-view';
 
 vi.mock('@/lib/forms/submit', () => ({
   submitEnquiry: vi.fn(),
-  initialEnquiryState: { status: 'idle', fieldErrors: {}, formErrors: [], values: {}, whatsappHref: null, responseTime: null },
 }));
 
 const offerings: HomeOffering[] = [

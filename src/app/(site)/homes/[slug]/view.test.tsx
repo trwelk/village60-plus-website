@@ -7,7 +7,6 @@ import { ResidenceView, type ResidenceContent } from './view';
 
 vi.mock('@/lib/forms/submit', () => ({
   submitEnquiry: vi.fn(),
-  initialEnquiryState: { status: 'idle', fieldErrors: {}, formErrors: [], values: {}, whatsappHref: null, responseTime: null },
 }));
 
 const block = (text: string) => [

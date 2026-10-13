@@ -5,7 +5,6 @@ import { ContactView } from './view';
 
 vi.mock('@/lib/forms/submit', () => ({
   submitEnquiry: vi.fn(),
-  initialEnquiryState: { status: 'idle', fieldErrors: {}, formErrors: [], values: {}, whatsappHref: null, responseTime: null },
 }));
 
 const office = { line1: '133/19 Nawala Road', line2: 'Narahenpita', city: 'Colombo 05', country: 'Sri Lanka' };

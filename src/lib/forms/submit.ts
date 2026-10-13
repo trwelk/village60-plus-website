@@ -4,7 +4,7 @@ import { headers } from 'next/headers';
 import { Resend } from 'resend';
 import { getPublicEnv, getServerEnv } from '@/lib/env';
 import { getEnquiryLimiter } from './rate-limit';
-import { initialEnquiryState, processEnquiry, type EnquiryState, type RecipientRow } from './process';
+import { processEnquiry, type EnquiryState, type RecipientRow } from './process';
 
 function todayInColombo(): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Colombo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
@@ -76,5 +76,3 @@ export async function submitEnquiry(prev: EnquiryState, formData: FormData): Pro
     today: todayInColombo(),
   });
 }
-
-export { initialEnquiryState };

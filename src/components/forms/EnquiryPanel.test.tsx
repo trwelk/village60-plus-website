@@ -6,7 +6,6 @@ import { contactFixture } from '@/test/contact-fixture';
 
 vi.mock('@/lib/forms/submit', () => ({
   submitEnquiry: vi.fn(),
-  initialEnquiryState: { status: 'idle', fieldErrors: {}, formErrors: [], values: {}, whatsappHref: null, responseTime: null },
 }));
 
 HTMLDialogElement.prototype.showModal = vi.fn(function show(this: HTMLDialogElement) {

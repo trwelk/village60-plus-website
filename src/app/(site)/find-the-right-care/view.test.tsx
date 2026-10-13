@@ -5,7 +5,6 @@ import { FindCareView, pathwayDefaults } from './view';
 
 vi.mock('@/lib/forms/submit', () => ({
   submitEnquiry: vi.fn(),
-  initialEnquiryState: { status: 'idle', fieldErrors: {}, formErrors: [], values: {}, whatsappHref: null, responseTime: null },
 }));
 
 describe('pathwayDefaults', () => {

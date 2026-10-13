@@ -2,18 +2,11 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
 import { describe, expect, it, vi } from 'vitest';
+import { initialEnquiryState } from '@/lib/forms/process';
 import { EnquiryForm } from './EnquiryForm';
 
 vi.mock('@/lib/forms/submit', () => ({
   submitEnquiry: vi.fn(),
-  initialEnquiryState: {
-    status: 'idle',
-    fieldErrors: {},
-    formErrors: [],
-    values: {},
-    whatsappHref: null,
-    responseTime: null,
-  },
 }));
 
 describe('EnquiryForm', () => {
@@ -49,7 +42,7 @@ describe('EnquiryForm', () => {
 
 describe('EnquiryForm feedback', () => {
   it('moves focus to the error summary when the action returns field errors', async () => {
-    const { submitEnquiry, initialEnquiryState } = await import('@/lib/forms/submit');
+    const { submitEnquiry } = await import('@/lib/forms/submit');
     vi.mocked(submitEnquiry).mockResolvedValue({
       ...initialEnquiryState,
       status: 'error',
@@ -68,7 +61,7 @@ describe('EnquiryForm feedback', () => {
   });
 
   it('shows what was submitted after a successful send', async () => {
-    const { submitEnquiry, initialEnquiryState } = await import('@/lib/forms/submit');
+    const { submitEnquiry } = await import('@/lib/forms/submit');
     vi.mocked(submitEnquiry).mockResolvedValue({
       ...initialEnquiryState,
       status: 'success',
