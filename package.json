@@ -13,7 +13,7 @@
     "e2e": "playwright test",
     "typegen": "sanity schema extract --enforce-required-fields && sanity typegen generate",
     "seed": "tsx --env-file=.env.local scripts/seed.ts",
-    "report:placeholders": "tsx scripts/placeholder-report.ts"
+    "report:placeholders": "tsx --env-file=.env.local scripts/placeholder-report.ts"
   },
   "dependencies": {
     "@next/third-parties": "^16.4.0",
