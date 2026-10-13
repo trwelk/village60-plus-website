@@ -71,7 +71,7 @@ That reads `lighthouserc.json` (accessibility at least 95, LCP 2.5s, CLS 0.1). I
 
 ## Continuous integration
 
-GitHub Actions CI (Task 36: lint, typecheck, unit tests, build, and Playwright smoke or full e2e when Sanity repository secrets exist) is not in the tree yet. Dependabot and `lighthouserc.json` ship with that task. Until then, run the script block above locally before you push.
+`.github/workflows/ci.yml` runs lint, typecheck, unit tests, and `next build` on every push and pull request. A second job runs Playwright: `e2e/smoke.spec.ts` when Sanity repository secrets are absent, or the full `npm run e2e` suite when `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, and `SANITY_API_READ_TOKEN` are configured. Dependabot scans npm weekly. Lighthouse stays local (`npx lhci autorun`), not a required check.
 
 ## Preview and revalidation
 
