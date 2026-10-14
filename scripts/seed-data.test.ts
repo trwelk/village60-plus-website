@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { CONTENT_STATUSES } from '@/lib/content-status';
 import { CARE_SERVICE_SLUGS, OFFERING_SLUGS, PAGE_SLUGS, RESIDENCE_SLUGS } from '@/lib/routes';
 import { seedDocuments } from './seed-data';
+import { CLIENT_PHOTOS } from './client-photos';
 import { STOCK_PHOTOS } from './stock-photos';
 
 type Doc = { _id: string; _type: string; [key: string]: unknown };
@@ -22,6 +23,46 @@ describe('seed data', () => {
     const ids = docs.map((d) => d._id);
     expect(new Set(ids).size).toBe(ids.length);
     expect(ids.every((id) => /^[a-zA-Z0-9.-]+$/.test(id))).toBe(true);
+  });
+
+  it('pins the four published care homes and leaves Oracle and The Grove unpinned', () => {
+    const pinned = ['tranquility', 'serenity', 'house-on-the-hill', 'enchanted-fields'];
+    for (const slug of pinned) {
+      const home = ofType('residence').find((d) => (d.slug as { current: string }).current === slug);
+      const location = (home?.address as { location?: { lat?: number; lng?: number } } | undefined)?.location;
+      expect(location?.lat, slug).toEqual(expect.any(Number));
+      expect(location?.lng, slug).toEqual(expect.any(Number));
+    }
+    for (const slug of ['oracle', 'the-grove']) {
+      const home = ofType('residence').find((d) => (d.slug as { current: string }).current === slug);
+      expect((home?.address as { location?: unknown } | undefined)?.location, slug).toBeUndefined();
+    }
+  });
+
+  it('includes retirement villas copy on Enchanted Fields', () => {
+    const home = ofType('residence').find((d) => (d.slug as { current: string }).current === 'enchanted-fields');
+    const text = JSON.stringify(home);
+    expect(text).toContain('Retirement chalet');
+    expect(text).toContain('Ayurvedic spa treatments');
+    expect(text).toContain('Community lounge');
+    expect(text).toContain('retirement chalet village in Kottawa');
+    expect(text).toContain('New friendships and connections');
+  });
+
+  it('leads every open home gallery with the client photographs and keeps the stand-ins', () => {
+    for (const home of ofType('residence')) {
+      const slug = (home.slug as { current: string }).current;
+      const gallery = home.gallery as Array<{ seedPhoto?: string; placeholder?: boolean }> | undefined;
+      if (slug === 'the-grove') {
+        expect(gallery, slug).toBeUndefined();
+        continue;
+      }
+      expect(gallery, slug).toBeDefined();
+      const real = gallery!.filter((image) => image.placeholder === false);
+      expect(real, slug).toHaveLength(Object.keys(CLIENT_PHOTOS).length);
+      expect(gallery!.length, slug).toBeGreaterThanOrEqual(11);
+      expect(gallery!.slice(0, real.length).every((image) => image.placeholder === false), slug).toBe(true);
+    }
   });
 
   it('covers every sitemap residence once, with Oracle as flagship and The Grove coming soon', () => {
@@ -49,26 +90,37 @@ describe('seed data', () => {
     });
   });
 
-  it('marks every image as a placeholder with rights metadata and a replacement deadline', () => {
+  it('records rights on every image, and keeps stand-ins marked for replacement', () => {
     let images = 0;
     const used = new Set<string>();
     walk(docs, (node) => {
       if (node._type === 'mediaImage') {
         images += 1;
-        const photo = STOCK_PHOTOS[node.seedPhoto as keyof typeof STOCK_PHOTOS];
-        expect(photo, String(node.seedPhoto)).toBeTruthy();
-        used.add(String(node.seedPhoto));
-        expect(node.placeholder).toBe(true);
-        expect(node.replaceBy).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-        expect(node.alt).toBe(photo.alt);
-        expect(node.source).toContain('Unsplash');
-        expect(node.license).toBe('other');
-        expect(node.consent).toBe(photo.people ? 'obtained' : 'not-required');
-        if (photo.people) expect(node.consentRecord).toBeTruthy();
+        const seedPhoto = String(node.seedPhoto);
+        used.add(seedPhoto);
+        const stock = STOCK_PHOTOS[seedPhoto as keyof typeof STOCK_PHOTOS];
+        const client = CLIENT_PHOTOS[seedPhoto as keyof typeof CLIENT_PHOTOS];
+        expect(stock ?? client, seedPhoto).toBeTruthy();
+        expect(node.alt).toBe((stock ?? client)!.alt);
+        if (client) {
+          expect(node.placeholder, seedPhoto).toBe(false);
+          expect(node.replaceBy, seedPhoto).toBeUndefined();
+          expect(node.license, seedPhoto).toBe('client-owned');
+          expect(node.source, seedPhoto).toContain('Village 60 Plus');
+          expect(node.consent, seedPhoto).toBe(client.people ? 'obtained' : 'not-required');
+          if (client.people) expect(node.consentRecord, seedPhoto).toBeTruthy();
+          return;
+        }
+        expect(node.placeholder, seedPhoto).toBe(true);
+        expect(node.replaceBy, seedPhoto).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+        expect(node.source, seedPhoto).toContain('Unsplash');
+        expect(node.license, seedPhoto).toBe('other');
+        expect(node.consent, seedPhoto).toBe(stock!.people ? 'obtained' : 'not-required');
+        if (stock!.people) expect(node.consentRecord, seedPhoto).toBeTruthy();
       }
     });
     expect(images).toBeGreaterThan(0);
-    expect(used.size).toBe(Object.keys(STOCK_PHOTOS).length);
+    expect(used.size).toBe(Object.keys(STOCK_PHOTOS).length + Object.keys(CLIENT_PHOTOS).length);
   });
 
   it('flags every public document for compliance review before publication', () => {

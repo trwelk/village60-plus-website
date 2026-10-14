@@ -21,11 +21,17 @@ describe('LivingCareView', () => {
         contact={contactFixture}
       />,
     );
+    const aHome = screen.getByRole('heading', { name: 'A home' });
     const independent = screen.getByRole('heading', { name: 'Independent Living' });
+    const decision = screen.getByRole('heading', { name: 'You do not need to know which type before you call' });
+    const aWhile = screen.getByRole('heading', { name: 'A while' });
     const rehabilitation = screen.getByRole('heading', { name: 'Rehabilitation' });
     const meals = screen.getByRole('heading', { name: 'Meals and dining' });
     const unfit = screen.getByRole('heading', { name: 'When Village 60 Plus is not the right fit' });
-    expect(independent.compareDocumentPosition(rehabilitation) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(aHome.compareDocumentPosition(independent) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(independent.compareDocumentPosition(decision) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(decision.compareDocumentPosition(aWhile) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(aWhile.compareDocumentPosition(rehabilitation) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(rehabilitation.compareDocumentPosition(meals) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(meals.compareDocumentPosition(unfit) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(screen.getByRole('link', { name: 'Silver Roots' })).toHaveAttribute('href', '/silver-roots');

@@ -36,6 +36,7 @@ export function SanityImage({
   className,
   showCaption = false,
   cover = false,
+  decorative = false,
 }: {
   image: CmsImage | null | undefined;
   /** CSS-pixel width of the slot. Sent to the CDN and written as the width attribute. */
@@ -49,6 +50,8 @@ export function SanityImage({
   showCaption?: boolean;
   /** Fill the positioned parent, cropped, with no card radius. */
   cover?: boolean;
+  /** Keep the asset (alt is still required) but hide it from the accessibility tree. Use when a control beside it already names the photograph. */
+  decorative?: boolean;
 }) {
   const alt = image?.alt?.trim();
   if (!image?.asset?.url || !alt) return null;
@@ -63,7 +66,7 @@ export function SanityImage({
       src={src}
       srcSet={`${src} ${w}w, ${src2} ${w * 2}w`}
       sizes={sizes ?? `(min-width: 1200px) ${w}px, 100vw`}
-      alt={alt}
+      alt={decorative ? '' : alt}
       width={w}
       height={h}
       loading={priority ? 'eager' : 'lazy'}

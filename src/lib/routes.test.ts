@@ -34,6 +34,7 @@ describe('routes', () => {
     expect(contextForPath('/homes/the-grove')).toBe('The Grove');
     expect(contextForPath('/living-and-care/respite-care')).toBe('Respite care');
     expect(contextForPath('/silver-roots')).toBe('Silver Roots');
+    expect(contextForPath('/feedback')).toBe('Feedback');
     expect(contextForPath('/unknown')).toBe('Village 60 Plus');
   });
 });

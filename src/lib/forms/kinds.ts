@@ -1,4 +1,4 @@
-// the six form contexts from spec §9. Subjects contain no personal or health data.
+// Subjects contain no personal or health data.
 export const FORM_KINDS = [
   { value: 'general', label: 'General enquiry', subject: 'Website enquiry' },
   { value: 'find-care', label: 'Find the Right Care', subject: 'Find the Right Care enquiry' },
@@ -6,6 +6,7 @@ export const FORM_KINDS = [
   { value: 'grove-interest', label: 'The Grove — register interest', subject: 'The Grove interest registration' },
   { value: 'silver-roots-partner', label: 'Silver Roots partner interest', subject: 'Silver Roots partner interest' },
   { value: 'destination-retirement', label: 'Destination Retirement enquiry', subject: 'Destination Retirement enquiry' },
+  { value: 'feedback', label: 'Feedback or complaint', subject: 'Feedback or complaint' },
 ] as const;
 
 export type FormKind = (typeof FORM_KINDS)[number]['value'];

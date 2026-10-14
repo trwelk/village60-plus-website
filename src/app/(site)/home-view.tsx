@@ -7,6 +7,7 @@ import { ResidenceCard, type ResidenceCardData } from '@/components/content/Resi
 import type { HeroVideo } from '@/components/media/VideoHero';
 import type { CmsImage } from '@/components/media/SanityImage';
 import { HomeHero } from '@/components/content/HomeHero';
+import { OracleSpotlight } from '@/components/content/OracleSpotlight';
 import { Button } from '@/components/ui/Button';
 import { Heading } from '@/components/ui/Heading';
 import { Section } from '@/components/ui/Section';
@@ -61,6 +62,8 @@ export type HomeViewProps = {
   careServices: CareServiceCardData[];
   offerings: HomeOffering[];
   contact: SiteContact;
+  /** Gallery and hero frames for the Oracle portraits. Falls back to the residence card image. */
+  oracleImages?: Array<CmsImage | null> | null;
 };
 
 export function toResidenceCards(rows: Array<ResidenceCardData | null> | null | undefined): ResidenceCardData[] {
@@ -85,7 +88,7 @@ function Region({ name, children }: { name: string; children: ReactNode }) {
   return <div data-home-section={name}>{children}</div>;
 }
 
-export function HomeView({ home, residences, careServices, offerings, contact }: HomeViewProps) {
+export function HomeView({ home, residences, careServices, offerings, contact, oracleImages }: HomeViewProps) {
   const video = home?.heroVideo?.videoUrl || home?.heroVideo?.poster?.asset?.url ? home.heroVideo : null;
   const oracle = residences.find((item) => item.slug === 'oracle');
   const silver = offerings.find((item) => item.slug === 'silver-roots');
@@ -119,15 +122,11 @@ export function HomeView({ home, residences, careServices, offerings, contact }:
       </Region>
 
       <Region name="oracle">
-        <Section tone="night" labelledBy="home-oracle">
-          {isContentStatus(oracle?.status) ? <StatusBadge status={oracle.status} tone="dark" /> : null}
-          <Heading as="h2" id="home-oracle" onDark>Oracle</Heading>
-          <p className="mt-4 max-w-prose-site">{oracle?.summary || 'Oracle is the flagship residence. The team confirms what is available today.'}</p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Button href="/oracle" onDark>Explore Oracle</Button>
-            <EnquiryButton kind="oracle-visit" context="Oracle">Arrange a private visit</EnquiryButton>
-          </div>
-        </Section>
+        <OracleSpotlight
+          name={oracle?.name}
+          summary={oracle?.summary || 'Oracle is the flagship residence. The team confirms what is available today.'}
+          images={oracleImages?.length ? oracleImages : oracle?.heroImage ? [oracle.heroImage] : []}
+        />
       </Region>
 
       <Region name="homes">

@@ -2,15 +2,17 @@
  * Seeds the development dataset. Idempotent (createOrReplace with deterministic _ids).
  * Usage: npm run seed     (reads .env.local; requires SANITY_API_WRITE_TOKEN)
  *
- * Photographs are downloaded from Unsplash into scripts/.stock-cache (gitignored)
- * and uploaded once per filename.
+ * Stand-in photographs are downloaded from Unsplash into scripts/.stock-cache (gitignored).
+ * Client photographs are read from scripts/client-photos. Each file is uploaded once per filename.
  */
 import { createReadStream } from 'node:fs';
 import { mkdir, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createClient } from '@sanity/client';
 import { requireEnv } from '@/lib/env';
+import { CLIENT_PHOTOS, type ClientPhotoKey } from './client-photos';
 import { seedDocuments } from './seed-data';
+import { attachAssets } from './seed-assets';
 import { STOCK_PHOTOS, type StockPhotoKey } from './stock-photos';
 
 const projectId = requireEnv('NEXT_PUBLIC_SANITY_PROJECT_ID');
@@ -42,7 +44,7 @@ async function downloadPhoto(key: StockPhotoKey): Promise<string> {
   return file;
 }
 
-async function uploadPhoto(key: StockPhotoKey, file: string): Promise<string> {
+async function uploadPhoto(key: string, file: string): Promise<string> {
   const filename = `${key}.jpg`;
   const existing = await client.fetch<string | null>(`*[_type == "sanity.imageAsset" && originalFilename == $filename][0]._id`, { filename });
   if (existing) return existing;
@@ -50,35 +52,22 @@ async function uploadPhoto(key: StockPhotoKey, file: string): Promise<string> {
   return asset._id;
 }
 
-/** Attach the uploaded photograph for each mediaImage and drop the seed-only key. */
-function attachAssets<T>(value: T, assets: Map<string, string>): T {
-  if (Array.isArray(value)) return value.map((item) => attachAssets(item, assets)) as T;
-  if (value && typeof value === 'object') {
-    const record = value as Record<string, unknown>;
-    const next: Record<string, unknown> = {};
-    for (const [field, fieldValue] of Object.entries(record)) {
-      if (fieldValue !== undefined && field !== 'seedPhoto') next[field] = attachAssets(fieldValue, assets);
-    }
-    if (record._type === 'mediaImage') {
-      const photoKey = record.seedPhoto;
-      if (typeof photoKey !== 'string' || !assets.has(photoKey)) {
-        throw new Error(`No uploaded asset for image "${String(photoKey)}"`);
-      }
-      next.asset = { _type: 'reference', _ref: assets.get(photoKey) };
-    }
-    return next as T;
-  }
-  return value;
+function clientPhotoFile(key: ClientPhotoKey): string {
+  return path.join(process.cwd(), 'scripts', 'client-photos', CLIENT_PHOTOS[key].file);
 }
 
 async function main() {
   console.log(`Seeding ${projectId}/${dataset} …`);
   await mkdir(cacheDir, { recursive: true });
-  const keys = Object.keys(STOCK_PHOTOS) as StockPhotoKey[];
   const assets = new Map<string, string>();
-  for (const key of keys) {
+  for (const key of Object.keys(STOCK_PHOTOS) as StockPhotoKey[]) {
     const file = await downloadPhoto(key);
     const assetId = await uploadPhoto(key, file);
+    assets.set(key, assetId);
+    console.log(`  ${key}: ${assetId}`);
+  }
+  for (const key of Object.keys(CLIENT_PHOTOS) as ClientPhotoKey[]) {
+    const assetId = await uploadPhoto(key, clientPhotoFile(key));
     assets.set(key, assetId);
     console.log(`  ${key}: ${assetId}`);
   }

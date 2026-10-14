@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { addressLines, directionsHref, mapPoint, staticMapUrl } from './maps';
+import { addressLines, directionsHref, embedMapUrl, mapPoint, pinEmbedUrl, staticMapUrl } from './maps';
 
 const address = {
   line1: '133/19 Nawala Road',
@@ -40,5 +40,17 @@ describe('map helpers', () => {
     expect(url.searchParams.get('size')).toBe('640x400');
     expect(url.searchParams.get('markers')).toBe('color:0x18352D|6.91,79.88');
     expect(url.searchParams.get('key')).toBe('test-key');
+  });
+
+  it('drops a pin on the interactive map at the coordinates', () => {
+    const keyed = new URL(embedMapUrl({ lat: 6.91, lng: 79.88 }, 'test-key'));
+    expect(keyed.origin + keyed.pathname).toBe('https://www.google.com/maps/embed/v1/place');
+    expect(keyed.searchParams.get('q')).toBe('6.91,79.88');
+    expect(keyed.searchParams.get('zoom')).toBe('16');
+
+    const open = new URL(pinEmbedUrl({ lat: 6.91, lng: 79.88 }));
+    expect(open.origin + open.pathname).toBe('https://www.google.com/maps');
+    expect(open.searchParams.get('q')).toBe('6.91,79.88');
+    expect(open.searchParams.get('output')).toBe('embed');
   });
 });

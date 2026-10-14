@@ -88,6 +88,31 @@ function columnCount(count: number) {
   return '';
 }
 
+const RESIDENCE_SECTION_LABELS: Partial<
+  Record<
+    string,
+    {
+      audience?: string;
+      spaces?: string;
+      sharedSpaces?: string;
+      care?: string;
+      everyday?: string;
+    }
+  >
+> = {
+  'enchanted-fields': {
+    audience: 'What we offer in our communities',
+    spaces: 'Amenities at the retirement chalets',
+    sharedSpaces: 'Community facilities at Enchanted Fields Retirement Villas',
+    care: 'Care at the retirement chalets',
+    everyday: 'Activity programme',
+  },
+};
+
+function residenceSectionLabel(slug: string, section: keyof NonNullable<(typeof RESIDENCE_SECTION_LABELS)[string]>, fallback: string) {
+  return RESIDENCE_SECTION_LABELS[slug]?.[section] ?? fallback;
+}
+
 function SupportGrid({ items, surface = 'paper' }: { items: Array<CapabilityItem | null> | null | undefined; surface?: 'paper' | 'ivory' }) {
   const rows = (items ?? []).filter((item): item is CapabilityItem & { title: string } => Boolean(item?.title));
   if (rows.length === 0) return null;
@@ -257,11 +282,25 @@ export function ResidenceView({
         </PageHero>
       </Region>
 
+      {photos.length > 0 ? (
+        <Region name="gallery">
+          <Section tone="paper" className="band-from-hero overflow-x-clip">
+            <Gallery
+              images={residence.gallery}
+              label={`${residence.name} photographs`}
+              title="A look through the house"
+              titleId="photographs"
+              intro="The house, in pictures"
+            />
+          </Section>
+        </Region>
+      ) : null}
+
       {suits.length > 0 ? (
         <Region name="audience">
-          <Section tone="sand" labelledBy="who-it-suits" className="band-from-hero">
+          <Section tone="sand" labelledBy="who-it-suits" className={photos.length > 0 ? undefined : 'band-from-hero'}>
             <Heading as="h2" id="who-it-suits">
-              Who this home suits
+              {residenceSectionLabel(residence.slug, 'audience', 'Who this home suits')}
             </Heading>
             <ul className={cn('m-0 mt-8 grid list-none gap-4 p-0', columnCount(suits.length))}>
               {suits.map((item, index) => (
@@ -295,7 +334,7 @@ export function ResidenceView({
       <Region name="spaces">
         <Section tone="paper" labelledBy="spaces">
           <Heading as="h2" id="spaces">
-            Rooms and shared spaces
+            {residenceSectionLabel(residence.slug, 'spaces', 'Rooms and shared spaces')}
           </Heading>
           {rooms.length > 0 ? (
             <ul className="m-0 mt-8 grid list-none gap-4 p-0 md:grid-cols-2">
@@ -310,7 +349,9 @@ export function ResidenceView({
           )}
           {spaces.length > 0 ? (
             <div className={rooms.length > 0 ? 'mt-12' : 'mt-10'}>
-              <h3 className="text-[22px] leading-snug md:text-[24px]">Shared spaces</h3>
+              <h3 className="text-[22px] leading-snug md:text-[24px]">
+                {residenceSectionLabel(residence.slug, 'sharedSpaces', 'Shared spaces')}
+              </h3>
               <ul className="m-0 mt-4 grid list-none gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3">
                 {spaces.map((space) => (
                   <li key={space} className="rounded-panel border border-stone bg-sand px-5 py-4 font-display text-[20px] leading-snug">
@@ -327,7 +368,7 @@ export function ResidenceView({
         <Region name="care">
           <Section tone="mist" labelledBy="care-here">
             <Heading as="h2" id="care-here">
-              Care and support at this home
+              {residenceSectionLabel(residence.slug, 'care', 'Care and support at this home')}
             </Heading>
             <SupportGrid items={residence.careAndSupport} />
           </Section>
@@ -338,17 +379,9 @@ export function ResidenceView({
         <Region name="everyday">
           <Section tone="ivory" labelledBy="everyday">
             <Heading as="h2" id="everyday">
-              Meals, housekeeping and family visits
+              {residenceSectionLabel(residence.slug, 'everyday', 'Meals, housekeeping and family visits')}
             </Heading>
             <SupportGrid items={residence.everydayLife} />
-          </Section>
-        </Region>
-      ) : null}
-
-      {photos.length > 0 ? (
-        <Region name="gallery">
-          <Section tone="paper">
-            <Gallery images={residence.gallery} label={`${residence.name} photographs`} title="Photographs" titleId="photographs" />
           </Section>
         </Region>
       ) : null}

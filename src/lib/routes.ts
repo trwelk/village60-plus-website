@@ -86,6 +86,7 @@ const PAGE_CONTEXT: Record<string, string> = {
   '/sage': 'SAGE',
   '/our-story': 'Our story',
   '/contact': 'Contact',
+  '/feedback': 'Feedback',
   '/privacy': 'Privacy',
   '/terms': 'Terms',
   '/accessibility': 'Accessibility',

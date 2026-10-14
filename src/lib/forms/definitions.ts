@@ -67,6 +67,11 @@ export const STAY_LENGTHS: FieldOption[] = [
   { value: 'not-sure', label: 'Not sure yet' },
 ];
 
+export const FEEDBACK_NATURES: FieldOption[] = [
+  { value: 'feedback', label: 'Feedback' },
+  { value: 'complaint', label: 'A complaint' },
+];
+
 const privacy: FieldDef = {
   name: 'privacy',
   label: 'I have read the privacy notice and agree to be contacted about this enquiry.',
@@ -153,6 +158,21 @@ const DEFINITIONS: Record<FormKind, FormDefinition> = {
       phone,
       { name: 'stayLength', label: 'How long are you thinking of staying?', type: 'select', required: true, options: STAY_LENGTHS },
       { name: 'note', label: 'What kind of stay are you imagining? (optional)', type: 'textarea', required: false, maxLength: 1000 },
+      privacy,
+    ],
+  },
+  feedback: {
+    kind: 'feedback',
+    heading: 'Feedback and complaints',
+    intro: 'Share a compliment, a suggestion, or a complaint. Tell us what happened and which home or service it concerns.',
+    submitLabel: 'Send message',
+    fields: [
+      name,
+      phone,
+      { name: 'email', label: 'Email (optional)', type: 'email', required: false, autocomplete: 'email', maxLength: 120 },
+      { name: 'nature', label: 'This message is', type: 'select', required: true, options: FEEDBACK_NATURES },
+      { name: 'about', label: 'Home or service (optional)', type: 'text', required: false, maxLength: 120 },
+      { name: 'message', label: 'What would you like us to know?', type: 'textarea', required: true, maxLength: 1000 },
       privacy,
     ],
   },

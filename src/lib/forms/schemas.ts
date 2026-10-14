@@ -15,6 +15,15 @@ function optionalText(max: number) {
     .transform((value) => (value ? value : undefined));
 }
 
+function optionalEmail() {
+  return z
+    .string()
+    .trim()
+    .max(120, 'Email must be 120 characters or fewer.')
+    .refine((value) => value === '' || z.email().safeParse(value).success, 'Enter a valid email address.')
+    .transform((value) => value || undefined);
+}
+
 function oneOf(values: string[], message: string) {
   return z.string().refine((value) => values.includes(value), message);
 }
@@ -65,6 +74,15 @@ const schemas = {
     phone,
     stayLength: oneOf(['few-weeks', 'few-months', 'not-sure'], 'Choose a rough length of stay.'),
     note: optionalText(1000),
+    privacy,
+  }),
+  feedback: z.object({
+    name: personName,
+    phone,
+    email: optionalEmail(),
+    nature: oneOf(['feedback', 'complaint'], 'Choose feedback or a complaint.'),
+    about: optionalText(120),
+    message: z.string().trim().min(2, 'Tell us what you would like us to know.').max(1000, 'Keep this to 1000 characters or fewer.'),
     privacy,
   }),
 } satisfies Record<FormKind, z.ZodType>;

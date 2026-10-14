@@ -146,6 +146,7 @@ describe('sitemap and robots', () => {
       'https://www.village60plus.lk/homes/the-grove',
       'https://www.village60plus.lk/living-and-care/respite-care',
       'https://www.village60plus.lk/sage',
+      'https://www.village60plus.lk/feedback',
     ]);
     expect(urls.some((url) => url.includes('/homes/oracle'))).toBe(false);
   });

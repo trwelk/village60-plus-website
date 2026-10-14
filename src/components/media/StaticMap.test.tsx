@@ -32,15 +32,19 @@ describe('StaticMap', () => {
     await user.click(screen.getByRole('button', { name: 'Load interactive map' }));
     const frame = container.querySelector('iframe');
     expect(frame).toHaveAttribute('title', 'Map of Serenity');
-    expect(frame?.getAttribute('src')).toContain('maps/embed');
-    expect(frame?.getAttribute('src')).toContain('6.91');
+    expect(frame?.getAttribute('src')).toContain('maps/embed/v1/place');
+    expect(frame?.getAttribute('src')).toContain('q=6.91%2C79.88');
     expect(screen.queryByRole('button', { name: 'Load interactive map' })).not.toBeInTheDocument();
   });
 
-  it('keeps the address and directions when there is no key or no coordinates', () => {
+  it('shows a pinned map without an API key, and keeps directions when there are no coordinates', () => {
     const { rerender, container } = render(<StaticMap address={address} mapsKey={null} label="Serenity" />);
     expect(screen.getByRole('link', { name: 'Get directions' })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Load interactive map' })).not.toBeInTheDocument();
+    const frame = container.querySelector('iframe');
+    expect(frame).toHaveAttribute('title', 'Map of Serenity');
+    expect(frame?.getAttribute('src')).toContain('output=embed');
+    expect(frame?.getAttribute('src')).toContain('q=6.91%2C79.88');
     rerender(<StaticMap address={{ ...address, location: null }} mapsKey="test-key" label="Serenity" />);
     expect(container.querySelector('iframe')).toBeNull();
     expect(screen.queryByRole('button')).not.toBeInTheDocument();

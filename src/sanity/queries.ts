@@ -41,6 +41,14 @@ export const RESIDENCES_QUERY = defineQuery(/* groq */ `
   *[_type == "residence"] | order(isFlagship desc, name asc){ ${RESIDENCE_CARD} }
 `);
 
+/** Hero plus gallery, so the home spotlight can choose two portrait frames. */
+export const ORACLE_FRAMES_QUERY = defineQuery(/* groq */ `
+  *[_type == "residence" && slug.current == "oracle"][0]{
+    heroImage{ ${IMAGE} },
+    gallery[]{ ${IMAGE} }
+  }
+`);
+
 export const RESIDENCE_QUERY = defineQuery(/* groq */ `
   *[_type == "residence" && slug.current == $slug][0]{
     ${RESIDENCE_CARD},
@@ -75,7 +83,8 @@ export const CARE_SERVICE_QUERY = defineQuery(/* groq */ `
     ${FAQS},
     ${SEO},
     "residences": *[_type == "residence" && references(^._id)] | order(isFlagship desc, name asc){
-      _id, name, "slug": slug.current, status, shortLocation
+      _id, name, "slug": slug.current, status, shortLocation,
+      heroImage{ ${IMAGE} }
     }
   }
 `);

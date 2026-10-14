@@ -6,7 +6,8 @@ import { docTag } from '@/lib/revalidation';
 import { organizationJsonLd, pageMetadata, websiteJsonLd } from '@/lib/seo';
 import { contactFromSettings } from '@/lib/site-settings';
 import { fetchPublished } from '@/sanity/fetch';
-import { CARE_SERVICES_QUERY, OFFERINGS_QUERY, PAGE_QUERY, RESIDENCES_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/queries';
+import { imagesFromOracleFrames } from '@/components/content/OracleSpotlight';
+import { CARE_SERVICES_QUERY, OFFERINGS_QUERY, ORACLE_FRAMES_QUERY, PAGE_QUERY, RESIDENCES_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/queries';
 import { HomeView, toCareCards, toHomeOfferings, toResidenceCards } from './home-view';
 
 type HomePageData = {
@@ -15,6 +16,7 @@ type HomePageData = {
   careServices: Awaited<ReturnType<typeof fetchPublished<typeof CARE_SERVICES_QUERY>>> | null;
   offerings: Awaited<ReturnType<typeof fetchPublished<typeof OFFERINGS_QUERY>>> | null;
   settings: Awaited<ReturnType<typeof fetchPublished<typeof SITE_SETTINGS_QUERY>>> | null;
+  oracleFrames: unknown;
 };
 
 const emptyHomeData: HomePageData = {
@@ -23,6 +25,7 @@ const emptyHomeData: HomePageData = {
   careServices: null,
   offerings: null,
   settings: null,
+  oracleFrames: null,
 };
 
 async function loadHomePageData(): Promise<HomePageData> {
@@ -31,14 +34,15 @@ async function loadHomePageData(): Promise<HomePageData> {
     return emptyHomeData;
   }
   try {
-    const [home, residences, careServices, offerings, settings] = await Promise.all([
+    const [home, residences, careServices, offerings, settings, oracleFrames] = await Promise.all([
       fetchPublished(PAGE_QUERY, { slug: 'home' }, [docTag('page', 'home'), 'page']),
       fetchPublished(RESIDENCES_QUERY, {}, ['residence']),
       fetchPublished(CARE_SERVICES_QUERY, {}, ['careService']),
       fetchPublished(OFFERINGS_QUERY, {}, ['ecosystemOffering']),
       fetchPublished(SITE_SETTINGS_QUERY, {}, ['siteSettings']),
+      fetchPublished(ORACLE_FRAMES_QUERY, {}, ['residence']),
     ]);
-    return { home, residences, careServices, offerings, settings };
+    return { home, residences, careServices, offerings, settings, oracleFrames };
   } catch {
     return emptyHomeData;
   }
@@ -59,7 +63,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const { home, residences, careServices, offerings, settings } = await loadHomePageData();
+  const { home, residences, careServices, offerings, settings, oracleFrames } = await loadHomePageData();
   const contact = contactFromSettings(settings);
   const siteUrl = getPublicEnv().siteUrl;
   return (
@@ -81,6 +85,7 @@ export default async function HomePage() {
         residences={toResidenceCards(residences)}
         careServices={toCareCards(careServices)}
         offerings={toHomeOfferings(offerings)}
+        oracleImages={imagesFromOracleFrames(oracleFrames)}
         contact={contact}
       />
     </>

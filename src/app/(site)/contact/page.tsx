@@ -57,7 +57,7 @@ export default async function ContactPage() {
         emergencyNotice={settings?.emergencyNotice}
         headOffice={settings?.headOffice}
         mapsKey={mapsKey}
-        residences={residences.flatMap((residence) => (residence?.name ? [{ name: residence.name, address: residence.address ?? null }] : []))}
+        residences={residences.flatMap((residence) => (residence?.name ? [{ name: residence.name, slug: residence.slug, address: residence.address ?? null }] : []))}
       />
     </>
   );

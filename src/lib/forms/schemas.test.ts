@@ -102,6 +102,35 @@ describe('parseEnquiry', () => {
     if (!result.ok) expect(result.fieldErrors.preferredDate).toMatch(/today or a later date/i);
   });
 
+  it('accepts feedback without an email and rejects a blank message', () => {
+    const result = parseEnquiry(
+      'feedback',
+      raw({
+        name: 'Nimal Perera',
+        phone: '+94771234567',
+        email: '',
+        nature: 'complaint',
+        about: 'Serenity',
+        message: 'The evening meal arrived cold.',
+        privacy: 'on',
+      }),
+      { today: TODAY },
+    );
+    expect(result.ok).toBe(true);
+    if (result.ok) expect(result.data).toMatchObject({ nature: 'complaint', about: 'Serenity', email: undefined });
+
+    const blank = parseEnquiry(
+      'feedback',
+      raw({ name: 'Nimal Perera', phone: '+94771234567', email: 'not-an-email', nature: 'complaint', message: ' ', privacy: 'on' }),
+      { today: TODAY },
+    );
+    expect(blank.ok).toBe(false);
+    if (!blank.ok) {
+      expect(blank.fieldErrors.email).toMatch(/email/i);
+      expect(blank.fieldErrors.message).toMatch(/know/i);
+    }
+  });
+
   it('requires an email for partner interest and not for the other forms', () => {
     const missingEmail = parseEnquiry(
       'silver-roots-partner',

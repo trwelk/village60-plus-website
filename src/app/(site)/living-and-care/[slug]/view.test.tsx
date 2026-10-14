@@ -30,8 +30,8 @@ const service: CareDetail = {
   faqs: [{ _id: 'faq.visit', question: 'Can we visit first?', answer }],
   formKind: 'general',
   residences: [
-    { _id: 'residence.serenity', name: 'Serenity', slug: 'serenity', status: 'available', shortLocation: 'Colombo' },
-    { _id: 'residence.the-grove', name: 'The Grove', slug: 'the-grove', status: 'coming-soon', shortLocation: 'Kottawa' },
+    { _id: 'residence.serenity', name: 'Serenity', slug: 'serenity', status: 'available', shortLocation: 'Colombo', heroImage: imageFixture('Serenity exterior') },
+    { _id: 'residence.the-grove', name: 'The Grove', slug: 'the-grove', status: 'coming-soon', shortLocation: 'Kottawa', heroImage: imageFixture('The Grove') },
   ],
 };
 
@@ -50,6 +50,8 @@ describe('CareDetailView', () => {
     expect(screen.getByText('A few days to a few weeks')).toBeInTheDocument();
     expect(screen.getByText('Arranged through a partner')).toBeInTheDocument();
     expect(screen.getByRole('img', { name: 'A quiet bedroom prepared for a short stay' })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'Serenity exterior' })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'The Grove' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Serenity/ })).toHaveAttribute('href', '/homes/serenity');
     expect(screen.getByText('Coming soon')).toBeInTheDocument();
     expect(screen.getByText('Can we visit first?')).toBeInTheDocument();

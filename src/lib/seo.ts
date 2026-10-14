@@ -197,6 +197,7 @@ export function sitemapEntries(siteUrl: string, data: SitemapGroups): Array<{ ur
   for (const residence of data.residences ?? []) push(residence?.slug ? residencePath(residence.slug) : null, residence?._updatedAt);
   for (const service of data.careServices ?? []) push(service?.slug ? careServicePath(service.slug) : null, service?._updatedAt);
   for (const offering of data.offerings ?? []) push(offering?.slug ? offeringPath(offering.slug) : null, offering?._updatedAt);
+  push('/feedback');
   return entries;
 }
 

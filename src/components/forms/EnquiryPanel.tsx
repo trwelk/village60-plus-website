@@ -97,7 +97,7 @@ export function EnquiryButton({
   kind: FormKind;
   context: string;
   children: ReactNode;
-  tone?: 'solid' | 'secondary' | 'overlay' | 'text';
+  tone?: 'solid' | 'secondary' | 'overlay' | 'text' | 'on-dark' | 'rule';
 }) {
   const { open } = useEnquiry();
   const className =
@@ -107,7 +107,11 @@ export function EnquiryButton({
         ? 'inline-flex min-h-11 items-center font-semibold text-green underline decoration-gold underline-offset-4 transition-colors duration-(--duration-fast) hover:decoration-green'
         : tone === 'secondary'
           ? 'inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full border border-green bg-transparent px-5 text-[17px] font-semibold text-green transition-colors duration-(--duration-fast) hover:bg-mist'
-          : 'inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-green px-5 text-[17px] font-semibold text-ivory transition-colors duration-(--duration-fast) hover:bg-night';
+          : tone === 'on-dark'
+            ? 'inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full border border-ivory bg-transparent px-7 py-3.5 text-[18px] font-semibold text-ivory transition-colors duration-(--duration-fast) hover:bg-white/10'
+            : tone === 'rule'
+              ? 'inline-flex min-h-12 w-full items-center justify-between gap-3 border-t border-charcoal bg-transparent px-4 py-3 text-left text-[15px] font-semibold text-charcoal transition-colors duration-(--duration-fast) hover:bg-charcoal hover:text-ivory sm:border-t-0 sm:border-l'
+              : 'inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-green px-5 text-[17px] font-semibold text-ivory transition-colors duration-(--duration-fast) hover:bg-night';
   return (
     <button type="button" className={className} data-track="enquiry_open" onClick={() => open(kind, context)}>
       {children}

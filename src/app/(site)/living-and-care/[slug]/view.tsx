@@ -5,7 +5,7 @@ import { provisionLabel, type CapabilityItem } from '@/components/content/Capabi
 import { FaqList, type FaqItem } from '@/components/content/FaqList';
 import { PageHero } from '@/components/content/PageHero';
 import type { StepItem } from '@/components/content/StepList';
-import { type CmsImage } from '@/components/media/SanityImage';
+import { SanityImage, type CmsImage } from '@/components/media/SanityImage';
 import { ContactActions } from '@/components/site/ContactActions';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { Chip } from '@/components/ui/Chip';
@@ -31,7 +31,14 @@ export type CareDetail = {
   notRightFit?: string | null;
   faqs?: Array<FaqItem | null> | null;
   formKind?: string | null;
-  residences?: Array<{ _id: string; name?: string | null; slug?: string | null; status?: string | null; shortLocation?: string | null } | null> | null;
+  residences?: Array<{
+    _id: string;
+    name?: string | null;
+    slug?: string | null;
+    status?: string | null;
+    shortLocation?: string | null;
+    heroImage?: CmsImage | null;
+  } | null> | null;
 };
 
 function Region({ name, className, children }: { name: string; className?: string; children?: ReactNode }) {
@@ -44,6 +51,10 @@ function Region({ name, className, children }: { name: string; className?: strin
 
 function markedStatus(status: string | null | undefined) {
   return isContentStatus(status) && status !== 'available' ? status : null;
+}
+
+function hasPhoto(image: CmsImage | null | undefined) {
+  return Boolean(image?.asset?.url && image.alt?.trim());
 }
 
 export function CareDetailView({ service, contact }: { service: CareDetail | null; contact: SiteContact }) {
@@ -178,14 +189,28 @@ export function CareDetailView({ service, contact }: { service: CareDetail | nul
                   <li key={home._id} className={cn('h-full', homes.length === 1 && 'md:max-w-md')}>
                     <Link
                       href={residencePath(home.slug)}
-                      className="flex h-full flex-col rounded-panel border border-stone bg-paper p-6 no-underline transition-colors hover:border-green"
+                      className="flex h-full flex-col overflow-hidden rounded-panel border border-stone bg-paper no-underline transition-colors hover:border-green"
                     >
-                      <div className="flex flex-wrap items-start justify-between gap-3">
-                        <h3 className="text-[24px] leading-snug text-green md:text-[26px]">{home.name}</h3>
-                        {status ? <StatusBadge status={status} /> : null}
+                      {hasPhoto(home.heroImage) ? (
+                        <div className="relative aspect-[3/2] bg-sand">
+                          <SanityImage
+                            image={home.heroImage}
+                            width={800}
+                            height={533}
+                            sizes="(min-width: 1200px) 560px, 100vw"
+                            cover
+                            className="absolute inset-0"
+                          />
+                        </div>
+                      ) : null}
+                      <div className="flex flex-1 flex-col p-6">
+                        <div className="flex flex-wrap items-start justify-between gap-3">
+                          <h3 className="text-[24px] leading-snug text-green md:text-[26px]">{home.name}</h3>
+                          {status ? <StatusBadge status={status} /> : null}
+                        </div>
+                        {home.shortLocation ? <p className="mt-3">{home.shortLocation}</p> : null}
+                        <span className="mt-auto pt-6 font-semibold text-green underline decoration-gold underline-offset-4">View home</span>
                       </div>
-                      {home.shortLocation ? <p className="mt-3">{home.shortLocation}</p> : null}
-                      <span className="mt-auto pt-6 font-semibold text-green underline decoration-gold underline-offset-4">View home</span>
                     </Link>
                   </li>
                 );

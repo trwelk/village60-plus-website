@@ -106,6 +106,86 @@ function StoryChapter({ section, index }: { section: StorySection; index: number
   );
 }
 
+const MISSION =
+  'V60+\u2019s Mission is to be the premier Home and Residential Elder care solution provider for you or your loved ones in the South Asian Region. With a decade and plus years of successive experience in caring for the wellbeing of loved ones, we are culminating Home and Residential Elder Care into the 21st Century / Twenty-Twenties, digitizing our amenities and services so that families may bond and be closer with loved ones, while providing family and or guardians ultimate access and control over the care of their loved ones.';
+
+const VISION = [
+  'Our goal is to provide State-of-the-art care and amenities to our residents and home care clients while investing heavily on training and development to maintain well trained and skilled nursing guilds.',
+  'Our vision is to be the front runner for Geriatric care in the South Asian region and to be recognized globally for our quality service towards our stakeholders.',
+] as const;
+
+const CORE_VALUES = [
+  {
+    name: 'Empathy',
+    body: 'We believe that acknowledging each one of our residents and clients is key to their wellbeing securing a sense of comfort and peace of mind in knowing that behind the empathy is integrity and care.',
+  },
+  {
+    name: 'Knowledge and expertise',
+    body: 'surrounding the caregiving of each of our Residents, clients and other stakeholders.',
+  },
+  {
+    name: 'Integrity',
+    body: 'We hold ourselves accountable to our residents, clients and employees. We endeavor to demonstrate honesty, professionalism, and sincerity. We will stay true to our promise to always act in the best interest of our stakeholders.',
+  },
+  {
+    name: 'Service',
+    body: 'Service is the cornerstone of our organization.',
+  },
+] as const;
+
+function CharterRule({ onDark = false }: { onDark?: boolean }) {
+  return (
+    <div aria-hidden="true" className="mt-4 flex w-14 flex-col gap-1">
+      <span className={cn('h-0.5', onDark ? 'bg-pale-gold' : 'bg-gold')} />
+      <span className={cn('h-px', onDark ? 'bg-pale-gold/45' : 'bg-stone')} />
+    </div>
+  );
+}
+
+function PurposeCharter() {
+  return (
+    <div className="flex flex-col gap-8 lg:gap-12">
+      <div className="grid overflow-hidden rounded-panel shadow-panel md:grid-cols-[minmax(0,1.4fr)_minmax(17.5rem,0.92fr)]">
+        <article aria-labelledby="mission" className="bg-paper px-6 py-8 sm:px-10 sm:py-12">
+          <h2 id="mission" className="scroll-mt-28">
+            Mission
+          </h2>
+          <CharterRule />
+          <p className="mt-6 text-[17px] leading-relaxed md:text-[18px]">{MISSION}</p>
+        </article>
+        <article aria-labelledby="vision" className="on-dark border-t-2 border-pale-gold bg-green px-6 py-8 text-ivory sm:px-10 sm:py-12 md:border-t-0 md:border-l-2">
+          <h2 id="vision" className="scroll-mt-28">
+            Vision
+          </h2>
+          <CharterRule onDark />
+          <div className="mt-6 flex flex-col gap-5 text-[17px] leading-relaxed md:text-[18px]">
+            {VISION.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </article>
+      </div>
+
+      <div className="rounded-panel border border-stone bg-paper px-6 py-8 shadow-panel sm:px-10 sm:py-12">
+        <h2 id="core-values" className="scroll-mt-28">
+          Our Core Values
+        </h2>
+        <CharterRule />
+        <ul className="m-0 mt-8 list-none border-b border-stone p-0">
+          {CORE_VALUES.map((value) => (
+            <li key={value.name} className="border-t border-stone">
+              <div className="grid gap-3 py-7 md:grid-cols-[minmax(13.5rem,18rem)_minmax(0,68ch)] md:items-baseline md:gap-x-12 md:py-8">
+                <h3 className="border-l-2 border-gold pl-4">{value.name}</h3>
+                <p className="text-[17px] leading-relaxed md:text-[18px]">{value.body}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 function PersonCard({ person }: { person: StoryPerson & { name: string } }) {
   const credentials = (person.credentials ?? []).filter((item): item is string => Boolean(item));
   const bio = person.bio && person.bio.length > 0 ? person.bio : null;
@@ -175,6 +255,9 @@ export function OurStoryView({
           </div>
         </Section>
       ) : null}
+      <Section tone="ivory" className={hasBody ? 'border-t border-stone' : undefined}>
+        <PurposeCharter />
+      </Section>
       {hasStory ? (
         <Section tone="sand" labelledBy={chapters.length === 0 ? 'leadership' : undefined}>
           <div className="flex flex-col gap-10 lg:gap-14">

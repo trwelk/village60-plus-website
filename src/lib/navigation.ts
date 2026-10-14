@@ -13,6 +13,7 @@ export const MORE_NAV: NavItem[] = [
   { label: 'SAGE', href: '/sage' },
   { label: 'Our Story', href: '/our-story' },
   { label: 'Contact', href: '/contact' },
+  { label: 'Feedback', href: '/feedback' },
 ];
 
 export const LEGAL_NAV: NavItem[] = [

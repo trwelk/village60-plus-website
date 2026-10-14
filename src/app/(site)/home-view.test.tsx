@@ -42,7 +42,7 @@ function renderHome(overrides: Partial<HomeViewProps> = {}) {
 }
 
 describe('HomeView', () => {
-  it('renders the eight sections in order, with Find the Right Care before Oracle', () => {
+  it('renders the eight sections in order, with Oracle after Find the Right Care', () => {
     const { container } = renderHome();
     expect([...container.querySelectorAll('[data-home-section]')].map((node) => node.getAttribute('data-home-section'))).toEqual([
       'hero',
@@ -54,11 +54,35 @@ describe('HomeView', () => {
       'ecosystem',
       'trust',
     ]);
-    const find = screen.getAllByRole('link', { name: /Find the Right Care/i })[0];
     const oracle = screen.getAllByRole('heading', { name: 'Oracle' })[0];
-    expect(find.compareDocumentPosition(oracle) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    const pathways = screen.getByRole('heading', { name: 'Find the Right Care' });
+    expect(pathways.compareDocumentPosition(oracle) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    const spotlight = container.querySelector('[data-home-section="oracle"]');
+    expect(spotlight).not.toBeNull();
+    expect(within(spotlight as HTMLElement).getByText('Ten rooms for independent adults.')).toBeInTheDocument();
+    expect(within(spotlight as HTMLElement).getByRole('link', { name: 'Learn More' })).toHaveAttribute('href', '/oracle');
+    expect(within(spotlight as HTMLElement).getByRole('img', { name: 'Oracle exterior' })).toBeInTheDocument();
+    expect(within(spotlight as HTMLElement).queryByRole('button', { name: /private visit/i })).not.toBeInTheDocument();
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Live well. Age exceptionally.');
+  });
+
+  it('overlaps the two tallest Oracle photographs', () => {
+    const wide = imageFixture('Oracle exterior');
+    wide.asset.url = 'https://cdn.sanity.io/images/testproject/test/wide-1600x1000.jpg';
+    const verandah = imageFixture('A long wooden verandah');
+    verandah.asset.url = 'https://cdn.sanity.io/images/testproject/test/verandah-2400x3606.jpg';
+    verandah.asset.metadata.dimensions = { width: 2400, height: 3606, aspectRatio: 2400 / 3606 };
+    const bungalow = imageFixture('A white bungalow and bougainvillea');
+    bungalow.asset.url = 'https://cdn.sanity.io/images/testproject/test/bungalow-2299x2838.jpg';
+    bungalow.asset.metadata.dimensions = { width: 2299, height: 2838, aspectRatio: 2299 / 2838 };
+    const { container } = renderHome({ oracleImages: [wide, bungalow, verandah] });
+    const spotlight = container.querySelector('[data-home-section="oracle"]') as HTMLElement;
+    const photos = within(spotlight).getAllByRole('img');
+    expect(photos.map((photo) => photo.getAttribute('alt'))).toEqual([
+      'A long wooden verandah',
+      'A white bungalow and bougainvillea',
+    ]);
   });
 
   it('links Oracle to /oracle and labels The Grove as coming soon', () => {

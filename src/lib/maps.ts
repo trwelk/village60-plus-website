@@ -58,11 +58,22 @@ export function staticMapUrl(
   return `https://maps.googleapis.com/maps/api/staticmap?${params}`;
 }
 
+/** Interactive map with a pin. Place mode marks the coordinates; view mode does not. */
 export function embedMapUrl(point: { lat: number; lng: number }, key: string): string {
   const params = new URLSearchParams({
     key,
-    center: `${point.lat},${point.lng}`,
-    zoom: '15',
+    q: `${point.lat},${point.lng}`,
+    zoom: '16',
   });
-  return `https://www.google.com/maps/embed/v1/view?${params}`;
+  return `https://www.google.com/maps/embed/v1/place?${params}`;
+}
+
+/** Same pin, without a Maps API key. Host stays on www.google.com so the site CSP can frame it. */
+export function pinEmbedUrl(point: { lat: number; lng: number }): string {
+  const params = new URLSearchParams({
+    q: `${point.lat},${point.lng}`,
+    z: '16',
+    output: 'embed',
+  });
+  return `https://www.google.com/maps?${params}`;
 }

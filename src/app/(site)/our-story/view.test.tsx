@@ -33,7 +33,14 @@ describe('OurStoryView', () => {
     expect(screen.getByRole('img', { name: 'The first home' })).toBeInTheDocument();
     expect(screen.getByText('People should grow older with dignity.')).toBeInTheDocument();
     expect(screen.queryByText(/Established/)).not.toBeInTheDocument();
-    expect(container.querySelectorAll('.bg-green')).toHaveLength(1);
+    expect(screen.getByRole('heading', { name: 'Mission' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Vision' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Our Core Values' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Knowledge and expertise' })).toBeInTheDocument();
+    expect(screen.getByText(/V60\+\u2019s Mission is to be the premier Home and Residential Elder care/)).toBeInTheDocument();
+    expect(screen.getByText('surrounding the caregiving of each of our Residents, clients and other stakeholders.')).toBeInTheDocument();
+    expect(screen.getByText('Service is the cornerstone of our organization.')).toBeInTheDocument();
+    expect(container.querySelector('ol')?.querySelectorAll('.bg-green')).toHaveLength(1);
     expect(screen.getByRole('heading', { name: 'Night' }).closest('.bg-night')).toBeNull();
     expect(screen.getByRole('img', { name: 'Amara Perera' })).toBeInTheDocument();
     expect(screen.queryByRole('img', { name: 'hidden' })).not.toBeInTheDocument();
@@ -43,5 +50,7 @@ describe('OurStoryView', () => {
   it('prints the founding year only when settings provide one', () => {
     render(<OurStoryView title="Our story" intro={null} body={null} foundedYear={2008} sections={[]} team={[]} />);
     expect(screen.getByText('Established 2008')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Empathy' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Integrity' })).toBeInTheDocument();
   });
 });

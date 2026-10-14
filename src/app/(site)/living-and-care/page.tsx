@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
     siteUrl,
     path: PATH,
     fallbackTitle: 'Living and care',
-    fallbackDescription: 'Independent living, residential care, respite, recovery and rehabilitation.',
+    fallbackDescription: 'Residential and independent living, short stays, recovery and rehabilitation, plus coordinated support at home through Silver Roots.',
     seo: doc?.seo,
   });
 }

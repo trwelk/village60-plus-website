@@ -1267,7 +1267,7 @@ export type CARE_SERVICES_QUERY_RESULT = Array<{
 
 // Source: src/sanity/queries.ts
 // Variable: CARE_SERVICE_QUERY
-// Query: *[_type == "careService" && slug.current == $slug][0]{      _id, name, "slug": slug.current, status, summary, typicalDuration,  heroImage{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },    whoItSuits, notRightFit, formKind,    included[]{ _key, title, description, provision, status },    process[]{ _key, title, description },    faqs[]->{ _id, question, answer },    seo{ ..., image{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } } },    "residences": *[_type == "residence" && references(^._id)] | order(isFlagship desc, name asc){      _id, name, "slug": slug.current, status, shortLocation    }  }
+// Query: *[_type == "careService" && slug.current == $slug][0]{      _id, name, "slug": slug.current, status, summary, typicalDuration,  heroImage{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } },    whoItSuits, notRightFit, formKind,    included[]{ _key, title, description, provision, status },    process[]{ _key, title, description },    faqs[]->{ _id, question, answer },    seo{ ..., image{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } } },    "residences": *[_type == "residence" && references(^._id)] | order(isFlagship desc, name asc){      _id, name, "slug": slug.current, status, shortLocation,      heroImage{   ...,  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } } }    }  }
 export type CARE_SERVICE_QUERY_RESULT = {
   _id: string;
   name: string;
@@ -1396,6 +1396,38 @@ export type CARE_SERVICE_QUERY_RESULT = {
       | "pilot"
       | "planned";
     shortLocation: string;
+    heroImage: {
+      _type: "mediaImage";
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      caption?: string;
+      source: string;
+      license:
+        | "client-owned"
+        | "creative-commons"
+        | "licensed-stock"
+        | "other"
+        | "public-domain";
+      licenseNotes?: string;
+      consent: "not-required" | "obtained" | "pending";
+      consentRecord?: string;
+      placeholder?: boolean;
+      replaceBy?: string;
+    } | null;
   }>;
 } | null;
 
@@ -1735,7 +1767,7 @@ declare global {
     '\n  *[_type == "residence"] | order(isFlagship desc, name asc){ \n  _id, name, "slug": slug.current, status, isFlagship, shortLocation, summary,\n  heroImage{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n },\n  careTypes[]->{ _id, name, "slug": slug.current, status }\n }\n': RESIDENCES_QUERY_RESULT;
     '\n  *[_type == "residence" && slug.current == $slug][0]{\n    \n  _id, name, "slug": slug.current, status, isFlagship, shortLocation, summary,\n  heroImage{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n },\n  careTypes[]->{ _id, name, "slug": slug.current, status }\n,\n    description, audienceFit, atmosphere, sharedSpaces, formKind, comingSoonNote,\n    rooms[]{ _key, name, house, summary, facts, image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } },\n    careAndSupport[]{ _key, title, description, provision, status },\n    everydayLife[]{ _key, title, description, provision, status },\n    gallery[]{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n },\n    team[]->[approvedForPublication == true]{ _id, name, role, credentials, bio, image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } },\n    address,\n    faqs[]->{ _id, question, answer },\n    seo{ ..., image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } },\n    "testimonials": *[_type == "testimonial" && approved == true && residence._ref == ^._id]{ _id, quote, displayName, relationship }\n  }\n': RESIDENCE_QUERY_RESULT;
     '\n  *[_type == "careService"] | order(name asc){ \n  _id, name, "slug": slug.current, status, summary, typicalDuration,\n  heroImage{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n }\n }\n': CARE_SERVICES_QUERY_RESULT;
-    '\n  *[_type == "careService" && slug.current == $slug][0]{\n    \n  _id, name, "slug": slug.current, status, summary, typicalDuration,\n  heroImage{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n }\n,\n    whoItSuits, notRightFit, formKind,\n    included[]{ _key, title, description, provision, status },\n    process[]{ _key, title, description },\n    faqs[]->{ _id, question, answer },\n    seo{ ..., image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } },\n    "residences": *[_type == "residence" && references(^._id)] | order(isFlagship desc, name asc){\n      _id, name, "slug": slug.current, status, shortLocation\n    }\n  }\n': CARE_SERVICE_QUERY_RESULT;
+    '\n  *[_type == "careService" && slug.current == $slug][0]{\n    \n  _id, name, "slug": slug.current, status, summary, typicalDuration,\n  heroImage{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n }\n,\n    whoItSuits, notRightFit, formKind,\n    included[]{ _key, title, description, provision, status },\n    process[]{ _key, title, description },\n    faqs[]->{ _id, question, answer },\n    seo{ ..., image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } },\n    "residences": *[_type == "residence" && references(^._id)] | order(isFlagship desc, name asc){\n      _id, name, "slug": slug.current, status, shortLocation,\n      heroImage{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n }\n    }\n  }\n': CARE_SERVICE_QUERY_RESULT;
     '\n  *[_type == "ecosystemOffering"] | order(name asc){ \n  _id, name, "slug": slug.current, status, tagline, distinction, summary, heroTone, ctaLabel, formKind,\n  heroImage{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n }\n }\n': OFFERINGS_QUERY_RESULT;
     '\n  *[_type == "ecosystemOffering" && slug.current == $slug][0]{\n    \n  _id, name, "slug": slug.current, status, tagline, distinction, summary, heroTone, ctaLabel, formKind,\n  heroImage{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n }\n,\n    currentCapabilities[]{ _key, title, description, provision, status },\n    plannedCapabilities[]{ _key, title, description, provision, status },\n    howItWorks[]{ _key, title, description },\n    benefitGroups[]{ _key, audience, points },\n    sections[]{ _key, eyebrow, heading, body, tone, cta, status, image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } },\n    faqs[]->{ _id, question, answer },\n    seo{ ..., image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n } }\n  }\n': OFFERING_QUERY_RESULT;
     '\n  *[_type == "teamMember" && approvedForPublication == true] | order(order asc, name asc){\n    _id, name, role, credentials, bio, image{ \n  ...,\n  asset->{ _id, url, metadata { lqip, dimensions { width, height, aspectRatio } } }\n }\n  }\n': TEAM_QUERY_RESULT;

@@ -36,7 +36,7 @@ describe('Header', () => {
   });
 
   it('lays a light bar over main-nav heroes and keeps a solid bar on detail and legal pages', () => {
-    const light = ['/', '/find-the-right-care', '/homes', '/living-and-care', '/oracle', '/silver-roots', '/destination-retirement', '/sage', '/our-story', '/contact'];
+    const light = ['/', '/find-the-right-care', '/homes', '/living-and-care', '/oracle', '/silver-roots', '/destination-retirement', '/sage', '/our-story', '/contact', '/feedback'];
     const solid = ['/homes/serenity', '/living-and-care/respite-care', '/privacy', '/terms', '/accessibility'];
     try {
       for (const path of light) {

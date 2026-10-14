@@ -60,10 +60,12 @@ describe('ResidenceView', () => {
   it('renders the operating sections in order and a single h1', () => {
     const { container } = renderResidence(operating);
     expect([...container.querySelectorAll('[data-residence-section]')].map((node) => node.getAttribute('data-residence-section'))).toEqual([
-      'hero', 'audience', 'atmosphere', 'spaces', 'care', 'everyday', 'gallery', 'team', 'map', 'faqs', 'enquiry',
+      'hero', 'gallery', 'audience', 'atmosphere', 'spaces', 'care', 'everyday', 'team', 'map', 'faqs', 'enquiry',
     ]);
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
     expect(screen.getByRole('heading', { level: 1, name: 'Serenity' })).toHaveAttribute('id', 'page-title');
+    expect(screen.getByRole('heading', { name: 'A look through the house' })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'Serenity garden' })).toBeInTheDocument();
     expect(screen.getByText('People who prefer a small household')).toBeInTheDocument();
     expect(screen.getByText('Garden room')).toBeInTheDocument();
     expect(screen.getByText('Care team on site')).toBeInTheDocument();
