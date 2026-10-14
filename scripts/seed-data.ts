@@ -191,20 +191,14 @@ const CARE_PHOTO: Record<CareServiceSlug, StockPhotoKey> = {
   rehabilitation: 'tea-hills',
 };
 
-const CARE_CLIENT_PHOTO: Partial<Record<CareServiceSlug, ClientPhotoKey>> = {
-  'residential-care': 'lounge-care',
-};
-
-const careServices = careSeeds.map((c) => {
-  const carePhoto = CARE_CLIENT_PHOTO[c.slug];
-  return {
+const careServices = careSeeds.map((c) => ({
   _id: `careService.${c.slug}`,
   _type: 'careService',
   name: c.name,
   slug: { _type: 'slug', current: c.slug },
   status: c.status,
   summary: c.summary,
-  heroImage: carePhoto ? clientImage(carePhoto, c.slug) : stockImage(CARE_PHOTO[c.slug], c.slug),
+  heroImage: stockImage(CARE_PHOTO[c.slug], c.slug),
   whoItSuits: c.whoItSuits,
   typicalDuration: c.typicalDuration,
   included: c.included,
@@ -218,8 +212,7 @@ const careServices = careSeeds.map((c) => {
   formKind: 'general' satisfies FormKind,
   editorial: REVIEW,
   seo: { _type: 'seo', title: `${c.name} in Sri Lanka | Village 60 Plus`, description: c.summary.slice(0, 160) },
-  };
-});
+}));
 
 // ---------- residences ----------
 
@@ -651,7 +644,7 @@ const PAGE_PHOTO: Partial<Record<PageSlug, StockPhotoKey>> = {
 const PAGE_CLIENT_PHOTO: Partial<Record<PageSlug, ClientPhotoKey>> = {
   home: 'verandah-bougainvillea',
   homes: 'upper-house-garden',
-  'living-and-care': 'lounge-care',
+  'living-and-care': 'garden-trees',
   'our-story': 'garden-trees',
 };
 

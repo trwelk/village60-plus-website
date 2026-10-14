@@ -60,7 +60,7 @@ describe('seed data', () => {
       expect(gallery, slug).toBeDefined();
       const real = gallery!.filter((image) => image.placeholder === false);
       expect(real, slug).toHaveLength(Object.keys(CLIENT_PHOTOS).length);
-      expect(gallery!.length, slug).toBeGreaterThanOrEqual(11);
+      expect(gallery!.length, slug).toBeGreaterThanOrEqual(10);
       expect(gallery!.slice(0, real.length).every((image) => image.placeholder === false), slug).toBe(true);
     }
   });

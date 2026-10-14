@@ -1,8 +1,8 @@
 /**
  * Photographs supplied by Village 60 Plus on 14 October 2026.
  * Files live in scripts/client-photos and are uploaded by scripts/seed.ts.
- * Two other files from the same batch are not included: a Shutterstock
- * download, and a greenhouse portrait that is not this residence.
+ * Left out of this set: a Shutterstock download, a greenhouse portrait that
+ * is not this residence, and the lounge photograph (too low quality to publish).
  */
 export type ClientPhoto = {
   file: string;
@@ -31,12 +31,6 @@ export const CLIENT_PHOTOS = {
     caption: 'The garden',
     people: false,
   },
-  'lounge-care': {
-    file: 'lounge-care.jpg',
-    alt: 'Nurses in Village 60 Plus uniform sitting with residents in the lounge',
-    caption: 'The lounge',
-    people: true,
-  },
   'window-seats': {
     file: 'window-seats.jpg',
     alt: 'Two residents sitting by a window and looking out to the garden',
@@ -52,6 +46,5 @@ export const CLIENT_GALLERY: ClientPhotoKey[] = [
   'verandah-bougainvillea',
   'upper-house-garden',
   'garden-trees',
-  'lounge-care',
   'window-seats',
 ];
