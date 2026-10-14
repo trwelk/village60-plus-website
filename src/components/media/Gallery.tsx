@@ -6,15 +6,17 @@ import { SanityImage, type CmsImage } from './SanityImage';
 
 export type GalleryImage = CmsImage & { _key?: string | null };
 
+type UsableImage = GalleryImage & { alt: string };
+
 const CHIP_WINDOW = 8;
 
-function usable(images: Array<GalleryImage | null> | null | undefined): GalleryImage[] {
-  return (images ?? []).filter((image): image is GalleryImage => Boolean(image?.asset?.url && image.alt?.trim()));
+function usable(images: Array<GalleryImage | null> | null | undefined): UsableImage[] {
+  return (images ?? []).filter((image): image is UsableImage => Boolean(image?.asset?.url && image.alt?.trim()));
 }
 
 const CHIP_TRAIL = new Set(['a', 'an', 'the', 'and', 'or', 'with', 'to', 'of', 'in', 'on', 'for', 'from', 'among', 'into', 'over', 'leading', 'open']);
 
-function chipText(image: GalleryImage): string {
+function chipText(image: UsableImage): string {
   const source = (image.caption?.trim() || image.alt.trim()).replace(/\s+/g, ' ');
   if (source.length <= 28) return source;
   const words = source.split(' ');
