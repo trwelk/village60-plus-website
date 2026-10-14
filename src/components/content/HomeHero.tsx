@@ -27,6 +27,7 @@ export function HomeHero({
       </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/80 via-night/35 to-transparent" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/60 via-transparent to-night/30" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-night/80 to-transparent" />
       <div className="relative z-10 w-full pt-28 pb-64 md:pb-28">
         <div className="mx-auto w-full max-w-[1520px] gutter">
           <h1 id="page-title" className="display-text max-w-[12ch] text-ivory">

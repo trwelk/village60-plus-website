@@ -6,10 +6,15 @@ import { usePathname } from 'next/navigation';
 import { EnquiryButton } from '@/components/forms/EnquiryPanel';
 import { MORE_NAV, PRIMARY_NAV, overlayHeader } from '@/lib/navigation';
 import { telHref, type SiteContact } from '@/lib/contact';
+import { cn } from '@/lib/cn';
 import { WhatsAppLink } from '@/components/site/WhatsAppLink';
 
 function closeMenu(event: MouseEvent<HTMLAnchorElement>) {
   event.currentTarget.closest('details')?.removeAttribute('open');
+}
+
+function navActive(pathname: string, href: string) {
+  return pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
 }
 
 export function Header({ contact, enquiryTrigger }: { contact: SiteContact; enquiryTrigger?: ReactNode }) {
@@ -21,9 +26,12 @@ export function Header({ contact, enquiryTrigger }: { contact: SiteContact; enqu
     headerRef.current?.querySelectorAll('details[open]').forEach((menu) => menu.removeAttribute('open'));
   }, [pathname]);
 
+  const navLinkBase =
+    'inline-flex items-center whitespace-nowrap rounded-input px-2 py-2 text-[15px] font-semibold leading-snug no-underline transition-colors duration-(--duration-fast) xl:text-[16px]';
   const navLink = overlay
-    ? 'whitespace-nowrap py-2 text-[16px] font-semibold leading-none text-ivory no-underline hover:text-pale-gold'
-    : 'whitespace-nowrap py-2 text-[16px] font-semibold leading-none text-charcoal no-underline hover:text-green';
+    ? `${navLinkBase} text-ivory hover:text-pale-gold`
+    : `${navLinkBase} text-charcoal hover:text-green`;
+  const navLinkActive = overlay ? 'text-pale-gold' : 'text-green';
   const enquiry = overlay ? (
     <EnquiryButton kind="general" context="Village 60 Plus" tone="overlay">
       Enquire
@@ -33,27 +41,41 @@ export function Header({ contact, enquiryTrigger }: { contact: SiteContact; enqu
   );
 
   return (
-    <header ref={headerRef} className={`absolute inset-x-0 top-0 z-40${overlay ? ' on-dark' : ''}`}>
-      <div className="mx-auto flex w-full max-w-[1520px] min-h-[72px] items-center gap-x-4 gutter py-4 lg:gap-x-6">
+    <header ref={headerRef} className={cn('absolute inset-x-0 top-0 z-40', overlay && 'on-dark')}>
+      {overlay ? (
+        <div
+          className="pointer-events-none absolute inset-0 border-b border-white/10 bg-gradient-to-b from-night/92 via-night/60 to-transparent supports-[backdrop-filter]:backdrop-blur-[6px]"
+          aria-hidden
+        />
+      ) : null}
+      <div className="relative mx-auto grid w-full max-w-[1520px] min-h-[76px] grid-cols-[1fr_auto] items-center gap-x-4 gutter py-3 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-x-8 lg:py-4">
         <Link
           href="/"
           className={
             overlay
-              ? 'shrink-0 whitespace-nowrap font-display text-[22px] font-semibold leading-none text-ivory no-underline'
-              : 'shrink-0 whitespace-nowrap font-display text-[22px] font-semibold leading-none text-green no-underline'
+              ? 'col-start-1 shrink-0 whitespace-nowrap font-display text-[22px] font-semibold leading-none tracking-tight text-ivory no-underline lg:text-[24px]'
+              : 'col-start-1 shrink-0 whitespace-nowrap font-display text-[22px] font-semibold leading-none tracking-tight text-green no-underline lg:text-[24px]'
           }
         >
           Village 60 Plus
         </Link>
 
-        <nav aria-label="Primary" className="hidden flex-1 items-center justify-center gap-x-4 lg:flex xl:gap-x-6">
+        <nav
+          aria-label="Primary"
+          className="col-span-2 col-start-1 hidden items-center justify-center gap-x-2 lg:col-span-1 lg:col-start-2 lg:flex lg:gap-x-3 xl:gap-x-4"
+        >
           {PRIMARY_NAV.map((item) => (
-            <Link key={item.href} href={item.href} className={navLink}>
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(navLink, navActive(pathname, item.href) && navLinkActive)}
+              aria-current={navActive(pathname, item.href) ? 'page' : undefined}
+            >
               {item.label}
             </Link>
           ))}
           <details className="relative">
-            <summary className={`list-none cursor-pointer ${navLink} [&::-webkit-details-marker]:hidden`}>More</summary>
+            <summary className={cn('list-none cursor-pointer [&::-webkit-details-marker]:hidden', navLink)}>More</summary>
             <ul className="absolute right-0 top-full z-20 mt-2 min-w-56 rounded-card border border-stone bg-paper p-2 shadow-panel transition-opacity duration-(--duration-menu)">
               {MORE_NAV.map((item) => (
                 <li key={item.href}>
@@ -66,14 +88,14 @@ export function Header({ contact, enquiryTrigger }: { contact: SiteContact; enqu
           </details>
         </nav>
 
-        <div className="ml-auto flex shrink-0 items-center justify-end gap-2.5 xl:gap-3">
+        <div className="col-start-2 flex shrink-0 items-center justify-end gap-2 lg:col-start-3 lg:gap-2.5 xl:gap-3">
           {contact.phone ? (
             <a
               href={telHref(contact.phone)}
               className={
                 overlay
-                  ? 'hidden whitespace-nowrap text-[16px] font-semibold leading-none text-ivory no-underline md:inline-flex'
-                  : 'hidden whitespace-nowrap text-[16px] font-semibold leading-none text-green no-underline md:inline-flex'
+                  ? 'hidden min-h-11 items-center whitespace-nowrap text-[15px] font-semibold leading-none text-ivory/95 no-underline transition-colors duration-(--duration-fast) hover:text-pale-gold md:inline-flex xl:text-[16px]'
+                  : 'hidden min-h-11 items-center whitespace-nowrap text-[15px] font-semibold leading-none text-green no-underline transition-colors duration-(--duration-fast) hover:text-night md:inline-flex xl:text-[16px]'
               }
               data-track="call_click"
             >
@@ -85,8 +107,8 @@ export function Header({ contact, enquiryTrigger }: { contact: SiteContact; enqu
               contact={contact}
               className={
                 overlay
-                  ? 'hidden items-center whitespace-nowrap rounded-full border border-ivory px-4 py-2 text-[16px] font-semibold leading-none text-ivory no-underline hover:bg-white/10 md:inline-flex'
-                  : 'hidden items-center whitespace-nowrap rounded-full border border-green px-4 py-2 text-[16px] font-semibold leading-none text-green no-underline hover:bg-mist md:inline-flex'
+                  ? 'hidden min-h-11 items-center whitespace-nowrap rounded-full border border-ivory/80 px-4 py-2 text-[15px] font-semibold leading-none text-ivory no-underline transition-colors duration-(--duration-fast) hover:border-ivory hover:bg-white/10 md:inline-flex xl:text-[16px]'
+                  : 'hidden min-h-11 items-center whitespace-nowrap rounded-full border border-green px-4 py-2 text-[15px] font-semibold leading-none text-green no-underline transition-colors duration-(--duration-fast) hover:bg-mist md:inline-flex xl:text-[16px]'
               }
             >
               WhatsApp
@@ -97,8 +119,8 @@ export function Header({ contact, enquiryTrigger }: { contact: SiteContact; enqu
             <summary
               className={
                 overlay
-                  ? 'list-none cursor-pointer whitespace-nowrap rounded-input border border-ivory/70 px-3 py-2 font-semibold text-ivory [&::-webkit-details-marker]:hidden'
-                  : 'list-none cursor-pointer whitespace-nowrap rounded-input border border-stone px-3 py-2 font-semibold [&::-webkit-details-marker]:hidden'
+                  ? 'inline-flex min-h-11 list-none cursor-pointer items-center whitespace-nowrap rounded-input border border-ivory/70 px-3 py-2 font-semibold text-ivory [&::-webkit-details-marker]:hidden'
+                  : 'inline-flex min-h-11 list-none cursor-pointer items-center whitespace-nowrap rounded-input border border-stone px-3 py-2 font-semibold [&::-webkit-details-marker]:hidden'
               }
             >
               Menu

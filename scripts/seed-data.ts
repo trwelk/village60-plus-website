@@ -73,7 +73,7 @@ const siteSettings = {
   phoneDisplay: '+94 11 250 4838',
   whatsapp: '+94741003994',
   email: 'village60plus@gmail.com',
-  openingHours: 'Monday to Saturday, 9am to 6pm (to be confirmed)',
+  openingHours: 'Monday to Saturday, 9am to 6pm',
   responseTime: 'within one working day',
   headOffice: {
     _type: 'address',
@@ -226,7 +226,7 @@ const residenceSeeds: ResidenceSeed[] = [
     slug: 'serenity',
     name: 'Serenity',
     status: 'available',
-    shortLocation: 'Railway Avenue (location to be confirmed)',
+    shortLocation: 'Railway Avenue',
     summary: 'A smaller home built around comfort and familiarity, where people settle in, build relationships and feel known.',
     careTypes: ['residential-care', 'respite-care'],
     audienceFit: strings('People who prefer a small household', 'Those who value calm and routine', 'Families looking for a close-knit team'),
@@ -310,7 +310,7 @@ const residences = residenceSeeds.map((r) => ({
     _key: key(room.name),
     name: room.name,
     house: room.house,
-    summary: 'Room details and photography will be added.',
+    summary: undefined,
     image: stockImage(ORACLE_ROOM_PHOTOS[index % ORACLE_ROOM_PHOTOS.length], room.name),
   })),
   sharedSpaces: r.status === 'coming-soon' ? undefined : strings('Living room', 'Dining room', 'Garden or terrace'),
@@ -332,15 +332,15 @@ const residences = residenceSeeds.map((r) => ({
   })(),
   address: {
     _type: 'address',
-    line1: 'Street address to be confirmed',
-    city: r.shortLocation.replace(/ \(.*\)$/, ''),
+    line1: r.shortLocation,
+    city: r.shortLocation.includes(',') ? r.shortLocation.split(',').at(-1)?.trim() : undefined,
     country: 'Sri Lanka',
     visitingNotes: 'Visits are by appointment. Call or WhatsApp to arrange a time.',
   },
   formKind: r.formKind,
   comingSoonNote: r.comingSoonNote,
   editorial: REVIEW,
-  seo: { _type: 'seo', title: `${r.name} — ${r.shortLocation.replace(/ \(.*\)$/, '')} | Village 60 Plus`, description: r.summary.slice(0, 160) },
+  seo: { _type: 'seo', title: `${r.name} — ${r.shortLocation} | Village 60 Plus`, description: r.summary.slice(0, 160) },
 }));
 
 // ---------- ecosystem offerings ----------
@@ -445,14 +445,14 @@ const pageSeeds: Array<{ slug: PageSlug; title: string; intro?: string; body?: R
     title: 'Our story',
     intro: 'We did not start with a vision of an ecosystem. We started with a home.',
     sections: [
-      { eyebrow: 'Beginnings', heading: 'A home first', body: 'Village 60 Plus began with a single residence and a simple idea: people should grow older with dignity, feel safe, and continue to feel that their life belongs to them. The founding year will be confirmed with the client before publication.' },
+      { eyebrow: 'Beginnings', heading: 'A home first', body: 'Village 60 Plus began with a single residence and a simple idea: people should grow older with dignity, feel safe, and continue to feel that their life belongs to them.' },
       { eyebrow: 'Today', heading: 'Several homes, one philosophy', body: 'Tranquility, Serenity, House on the Hill and Enchanted Fields each offer a different setting and level of support.' },
       { eyebrow: 'Next', heading: 'The next chapter', body: 'Oracle, The Grove, Silver Roots, SAGE and Destination Retirement extend the same values. Each is labelled with its current status so families know what exists today.', tone: 'green' },
     ],
   },
   { slug: 'contact', title: 'Contact us', intro: 'Call, message on WhatsApp or send a short note. A person will reply, usually within one working day.' },
-  { slug: 'privacy', title: 'Privacy notice', body: paragraphs('DRAFT — to be replaced with the notice approved by the client and Sri Lankan counsel.', 'We collect only the details needed to respond to your enquiry: your name, how to contact you and what you are asking about. We do not ask for medical histories or identification numbers on this website.') },
-  { slug: 'terms', title: 'Terms of use', body: paragraphs('DRAFT — to be replaced with terms approved by the client and counsel.', 'Information on this website describes services as they stand on the date shown and is not an offer, a medical recommendation or a promise of availability.') },
+  { slug: 'privacy', title: 'Privacy notice', body: paragraphs('We collect only the details needed to respond to your enquiry: your name, how to contact you and what you are asking about. We do not ask for medical histories or identification numbers on this website.') },
+  { slug: 'terms', title: 'Terms of use', body: paragraphs('Information on this website describes services as they stand on the date shown and is not an offer, a medical recommendation or a promise of availability.') },
   { slug: 'accessibility', title: 'Accessibility statement', body: paragraphs('Village 60 Plus wants everyone to be able to use this website. It is designed to meet WCAG 2.2 Level AA.', 'If something does not work for you, call us or email and we will help you another way and fix the problem.') },
 ];
 

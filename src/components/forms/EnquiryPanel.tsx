@@ -102,7 +102,7 @@ export function EnquiryButton({
   const { open } = useEnquiry();
   const className =
     tone === 'overlay'
-      ? 'inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full border border-pale-gold bg-transparent px-5 font-semibold text-ivory hover:bg-white/10'
+      ? 'inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-ivory px-5 text-[15px] font-semibold text-green shadow-[0_2px_12px_rgba(15,31,27,0.28)] transition-colors duration-(--duration-fast) hover:bg-paper xl:text-[16px]'
       : tone === 'text'
         ? 'inline-flex min-h-11 items-center font-semibold text-green underline decoration-gold underline-offset-4 transition-colors duration-(--duration-fast) hover:decoration-green'
         : tone === 'secondary'

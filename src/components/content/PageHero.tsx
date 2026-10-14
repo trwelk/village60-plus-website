@@ -62,7 +62,7 @@ export function PageHero({
         ) : null}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night via-night/88 to-night/40 md:hidden" />
         <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-night from-0% via-night/82 via-38% to-transparent md:block" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-night/70 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-night/80 to-transparent" />
         <div className="relative z-10 w-full pt-28 pb-14 md:pb-20">
           <Container>
             <div className="flex max-w-xl flex-col items-start gap-5">
