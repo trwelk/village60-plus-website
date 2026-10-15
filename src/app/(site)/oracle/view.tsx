@@ -79,6 +79,15 @@ function Rule({ onDark = false }: { onDark?: boolean }) {
   return <span className={cn('mt-3 block h-px w-10', onDark ? 'bg-pale-gold' : 'bg-gold')} aria-hidden="true" />;
 }
 
+function Check() {
+  return (
+    <svg viewBox="0 0 20 20" className="mt-0.5 size-5 shrink-0 text-gold" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+      <circle cx="10" cy="10" r="7.25" />
+      <path d="M6.5 10.2 8.8 12.5 13.5 7.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 const HIGHLIGHTS: Array<{ label: string; icon: 'house' | 'leaf' | 'cup' | 'lotus' | 'people' }> = [
   { label: 'Beautiful Private Rooms', icon: 'house' },
   { label: 'Elegant Shared Spaces', icon: 'leaf' },
@@ -483,17 +492,33 @@ export function OracleView({
 
       {fit.length > 0 ? (
         <Region name="independence">
-          <Section tone="ivory" labelledBy="oracle-independence">
-            <Heading as="h2" id="oracle-independence" eyebrow="Independent living">Independence comes first.</Heading>
-            <ul className={cn('mt-8 grid gap-4', fit.length > 2 ? 'md:grid-cols-3' : 'sm:grid-cols-2')}>
-              {fit.map((item) => (
-                <li key={item} className="rounded-panel border border-stone bg-paper px-6 py-7">
-                  <span className="block h-0.5 w-8 bg-gold" aria-hidden="true" />
-                  <p className="mt-5 font-display text-[22px] leading-snug md:text-[24px]">{item}</p>
-                </li>
-              ))}
-            </ul>
-          </Section>
+          <section aria-labelledby="oracle-independence" className="relative scroll-mt-24 overflow-hidden bg-green text-ivory on-dark">
+            <div className="absolute inset-0">
+              <img src="/silver-roots/garden.jpg" alt="" className="absolute inset-0 h-full w-full object-cover object-[center_42%]" loading="lazy" decoding="async" />
+            </div>
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/25 via-night/40 to-night/80" />
+            <div className="relative mx-auto flex min-h-[34rem] w-full max-w-[1400px] items-center gutter py-16 lg:min-h-[40rem] lg:py-24">
+              <div className="ml-auto w-full max-w-xl">
+                <Heading as="h2" id="oracle-independence" eyebrow="Independent living" onDark titleClassName="scroll-mt-28 text-ivory" className="max-w-none">
+                  Independence comes first.
+                </Heading>
+                <p className="mt-4 text-ivory/90">
+                  A private home for people who want their own life, with company nearby and support that can grow when they need it.
+                </p>
+                <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+                  {fit.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-[16px] leading-snug text-ivory">
+                      <Check />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-8">
+                  <Cta href="#oracle-visit" tone="pill">Arrange a private visit</Cta>
+                </div>
+              </div>
+            </div>
+          </section>
         </Region>
       ) : null}
 

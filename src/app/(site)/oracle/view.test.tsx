@@ -62,7 +62,11 @@ describe('OracleView', () => {
     expect(screen.getByRole('link', { name: 'Explore Silver Roots' })).toHaveAttribute('href', '/silver-roots');
     expect(screen.getByRole('link', { name: 'Personal Services via Silver Roots' })).toHaveAttribute('href', '/silver-roots');
     expect(screen.getByText('A new standard of living.')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Arrange a private visit' })).toHaveAttribute('href', '#oracle-visit');
+    expect(screen.getByRole('heading', { name: 'Independence comes first.' })).toBeInTheDocument();
+    expect(screen.getByText('Independent adults who want privacy without isolation')).toBeInTheDocument();
+    const visitLinks = screen.getAllByRole('link', { name: 'Arrange a private visit' });
+    expect(visitLinks).toHaveLength(2);
+    expect(visitLinks.every((link) => link.getAttribute('href') === '#oracle-visit')).toBe(true);
     expect(screen.getByText(/arranged separately/i)).toBeInTheDocument();
     expect(screen.getAllByRole('heading', { name: 'Arrange a private visit' })).toHaveLength(1);
     expect(screen.getByRole('heading', { name: 'Arrange a private visit' })).toHaveAttribute('id', 'oracle-visit');
