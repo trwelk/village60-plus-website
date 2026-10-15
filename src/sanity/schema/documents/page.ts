@@ -5,11 +5,11 @@ import { DOCUMENT_GROUPS, editorialField, seoField, slugField } from '../fields'
 const SECTION_PAGES = new Set(['living-and-care', 'our-story']);
 const BODY_PAGES = new Set<string>([...LEGAL_SLUGS, 'our-story']);
 
-type PageDocument = { slug?: { current?: string } } | undefined;
+type PageDocument = { slug?: { current?: string } };
 
 /** Hide fields the current page template does not render, so an empty editor is not mistaken for missing copy. */
-export function hidePageField(field: 'heroVideo' | 'sections' | 'body' | 'lastReviewed', document: PageDocument): boolean {
-  const slug = document?.slug?.current;
+export function hidePageField(field: 'heroVideo' | 'sections' | 'body' | 'lastReviewed', document: unknown): boolean {
+  const slug = (document as PageDocument | undefined)?.slug?.current;
   if (!slug) return false;
   if (field === 'heroVideo') return slug !== 'home';
   if (field === 'sections') return !SECTION_PAGES.has(slug);
