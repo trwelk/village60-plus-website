@@ -54,18 +54,20 @@ export function SanityImage({
   decorative?: boolean;
 }) {
   const alt = image?.alt?.trim();
-  if (!image?.asset?.url || !alt) return null;
+  const rawUrl = image?.asset?.url;
+  if (!rawUrl || !alt) return null;
 
   const w = width;
   const h = slotHeight(image, w, height);
+  const local = rawUrl.startsWith('/');
   const build = (tw: number, th: number) => urlFor(image as SanityImageSource).width(tw).height(th).fit('crop').url();
-  const src = build(w, h);
-  const src2 = build(w * 2, h * 2);
+  const src = local ? rawUrl : build(w, h);
+  const src2 = local ? rawUrl : build(w * 2, h * 2);
   const img = (
     <img
       src={src}
-      srcSet={`${src} ${w}w, ${src2} ${w * 2}w`}
-      sizes={sizes ?? `(min-width: 1200px) ${w}px, 100vw`}
+      srcSet={local ? undefined : `${src} ${w}w, ${src2} ${w * 2}w`}
+      sizes={local ? undefined : (sizes ?? `(min-width: 1200px) ${w}px, 100vw`)}
       alt={decorative ? '' : alt}
       width={w}
       height={h}

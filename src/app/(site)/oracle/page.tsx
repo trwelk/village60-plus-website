@@ -8,6 +8,7 @@ import { breadcrumbJsonLd, localBusinessJsonLd, pageMetadata } from '@/lib/seo';
 import { contactFromSettings } from '@/lib/site-settings';
 import { fetchPublished } from '@/sanity/fetch';
 import { RESIDENCE_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/queries';
+import { withResidencePhotos } from '@/lib/site-photos';
 import type { ResidenceContent } from '../homes/[slug]/view';
 import { OracleView } from './view';
 
@@ -43,7 +44,7 @@ export default async function OraclePage() {
     }
   }
   const contact = contactFromSettings(settings);
-  const residence: ResidenceContent | null = doc?.name && doc.slug ? {
+  const residence: ResidenceContent | null = doc?.name && doc.slug ? withResidencePhotos({
     name: doc.name,
     slug: doc.slug,
     status: doc.status,
@@ -64,7 +65,7 @@ export default async function OraclePage() {
     faqs: doc.faqs as ResidenceContent['faqs'],
     formKind: doc.formKind,
     comingSoonNote: doc.comingSoonNote,
-  } : null;
+  }) : null;
 
   return (
     <>

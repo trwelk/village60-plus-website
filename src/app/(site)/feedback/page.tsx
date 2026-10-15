@@ -27,7 +27,14 @@ export default async function FeedbackPage() {
     <>
       <JsonLd data={breadcrumbJsonLd(siteUrl, [{ label: 'Home', href: '/' }, { label: TITLE, href: PATH }])} />
       <main id="main">
-        <PageHero layout="overlay" title={TITLE} intro={INTRO} eyebrow="Village 60 Plus" tone="night" />
+        <PageHero
+          layout="overlay"
+          title={TITLE}
+          intro={INTRO}
+          eyebrow="Village 60 Plus"
+          tone="night"
+          photo={{ src: '/homes/guidance.jpg', alt: '' }}
+        />
         <Section tone="paper" labelledBy="feedback-form">
           <EnquiryForm kind="feedback" context="Feedback" headingId="feedback-form" layout="aside" eyebrow="Write to us" />
         </Section>

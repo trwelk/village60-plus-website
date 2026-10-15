@@ -1,9 +1,10 @@
-import { OfferingRoute, offeringMetadata } from '../offering-route';
+import { offeringMetadata } from '../offering-route';
+import { DestinationRetirementView } from './view';
 
 export function generateMetadata() {
   return offeringMetadata('destination-retirement');
 }
 
 export default function DestinationRetirementPage() {
-  return <OfferingRoute slug="destination-retirement" />;
+  return <DestinationRetirementView />;
 }

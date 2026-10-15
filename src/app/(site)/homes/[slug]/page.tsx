@@ -9,6 +9,7 @@ import { contactFromSettings } from '@/lib/site-settings';
 import { ORACLE_SLUG, RESIDENCE_SLUGS, residencePath, residenceStaticParams } from '@/lib/routes';
 import { fetchPublished } from '@/sanity/fetch';
 import { RESIDENCE_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/queries';
+import { withResidencePhotos } from '@/lib/site-photos';
 import { ResidenceView, type ResidenceContent } from './view';
 
 export function generateStaticParams() {
@@ -50,7 +51,7 @@ export default async function ResidencePage({ params }: { params: Promise<{ slug
     }
   }
   const contact = contactFromSettings(settings);
-  const residence: ResidenceContent | null = doc?.name && doc.slug ? {
+  const residence: ResidenceContent | null = doc?.name && doc.slug ? withResidencePhotos({
     name: doc.name,
     slug: doc.slug,
     status: doc.status,
@@ -71,7 +72,7 @@ export default async function ResidencePage({ params }: { params: Promise<{ slug
     faqs: doc.faqs as ResidenceContent['faqs'],
     formKind: doc.formKind,
     comingSoonNote: doc.comingSoonNote,
-  } : null;
+  }) : null;
 
   return (
     <>

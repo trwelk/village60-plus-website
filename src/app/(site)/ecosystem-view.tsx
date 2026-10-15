@@ -9,6 +9,7 @@ import { SectionList, type ContentSectionData } from '@/components/content/Secti
 import { StepList, type StepItem } from '@/components/content/StepList';
 import type { CmsImage } from '@/components/media/SanityImage';
 import { Chip } from '@/components/ui/Chip';
+import { Container } from '@/components/ui/Container';
 import { Heading } from '@/components/ui/Heading';
 import { Section } from '@/components/ui/Section';
 import { StatusBadge } from '@/components/ui/StatusBadge';
@@ -229,6 +230,126 @@ function AudienceBand({ groups }: { groups: BenefitGroup[] }) {
   );
 }
 
+function Check() {
+  return (
+    <svg viewBox="0 0 20 20" className="mt-0.5 size-5 shrink-0 text-gold" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+      <circle cx="10" cy="10" r="7.25" />
+      <path d="M6.5 10.2 8.8 12.5 13.5 7.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function Arrow() {
+  return (
+    <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+      <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+const goldPill =
+  'inline-flex min-h-11 items-center gap-2 rounded-full bg-gold px-6 py-3 text-[13px] font-semibold tracking-[0.14em] text-night uppercase transition-colors duration-(--duration-fast) hover:bg-bronze hover:text-ivory';
+
+function SageEnquire() {
+  return (
+    <EnquiryButton kind="general" context="SAGE" className={goldPill}>
+      Enquire
+      <Arrow />
+    </EnquiryButton>
+  );
+}
+
+function SagePlannedSection({ items, lead }: { items: Array<CapabilityItem & { title: string }>; lead?: string | null }) {
+  const repeated = sharedProvision(items);
+  return (
+    <section id="planned" aria-labelledby="offering-planned" className="section-space scroll-mt-8 bg-ivory">
+      <Container>
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <Heading as="h2" id="offering-planned" titleClassName="text-green" className="max-w-none">
+              Planned
+            </Heading>
+            {lead ? <p className="mt-4 max-w-prose-site text-charcoal/85">{lead}</p> : null}
+            {repeated ? (
+              <div className="mt-4">
+                <Chip>{repeated}</Chip>
+              </div>
+            ) : null}
+            <ul className="mt-6 grid list-none gap-x-8 gap-y-4 p-0 sm:grid-cols-2">
+              {items.map((item) => {
+                const provision = showProvisionLabel(item, Boolean(repeated));
+                const status = isContentStatus(item.status) ? item.status : null;
+                return (
+                  <li key={item._key} className="flex items-start gap-3 text-[16px] leading-snug text-charcoal/90">
+                    <Check />
+                    <span>
+                      <span className="block text-charcoal">{item.title}</span>
+                      {item.description ? <span className="mt-1 block text-charcoal/75">{item.description}</span> : null}
+                      {status || provision ? (
+                        <span className="mt-2 flex flex-wrap items-center gap-2">
+                          {status ? <StatusBadge status={status} /> : null}
+                          {provision ? <Chip>{provision}</Chip> : null}
+                        </span>
+                      ) : null}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="mt-8">
+              <SageEnquire />
+            </div>
+          </div>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-panel bg-sand lg:aspect-[5/4]">
+            <img src="/silver-roots/hero.jpg" alt="A caregiver sitting with a resident over tea" className="absolute inset-0 h-full w-full object-cover" />
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+function SageAudienceSection({ groups }: { groups: BenefitGroup[] }) {
+  const heading = groups.length === 1 ? groups[0].audience : 'Who it helps';
+  const headingId = groups.length === 1 ? 'offering-audience' : 'offering-audiences';
+  return (
+    <section id="who-it-helps" aria-labelledby={headingId} className="relative scroll-mt-8 overflow-hidden bg-green text-ivory on-dark">
+      <div className="absolute inset-0">
+        <img src="/silver-roots/garden.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" />
+      </div>
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/75 via-night/55 to-night/35 lg:bg-gradient-to-r lg:from-night/10 lg:via-night/35 lg:to-night/75" />
+      <Container className="relative flex min-h-[34rem] items-center py-16 lg:min-h-[40rem] lg:py-24">
+        <div className="ml-auto w-full max-w-xl">
+          <Heading as="h2" id={headingId} onDark titleClassName="text-ivory" className="max-w-none">
+            {heading}
+          </Heading>
+          <ul className="mt-6 grid list-none gap-x-8 gap-y-3 p-0 sm:grid-cols-2">
+            {groups.map((group) => {
+              const points = (group.points ?? []).filter((point): point is string => Boolean(point));
+              return (
+                <li key={group._key} className="flex items-start gap-3 text-[16px] leading-snug text-ivory">
+                  <Check />
+                  <span>
+                    {groups.length > 1 ? <span className="block text-ivory">{group.audience}</span> : null}
+                    {points.map((point) => (
+                      <span key={point} className="mt-1 block text-ivory/90">
+                        {point}
+                      </span>
+                    ))}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+          <div className="mt-8">
+            <SageEnquire />
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
 function SectionHeading({ id, title, meta }: { id: string; title: string; meta?: string | null }) {
   return (
     <div>
@@ -275,10 +396,14 @@ export function EcosystemView({
         </Section>
       ) : null}
       {planned.length > 0 ? (
-        <Section tone="paper" labelledBy="offering-planned">
-          <SectionHeading id="offering-planned" title="Planned" meta={sharedProvision(planned)} />
-          <CapabilityCards items={planned} surface="ivory" />
-        </Section>
+        slug === 'sage' ? (
+          <SagePlannedSection items={planned} lead={note} />
+        ) : (
+          <Section tone="paper" labelledBy="offering-planned">
+            <SectionHeading id="offering-planned" title="Planned" meta={sharedProvision(planned)} />
+            <CapabilityCards items={planned} surface="ivory" />
+          </Section>
+        )
       ) : null}
       {steps.length > 0 ? (
         <Section tone="sand" labelledBy="offering-steps">
@@ -287,9 +412,13 @@ export function EcosystemView({
         </Section>
       ) : null}
       {groups.length > 0 ? (
-        <Section tone="mist" labelledBy={groups.length === 1 ? 'offering-audience' : 'offering-audiences'}>
-          <AudienceBand groups={groups} />
-        </Section>
+        slug === 'sage' ? (
+          <SageAudienceSection groups={groups} />
+        ) : (
+          <Section tone="mist" labelledBy={groups.length === 1 ? 'offering-audience' : 'offering-audiences'}>
+            <AudienceBand groups={groups} />
+          </Section>
+        )
       ) : null}
       <SectionList sections={sections} layout="split" />
       {(offering?.faqs ?? []).some((item) => item?.question) ? (
@@ -336,11 +465,11 @@ export function EcosystemView({
             }
           />
         </Section>
-      ) : (
+      ) : slug === 'sage' && planned.length === 0 && groups.length === 0 ? (
         <Section tone="paper">
-          {slug === 'sage' ? <EnquiryButton kind="general" context="SAGE">Enquire</EnquiryButton> : null}
+          <EnquiryButton kind="general" context="SAGE">Enquire</EnquiryButton>
         </Section>
-      )}
+      ) : null}
     </main>
   );
 }

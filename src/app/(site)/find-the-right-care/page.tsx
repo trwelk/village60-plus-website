@@ -6,8 +6,8 @@ import { docTag } from '@/lib/revalidation';
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 import { contactFromSettings } from '@/lib/site-settings';
 import { fetchPublished } from '@/sanity/fetch';
-import { pickHeroImage } from '@/components/content/PageHero';
-import { PAGE_QUERY, RESIDENCES_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/queries';
+import { sitePhoto } from '@/lib/site-photos';
+import { PAGE_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/queries';
 import { FindCareView, pathwayDefaults } from './view';
 
 const PATH = '/find-the-right-care';
@@ -31,18 +31,15 @@ export default async function FindCarePage({ searchParams }: { searchParams: Pro
   const { siteUrl, sanityProjectId } = getPublicEnv();
   let doc: Awaited<ReturnType<typeof fetchPublished<typeof PAGE_QUERY>>> | null = null;
   let settings: Awaited<ReturnType<typeof fetchPublished<typeof SITE_SETTINGS_QUERY>>> | null = null;
-  let residences: Awaited<ReturnType<typeof fetchPublished<typeof RESIDENCES_QUERY>>> | null = null;
   if (isSanityProjectConfigured(sanityProjectId)) {
     try {
-      [doc, settings, residences] = await Promise.all([
+      [doc, settings] = await Promise.all([
         fetchPublished(PAGE_QUERY, { slug: 'find-the-right-care' }, [docTag('page', 'find-the-right-care'), 'page']),
         fetchPublished(SITE_SETTINGS_QUERY, {}, ['siteSettings']),
-        fetchPublished(RESIDENCES_QUERY, {}, ['residence']),
       ]);
     } catch {
       doc = null;
       settings = null;
-      residences = null;
     }
   }
   return (
@@ -56,7 +53,7 @@ export default async function FindCarePage({ searchParams }: { searchParams: Pro
       <FindCareView
         title={doc?.title || 'Find the right care'}
         intro={doc?.intro}
-        image={pickHeroImage(doc?.heroImage, ...(residences ?? []).map((row) => row?.heroImage))}
+        image={sitePhoto('/homes/guidance.jpg', 'A caregiver sitting with a resident in a bright room')}
         contact={contactFromSettings(settings)}
         defaults={pathwayDefaults(pathway)}
       />

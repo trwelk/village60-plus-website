@@ -9,6 +9,23 @@ import { telHref, type SiteContact } from '@/lib/contact';
 import { cn } from '@/lib/cn';
 import { WhatsAppLink } from '@/components/site/WhatsAppLink';
 
+function BrandMark() {
+  return (
+    <span className="inline-flex items-center gap-2.5">
+      <svg viewBox="0 0 48 48" className="size-9 shrink-0" aria-hidden>
+        <path d="M24 44.5v-12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+        <ellipse cx="24" cy="16" rx="6.2" ry="9" fill="currentColor" />
+        <ellipse cx="15.2" cy="22.5" rx="6" ry="8" transform="rotate(-32 15.2 22.5)" fill="currentColor" />
+        <ellipse cx="32.8" cy="22.5" rx="6" ry="8" transform="rotate(32 32.8 22.5)" fill="currentColor" />
+      </svg>
+      <span className="flex flex-col leading-none">
+        <span className="font-display text-[12px] tracking-[0.22em] uppercase">Village</span>
+        <span className="mt-1 font-display text-[15px] tracking-[0.16em] uppercase">60 Plus</span>
+      </span>
+    </span>
+  );
+}
+
 function closeMenu(event: MouseEvent<HTMLAnchorElement>) {
   event.currentTarget.closest('details')?.removeAttribute('open');
 }
@@ -27,89 +44,63 @@ export function Header({ contact, enquiryTrigger }: { contact: SiteContact; enqu
   }, [pathname]);
 
   const navLinkBase =
-    'inline-flex items-center whitespace-nowrap rounded-input px-2 py-2 text-[15px] font-semibold leading-snug no-underline transition-colors duration-(--duration-fast) xl:text-[16px]';
+    'inline-flex items-center whitespace-nowrap rounded-input px-1 py-2 text-[13px] font-medium leading-snug tracking-[0.01em] no-underline transition-colors duration-(--duration-fast) xl:px-1.5 xl:text-[14px]';
   const navLink = overlay
     ? `${navLinkBase} text-ivory hover:text-pale-gold`
     : `${navLinkBase} text-charcoal hover:text-green`;
-  const navLinkActive = overlay ? 'text-pale-gold' : 'text-green';
+  const navLinkActive = overlay ? 'text-ivory' : 'text-green';
   const enquiry = overlay ? (
     <EnquiryButton kind="general" context="Village 60 Plus" tone="overlay">
       Enquire
+      <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
+        <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
     </EnquiryButton>
   ) : (
     enquiryTrigger
   );
 
   return (
-    <header ref={headerRef} className={cn('absolute inset-x-0 top-0 z-40', overlay && 'on-dark')}>
+    <header ref={headerRef} className={cn('absolute inset-x-0 top-0 z-40', overlay ? 'on-dark' : 'bg-ivory')}>
       {overlay ? (
-        <div
-          className="pointer-events-none absolute inset-0 border-b border-white/10 bg-gradient-to-b from-night/92 via-night/60 to-transparent supports-[backdrop-filter]:backdrop-blur-[6px]"
-          aria-hidden
-        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-night/55 via-night/20 to-transparent" aria-hidden />
       ) : null}
-      <div className="relative mx-auto grid w-full max-w-[1520px] min-h-[76px] grid-cols-[1fr_auto] items-center gap-x-4 gutter py-3 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-x-8 lg:py-4">
-        <Link
-          href="/"
-          className={
-            overlay
-              ? 'col-start-1 shrink-0 whitespace-nowrap font-display text-[22px] font-semibold leading-none tracking-tight text-ivory no-underline lg:text-[24px]'
-              : 'col-start-1 shrink-0 whitespace-nowrap font-display text-[22px] font-semibold leading-none tracking-tight text-green no-underline lg:text-[24px]'
-          }
-        >
-          Village 60 Plus
+      <div className="relative mx-auto flex w-full max-w-[1520px] min-h-[72px] items-center gap-x-3 gutter py-3 lg:gap-x-5">
+        <Link href="/" aria-label="Village 60 Plus" className={overlay ? 'shrink-0 text-pale-gold no-underline' : 'shrink-0 text-green no-underline'}>
+          <BrandMark />
         </Link>
 
-        <nav
-          aria-label="Primary"
-          className="col-span-2 col-start-1 hidden items-center justify-center gap-x-2 lg:col-span-1 lg:col-start-2 lg:flex lg:gap-x-3 xl:gap-x-4"
-        >
-          {PRIMARY_NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(navLink, navActive(pathname, item.href) && navLinkActive)}
-              aria-current={navActive(pathname, item.href) ? 'page' : undefined}
-            >
-              {item.label}
-            </Link>
-          ))}
-          <details className="relative">
-            <summary className={cn('list-none cursor-pointer [&::-webkit-details-marker]:hidden', navLink)}>More</summary>
-            <ul className="absolute right-0 top-full z-20 mt-2 min-w-56 rounded-card border border-stone bg-paper p-2 shadow-panel transition-opacity duration-(--duration-menu)">
-              {MORE_NAV.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} onClick={closeMenu} className="block whitespace-nowrap rounded-input px-3 py-2.5 text-charcoal no-underline hover:bg-mist">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </details>
+        <nav aria-label="Primary" className="hidden min-w-0 flex-1 items-center justify-center gap-x-2 lg:flex xl:gap-x-3">
+          {PRIMARY_NAV.map((item) => {
+            const active = navActive(pathname, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(navLink, 'relative', active && navLinkActive)}
+                aria-current={active ? 'page' : undefined}
+              >
+                {item.label}
+                {active ? <span aria-hidden className="absolute -bottom-1 left-1/2 h-px w-5 -translate-x-1/2 bg-pale-gold" /> : null}
+              </Link>
+            );
+          })}
         </nav>
 
-        <div className="col-start-2 flex shrink-0 items-center justify-end gap-2 lg:col-start-3 lg:gap-2.5 xl:gap-3">
-          {contact.phone ? (
+        <div className="ml-auto flex shrink-0 items-center justify-end gap-2 lg:ml-0 lg:gap-2.5">
+          {!overlay && contact.phone ? (
             <a
               href={telHref(contact.phone)}
-              className={
-                overlay
-                  ? 'hidden min-h-11 items-center whitespace-nowrap text-[15px] font-semibold leading-none text-ivory/95 no-underline transition-colors duration-(--duration-fast) hover:text-pale-gold md:inline-flex xl:text-[16px]'
-                  : 'hidden min-h-11 items-center whitespace-nowrap text-[15px] font-semibold leading-none text-green no-underline transition-colors duration-(--duration-fast) hover:text-night md:inline-flex xl:text-[16px]'
-              }
+              className="hidden min-h-10 items-center whitespace-nowrap text-[13px] font-medium leading-none text-charcoal no-underline transition-colors duration-(--duration-fast) hover:text-green xl:inline-flex"
               data-track="call_click"
             >
               Call {contact.phoneDisplay}
             </a>
           ) : null}
-          {contact.whatsapp ? (
+          {!overlay && contact.whatsapp ? (
             <WhatsAppLink
               contact={contact}
-              className={
-                overlay
-                  ? 'hidden min-h-11 items-center whitespace-nowrap rounded-full border border-ivory/80 px-4 py-2 text-[15px] font-semibold leading-none text-ivory no-underline transition-colors duration-(--duration-fast) hover:border-ivory hover:bg-white/10 md:inline-flex xl:text-[16px]'
-                  : 'hidden min-h-11 items-center whitespace-nowrap rounded-full border border-green px-4 py-2 text-[15px] font-semibold leading-none text-green no-underline transition-colors duration-(--duration-fast) hover:bg-mist md:inline-flex xl:text-[16px]'
-              }
+              className="hidden min-h-10 items-center whitespace-nowrap rounded-full border border-night/70 px-3.5 py-2 text-[13px] font-medium leading-none text-night no-underline transition-colors duration-(--duration-fast) hover:bg-sand lg:inline-flex"
             >
               WhatsApp
             </WhatsAppLink>

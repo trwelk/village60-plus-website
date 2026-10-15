@@ -42,11 +42,11 @@ function renderHome(overrides: Partial<HomeViewProps> = {}) {
 }
 
 describe('HomeView', () => {
-  it('renders the eight sections in order, with Oracle after Find the Right Care', () => {
+  it('renders the story after the hero, then the remaining sections, without Find the Right Care', () => {
     const { container } = renderHome();
     expect([...container.querySelectorAll('[data-home-section]')].map((node) => node.getAttribute('data-home-section'))).toEqual([
       'hero',
-      'pathways',
+      'story',
       'oracle',
       'homes',
       'care',
@@ -55,8 +55,11 @@ describe('HomeView', () => {
       'trust',
     ]);
     const oracle = screen.getAllByRole('heading', { name: 'Oracle' })[0];
-    const pathways = screen.getByRole('heading', { name: 'Find the Right Care' });
-    expect(pathways.compareDocumentPosition(oracle) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    const story = screen.getByRole('heading', { name: /A More Meaningful Tomorrow/ });
+    expect(story.compareDocumentPosition(oracle) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.queryByRole('heading', { name: 'Find the Right Care' })).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Explore Village 60 Plus/ })).toHaveAttribute('href', '/homes');
+    expect(screen.getByRole('button', { name: /Arrange a private visit/ })).toBeInTheDocument();
     const spotlight = container.querySelector('[data-home-section="oracle"]');
     expect(spotlight).not.toBeNull();
     expect(within(spotlight as HTMLElement).getByText('Ten rooms for independent adults.')).toBeInTheDocument();
@@ -104,15 +107,13 @@ describe('HomeView', () => {
     expect(screen.getByText('Pilot')).toBeInTheDocument();
   });
 
-  it('sends the three pathways to Find the Right Care without a clinical field', () => {
+  it('keeps the homes row moving and does not ask for a diagnosis', () => {
     const { container } = renderHome();
     expect(screen.getByRole('button', { name: 'Pause automatic movement' })).toBeEnabled();
     const homes = container.querySelector('[data-home-section="homes"] ul');
     expect(homes?.className).toContain('animate-room-marquee');
-    expect(screen.getByRole('link', { name: /For a parent or relative/i })).toHaveAttribute('href', '/find-the-right-care?for=parent');
-    expect(screen.getByRole('link', { name: /For myself/i })).toHaveAttribute('href', '/find-the-right-care?for=myself');
-    expect(screen.getByRole('link', { name: /After hospital or surgery/i })).toHaveAttribute('href', '/find-the-right-care?for=after-hospital');
     expect(screen.queryByLabelText(/diagnosis/i)).not.toBeInTheDocument();
+    expect(screen.getByText('You.')).toBeInTheDocument();
   });
 
   it('drifts living and care the opposite way from the homes row', () => {

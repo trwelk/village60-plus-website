@@ -4,10 +4,8 @@ import { getPublicEnv } from '@/lib/env';
 import { isSanityProjectConfigured } from '@/lib/sanity-project';
 import { docTag } from '@/lib/revalidation';
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
-import { contactFromSettings } from '@/lib/site-settings';
 import { fetchPublished } from '@/sanity/fetch';
-import { PAGE_QUERY, RESIDENCES_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/queries';
-import { pickHeroImage } from '@/components/content/PageHero';
+import { PAGE_QUERY, RESIDENCES_QUERY } from '@/sanity/queries';
 import { toResidenceCards } from '../home-view';
 import { HomesView } from './view';
 
@@ -21,40 +19,27 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata({
     siteUrl,
     path: PATH,
-    fallbackTitle: 'Our homes',
-    fallbackDescription: 'Compare Village 60 Plus residences by location, care and status.',
+    fallbackTitle: 'A place for every chapter',
+    fallbackDescription:
+      'Different homes and settings, with the same purpose: to help you live well, in comfort, with the right support around you.',
     seo: doc?.seo,
   });
 }
 
 export default async function HomesPage() {
   const { siteUrl, sanityProjectId } = getPublicEnv();
-  let doc: Awaited<ReturnType<typeof fetchPublished<typeof PAGE_QUERY>>> | null = null;
   let residences: Awaited<ReturnType<typeof fetchPublished<typeof RESIDENCES_QUERY>>> | null = null;
-  let settings: Awaited<ReturnType<typeof fetchPublished<typeof SITE_SETTINGS_QUERY>>> | null = null;
   if (isSanityProjectConfigured(sanityProjectId)) {
     try {
-      [doc, residences, settings] = await Promise.all([
-        fetchPublished(PAGE_QUERY, { slug: 'homes' }, [docTag('page', 'homes'), 'page']),
-        fetchPublished(RESIDENCES_QUERY, {}, ['residence']),
-        fetchPublished(SITE_SETTINGS_QUERY, {}, ['siteSettings']),
-      ]);
+      residences = await fetchPublished(RESIDENCES_QUERY, {}, ['residence']);
     } catch {
-      doc = null;
       residences = null;
-      settings = null;
     }
   }
   return (
     <>
       <JsonLd data={breadcrumbJsonLd(siteUrl, [{ label: 'Home', href: '/' }, { label: 'Our homes', href: PATH }])} />
-      <HomesView
-        title={doc?.title || 'Our homes'}
-        intro={doc?.intro}
-        image={pickHeroImage(doc?.heroImage, ...(residences ?? []).map((row) => row?.heroImage))}
-        residences={toResidenceCards(residences)}
-        contact={contactFromSettings(settings)}
-      />
+      <HomesView residences={toResidenceCards(residences)} />
     </>
   );
 }

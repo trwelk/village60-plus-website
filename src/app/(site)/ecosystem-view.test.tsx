@@ -91,7 +91,7 @@ describe('EcosystemView', () => {
     expect(screen.queryByText('Available now')).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: /dashboard/i })).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Plan a stay' })).not.toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Enquire' })).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: 'Enquire' }).length).toBeGreaterThan(0);
     expect(document.body.textContent).not.toMatch(/voice interface/i);
   });
 });

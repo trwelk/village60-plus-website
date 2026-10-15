@@ -9,6 +9,7 @@ import { breadcrumbJsonLd, pageMetadata, serviceJsonLd } from '@/lib/seo';
 import { contactFromSettings } from '@/lib/site-settings';
 import { fetchPublished } from '@/sanity/fetch';
 import { CARE_SERVICE_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/queries';
+import { photoForCare, photoForResidence } from '@/lib/site-photos';
 import { CareDetailView, type CareDetail } from './view';
 
 export function generateStaticParams() {
@@ -54,7 +55,7 @@ export default async function CareDetailPage({ params }: { params: Promise<{ slu
     slug: doc.slug,
     status: doc.status,
     summary: doc.summary,
-    heroImage: doc.heroImage,
+    heroImage: photoForCare(doc.slug) ?? doc.heroImage,
     whoItSuits: doc.whoItSuits,
     typicalDuration: doc.typicalDuration,
     included: doc.included,
@@ -62,7 +63,9 @@ export default async function CareDetailPage({ params }: { params: Promise<{ slu
     notRightFit: doc.notRightFit,
     faqs: doc.faqs as CareDetail['faqs'],
     formKind: doc.formKind,
-    residences: doc.residences,
+    residences: doc.residences?.map((home) =>
+      home ? { ...home, heroImage: photoForResidence(home.slug) ?? home.heroImage } : home,
+    ),
   } : null;
 
   return (

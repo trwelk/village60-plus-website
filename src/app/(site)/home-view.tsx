@@ -7,6 +7,7 @@ import { ResidenceCard, type ResidenceCardData } from '@/components/content/Resi
 import type { HeroVideo } from '@/components/media/VideoHero';
 import type { CmsImage } from '@/components/media/SanityImage';
 import { HomeHero } from '@/components/content/HomeHero';
+import { HomeStory } from '@/components/content/HomeStory';
 import { OracleSpotlight } from '@/components/content/OracleSpotlight';
 import { Button } from '@/components/ui/Button';
 import { Heading } from '@/components/ui/Heading';
@@ -15,31 +16,6 @@ import { StatusBadge } from '@/components/ui/StatusBadge';
 import type { SiteContact } from '@/lib/contact';
 import { isContentStatus, isFuture, isOperating } from '@/lib/content-status';
 import { offeringPath } from '@/lib/routes';
-
-const PATHWAYS = [
-  {
-    title: 'For a parent or relative',
-    body: 'You do not need to know the care category. Tell us who you are asking about.',
-    href: '/find-the-right-care?for=parent',
-    careSlug: 'residential-care',
-  },
-  {
-    title: 'For myself',
-    body: 'Start with the kind of day you want, and a person will talk it through with you.',
-    href: '/find-the-right-care?for=myself',
-    careSlug: 'independent-living',
-  },
-  {
-    title: 'After hospital or surgery',
-    body: 'If someone is leaving hospital, we can explain respite, recovery and rehabilitation in plain language.',
-    href: '/find-the-right-care?for=after-hospital',
-    careSlug: 'recovery',
-  },
-] as const;
-
-function careHeroImage(services: CareServiceCardData[], slug: string): CmsImage | null {
-  return services.find((service) => service.slug === slug)?.heroImage ?? null;
-}
 
 export type HomePageFields = {
   title?: string | null;
@@ -97,28 +73,11 @@ export function HomeView({ home, residences, careServices, offerings, contact, o
   return (
     <main id="main">
       <Region name="hero">
-        <HomeHero title="Live well. Age exceptionally." intro={home?.intro} image={video ? null : home?.heroImage} video={video} contact={contact} />
+        <HomeHero video={video} />
       </Region>
 
-      <Region name="pathways">
-        <Section tone="sand" labelledBy="home-pathways">
-          <Heading as="h2" id="home-pathways">Find the Right Care</Heading>
-          <ul className="mt-8 grid gap-8 md:grid-cols-3">
-            {PATHWAYS.map((path, index) => (
-              <li key={path.href}>
-                <PreviewCard
-                  href={path.href}
-                  title={path.title}
-                  eyebrow="Find the right care"
-                  description={path.body}
-                  overlay={path.body}
-                  image={careHeroImage(careServices, path.careSlug)}
-                  fill={['bg-green', 'bg-leaf', 'bg-night'][index]}
-                />
-              </li>
-            ))}
-          </ul>
-        </Section>
+      <Region name="story">
+        <HomeStory />
       </Region>
 
       <Region name="oracle">

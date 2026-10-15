@@ -12,7 +12,18 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
   return (
     <EnquiryProvider contact={chrome.contact}>
       <SkipLink />
-      <Header contact={chrome.contact} enquiryTrigger={<EnquiryButton kind="general" context="Village 60 Plus">Enquire</EnquiryButton>} />
+      <Header
+        contact={chrome.contact}
+        enquiryTrigger={
+          <EnquiryButton
+            kind="general"
+            context="Village 60 Plus"
+            className="inline-flex min-h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-night px-4 text-[13px] font-semibold text-ivory transition-colors duration-(--duration-fast) hover:bg-green"
+          >
+            Enquire
+          </EnquiryButton>
+        }
+      />
       <div className="pb-20 md:pb-0">{children}</div>
       <Footer
         contact={chrome.contact}

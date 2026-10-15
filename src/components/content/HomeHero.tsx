@@ -1,51 +1,69 @@
+import { EnquiryButton } from '@/components/forms/EnquiryPanel';
 import { VideoHero, type HeroVideo } from '@/components/media/VideoHero';
-import { SanityImage, type CmsImage } from '@/components/media/SanityImage';
-import { Button } from '@/components/ui/Button';
-import { telHref, type SiteContact } from '@/lib/contact';
+import Link from 'next/link';
 
-export function HomeHero({
-  title,
-  intro,
-  image,
-  video,
-  contact,
-}: {
-  title: string;
-  intro?: string | null;
-  image?: CmsImage | null;
-  video?: HeroVideo | null;
-  contact: SiteContact;
-}) {
+const HERO_PHOTO = '/home/hero.jpg';
+
+export function HomeHero({ video }: { video?: HeroVideo | null }) {
   return (
-    <section aria-labelledby="page-title" className="relative flex min-h-[100svh] items-end overflow-hidden bg-night text-ivory on-dark">
+    <section aria-labelledby="page-title" className="relative flex min-h-[100svh] items-center overflow-hidden bg-night text-ivory on-dark">
       <div className="absolute inset-0">
-        {video ? (
-          <VideoHero video={video} fill />
-        ) : (
-          <SanityImage image={image} width={1920} height={1080} priority cover sizes="100vw" />
-        )}
+        {/* The dusk photograph is the designed still. A video, when published, plays over it. */}
+        <img src={HERO_PHOTO} alt="Oracle residence at dusk" className="h-full w-full object-cover object-[72%_center]" />
+        {video ? <VideoHero video={video} fill appearance="watch" /> : null}
       </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/80 via-night/35 to-transparent" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/60 via-transparent to-night/30" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-night/80 to-transparent" />
-      <div className="relative z-10 w-full pt-28 pb-64 md:pb-28">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/55 via-transparent to-night/45" />
+      <div className="relative z-10 w-full pt-28 pb-32">
         <div className="mx-auto w-full max-w-[1520px] gutter">
-          <h1 id="page-title" className="display-text max-w-[12ch] text-ivory">
-            {title}
-          </h1>
-          {intro ? <p className="mt-5 max-w-[36rem] text-[18px] leading-relaxed text-ivory">{intro}</p> : null}
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button href="/find-the-right-care" onDark size="lg">
-              Find the Right Care
-            </Button>
-            {contact.phone ? (
-              <Button href={telHref(contact.phone)} variant="secondary" onDark size="lg" data-track="call_click">
-                Call
-              </Button>
-            ) : null}
+          <div className="max-w-[46rem]">
+            <h1 id="page-title" className="font-display text-[clamp(2.35rem,4.5vw,4.65rem)] leading-[0.95] font-medium tracking-[-0.02em] text-ivory uppercase">
+              <span className="block">Live well.</span> <span className="block sm:whitespace-nowrap">Age exceptionally.</span>
+            </h1>
+            <div className="mt-6 h-px w-16 bg-pale-gold" />
+            <p className="mt-6 max-w-[36rem] font-display text-[clamp(1.15rem,1.5vw,1.45rem)] leading-snug text-ivory">
+              More than care. A better way to live after 60.
+            </p>
+            <p className="mt-5 max-w-[26rem] text-[16px] leading-relaxed text-ivory/95 md:text-[17px]">
+              Beautiful places to live.
+              <br />
+              Thoughtful support when you need it.
+              <br />
+              And the freedom to keep living life your way.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/homes"
+                className="inline-flex min-h-12 items-center gap-2.5 rounded-[4px] bg-pale-gold px-5 text-[13px] font-semibold tracking-[0.12em] text-night uppercase no-underline transition-colors duration-(--duration-fast) hover:bg-gold"
+              >
+                Explore Village 60 Plus
+                <Arrow />
+              </Link>
+              <EnquiryButton kind="oracle-visit" context="Home" tone="hero">
+                Arrange a private visit
+              </EnquiryButton>
+            </div>
+            <p className="mt-8 text-[12px] tracking-[0.16em] text-ivory/85 uppercase">Established 2008 · Sri Lanka</p>
           </div>
         </div>
       </div>
+      <a
+        href="#home-story"
+        className="absolute bottom-24 left-1/2 z-20 -translate-x-1/2 text-ivory/90 md:bottom-7"
+        aria-label="A more meaningful tomorrow"
+      >
+        <svg viewBox="0 0 24 24" className="size-6" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+          <path d="M6 9.5 12 15.5 18 9.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </a>
     </section>
+  );
+}
+
+function Arrow() {
+  return (
+    <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
+      <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }

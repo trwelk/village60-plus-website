@@ -8,6 +8,7 @@ import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
 import { contactFromSettings } from '@/lib/site-settings';
 import { fetchPublished } from '@/sanity/fetch';
 import { OFFERING_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/queries';
+import { photoForOffering } from '@/lib/site-photos';
 import { EcosystemView, toOffering } from './ecosystem-view';
 
 const COPY: Record<OfferingSlug, { title: string; description: string }> = {
@@ -55,15 +56,18 @@ export async function OfferingRoute({ slug }: { slug: OfferingSlug }) {
     }
   }
   const offering = toOffering(doc);
+  const pictured = offering
+    ? { ...offering, heroImage: photoForOffering(slug) ?? offering.heroImage }
+    : null;
   return (
     <>
       <JsonLd
         data={breadcrumbJsonLd(siteUrl, [
           { label: 'Home', href: '/' },
-          { label: offering?.name || COPY[slug].title, href: offeringPath(slug) },
+          { label: pictured?.name || COPY[slug].title, href: offeringPath(slug) },
         ])}
       />
-      <EcosystemView slug={slug} offering={offering} contact={contactFromSettings(settings)} />
+      <EcosystemView slug={slug} offering={pictured} contact={contactFromSettings(settings)} />
     </>
   );
 }

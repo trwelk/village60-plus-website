@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { SanityImage, type CmsImage } from '@/components/media/SanityImage';
-import { Container } from '@/components/ui/Container';
+import { Breadcrumbs, type Crumb } from '@/components/ui/Breadcrumbs';
 import { Heading } from '@/components/ui/Heading';
 import { Section, isDarkTone, type SectionTone } from '@/components/ui/Section';
 import { StatusBadge } from '@/components/ui/StatusBadge';
@@ -16,12 +16,14 @@ export function PageHero({
   title,
   intro,
   image,
+  photo,
   status,
   tone = 'ivory',
   align = 'start',
   framed = false,
   layout = 'split',
   offset = true,
+  crumbs,
   className,
   children,
 }: {
@@ -29,16 +31,20 @@ export function PageHero({
   title: string;
   intro?: string | null;
   image?: CmsImage | null;
+  /** Static photograph when the page has no CMS image. */
+  photo?: { src: string; alt: string } | null;
   status?: string | null;
   tone?: SectionTone;
   /** Vertical alignment of the text against a hero image. */
   align?: 'start' | 'center';
   /** Crop the photograph to a consistent 4:3 panel. */
   framed?: boolean;
-  /** `overlay` places the title on a full-bleed photograph. */
+  /** `overlay` places the title on a full-viewport photograph. */
   layout?: 'split' | 'overlay';
   /** Leave room for the overlaid header. Turn off when breadcrumbs already clear it. */
   offset?: boolean;
+  /** Ancestor trail drawn on the photograph, above the title. */
+  crumbs?: Crumb[];
   className?: string;
   children?: ReactNode;
 }) {
@@ -49,36 +55,34 @@ export function PageHero({
     return (
       <section
         aria-labelledby="page-title"
-        className={cn(
-          'relative flex items-end overflow-hidden bg-night text-ivory on-dark md:items-center',
-          showImage && 'min-h-[36rem] md:min-h-[40rem]',
-          className,
-        )}
+        className={cn('relative flex min-h-[100svh] items-center overflow-hidden bg-night text-ivory on-dark', className)}
       >
         {showImage ? (
           <div className="absolute inset-0">
             <SanityImage image={image} width={1920} height={1080} priority cover sizes="100vw" />
           </div>
+        ) : photo ? (
+          <img src={photo.src} alt={photo.alt} fetchPriority="high" className="absolute inset-0 h-full w-full object-cover" />
         ) : null}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night via-night/88 to-night/40 md:hidden" />
-        <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-night from-0% via-night/82 via-38% to-transparent md:block" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-night/80 to-transparent" />
-        <div className="relative z-10 w-full pt-28 pb-14 md:pb-20">
-          <Container>
-            <div className="flex max-w-xl flex-col items-start gap-5">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/78 via-night/32 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/35 via-transparent to-night/45" />
+        <div className="relative z-10 w-full pt-32 pb-16">
+          <div className="mx-auto w-full max-w-[1520px] gutter">
+            <div className="flex max-w-[40rem] flex-col items-start gap-5">
+              {crumbs && crumbs.length > 0 ? <Breadcrumbs items={crumbs} tone="dark" /> : null}
               {(eyebrow || isContentStatus(status)) && (
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                  {eyebrow ? <p className="text-[14px] font-semibold uppercase tracking-[0.08em] text-pale-gold">{eyebrow}</p> : null}
+                  {eyebrow ? <p className="text-[12px] font-semibold tracking-[0.22em] text-pale-gold uppercase">{eyebrow}</p> : null}
                   {isContentStatus(status) ? <StatusBadge status={status} tone="dark" /> : null}
                 </div>
               )}
-              <h1 id="page-title" className="display-text text-ivory">
+              <h1 id="page-title" className="font-display text-[clamp(2.6rem,4.4vw,4.25rem)] leading-[0.98] font-medium tracking-[-0.02em] text-ivory">
                 {title}
               </h1>
-              {intro ? <p className="max-w-prose-site text-[18px] leading-relaxed">{intro}</p> : null}
+              {intro ? <p className="max-w-[36rem] text-[16px] leading-relaxed text-ivory/95 md:text-[17px]">{intro}</p> : null}
               {children ? <div className="flex w-full flex-col items-start gap-5">{children}</div> : null}
             </div>
-          </Container>
+          </div>
         </div>
       </section>
     );

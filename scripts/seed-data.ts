@@ -592,7 +592,7 @@ const pageSeeds: Array<{
 }> = [
   { slug: 'home', title: 'Live well. Age exceptionally.', intro: 'Homes, care and practical support for later life in Sri Lanka, built around the person rather than the institution.' },
   { slug: 'find-the-right-care', title: 'Find the right care', intro: 'You do not need to know the name of the care you are looking for. Tell us a little and a person will call you back.' },
-  { slug: 'homes', title: 'Our homes', intro: 'Different homes, one philosophy. Compare location, type of support and current status, then visit the one that feels right.' },
+  { slug: 'homes', title: 'A Place for Every Chapter.', intro: 'Different homes. Different settings. The same purpose — to help you live well, in comfort, with the right support around you.' },
   {
     slug: 'living-and-care',
     title: 'Living and care',

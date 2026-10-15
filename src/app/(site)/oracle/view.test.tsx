@@ -46,7 +46,7 @@ describe('OracleView', () => {
   it('lists the rooms it is given and places the visit form at the end', () => {
     const { container } = render(<OracleView residence={oracle} contact={contactFixture} mapsKey={null} />);
     expect([...container.querySelectorAll('[data-oracle-section]')].map((node) => node.getAttribute('data-oracle-section'))).toEqual([
-      'hero', 'rooms', 'spaces', 'daily-life', 'everyday', 'optional', 'independence', 'map', 'visit',
+      'hero', 'rooms', 'daily-life', 'highlights', 'spaces', 'everyday', 'optional', 'independence', 'map', 'visit',
     ]);
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
     expect(screen.getByRole('heading', { level: 1, name: 'Oracle' })).toHaveAttribute('id', 'page-title');
@@ -55,15 +55,22 @@ describe('OracleView', () => {
     expect(screen.getByText('Pearl')).toBeInTheDocument();
     expect(screen.getByText('Aspect to be confirmed')).toBeInTheDocument();
     expect(screen.queryByText('Onyx')).not.toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Live your day, your way.' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Live Your Day, Your Way.' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'We take care of the rest.' })).toBeInTheDocument();
+    expect(screen.getByText('Dining & Meals')).toBeInTheDocument();
+    expect(screen.getByText('Security & Reassurance')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Explore Silver Roots' })).toHaveAttribute('href', '/silver-roots');
+    expect(screen.getByRole('link', { name: 'Personal Services via Silver Roots' })).toHaveAttribute('href', '/silver-roots');
+    expect(screen.getByText('A new standard of living.')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Arrange a private visit' })).toHaveAttribute('href', '#oracle-visit');
     expect(screen.getByText(/arranged separately/i)).toBeInTheDocument();
     expect(screen.getAllByRole('heading', { name: 'Arrange a private visit' })).toHaveLength(1);
     expect(screen.getByRole('heading', { name: 'Arrange a private visit' })).toHaveAttribute('id', 'oracle-visit');
     expect(screen.queryByText(/international standard/i)).not.toBeInTheDocument();
   });
 
-  it('gives each house its own moving row of room cards', () => {
-    const { container } = render(
+  it('shows every named room in one filmstrip', () => {
+    render(
       <OracleView
         residence={{
           ...oracle,
@@ -77,15 +84,13 @@ describe('OracleView', () => {
         mapsKey={null}
       />,
     );
-    const lists = container.querySelectorAll('[data-oracle-section="rooms"] ul');
-    expect(lists).toHaveLength(2);
-    expect(lists[0].className).toContain('animate-room-marquee');
-    expect(lists[0].querySelectorAll('article')).toHaveLength(4);
-    expect(lists[0].querySelectorAll('[aria-hidden="true"]')).toHaveLength(2);
-    expect(lists[1].className).not.toContain('animate-room-marquee');
-    expect(lists[1].querySelectorAll('article')).toHaveLength(1);
-    expect(screen.getByText('House 1')).toBeInTheDocument();
-    expect(screen.getByText('House 2')).toBeInTheDocument();
+    const list = screen.getByRole('list', { name: 'Rooms' });
+    expect(list.querySelectorAll('li')).toHaveLength(3);
+    expect(screen.getByText('Jade')).toBeInTheDocument();
+    expect(screen.getByText('Onyx')).toBeInTheDocument();
+    expect(screen.getByText('Pearl')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Next rooms' })).toBeInTheDocument();
+    expect(screen.queryByText('House 1')).not.toBeInTheDocument();
   });
 
   it('shows the coming-soon badge and does not describe a future Oracle as open', () => {

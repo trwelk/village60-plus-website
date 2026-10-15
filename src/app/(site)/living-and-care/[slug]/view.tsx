@@ -7,7 +7,7 @@ import { PageHero } from '@/components/content/PageHero';
 import type { StepItem } from '@/components/content/StepList';
 import { SanityImage, type CmsImage } from '@/components/media/SanityImage';
 import { ContactActions } from '@/components/site/ContactActions';
-import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
+import type { Crumb } from '@/components/ui/Breadcrumbs';
 import { Chip } from '@/components/ui/Chip';
 import { Heading } from '@/components/ui/Heading';
 import { Section } from '@/components/ui/Section';
@@ -57,11 +57,28 @@ function hasPhoto(image: CmsImage | null | undefined) {
   return Boolean(image?.asset?.url && image.alt?.trim());
 }
 
+function Check() {
+  return (
+    <svg viewBox="0 0 20 20" className="mt-0.5 size-5 shrink-0 text-gold" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+      <circle cx="10" cy="10" r="7.25" />
+      <path d="M6.5 10.2 8.8 12.5 13.5 7.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function Arrow() {
+  return (
+    <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+      <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export function CareDetailView({ service, contact }: { service: CareDetail | null; contact: SiteContact }) {
   if (!service) {
     return (
       <main id="main">
-        <PageHero title="This service" intro="Details will appear here once they are published." tone="ivory" />
+        <PageHero layout="overlay" title="This service" intro="Details will appear here once they are published." tone="night" />
       </main>
     );
   }
@@ -80,20 +97,28 @@ export function CareDetailView({ service, contact }: { service: CareDetail | nul
 
   return (
     <main id="main">
-      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Living & Care', href: '/living-and-care' }, { label: service.name }]} />
       <Region name="hero">
         <PageHero
+          layout="overlay"
           eyebrow="Living & Care"
           title={service.name}
           intro={service.summary}
           image={service.heroImage}
           status={service.status}
-          tone="ivory"
-          align="center"
-          offset={false}
-          className="hero-to-band"
+          tone="night"
+          crumbs={
+            [
+              { label: 'Home', href: '/' },
+              { label: 'Living & Care', href: '/living-and-care' },
+              { label: service.name },
+            ] satisfies Crumb[]
+          }
         >
-          <EnquiryButton kind={asFormKind(service.formKind)} context={service.name}>
+          <EnquiryButton
+            kind={asFormKind(service.formKind)}
+            context={service.name}
+            className="inline-flex min-h-12 items-center gap-2.5 rounded-[4px] bg-pale-gold px-5 text-[12px] font-semibold tracking-[0.14em] text-night uppercase transition-colors duration-(--duration-fast) hover:bg-gold"
+          >
             Enquire
           </EnquiryButton>
         </PageHero>
@@ -145,28 +170,58 @@ export function CareDetailView({ service, contact }: { service: CareDetail | nul
 
       <Region name="included">
         {included.length > 0 ? (
-          <Section tone="paper" labelledBy="included">
-            <Heading as="h2" id="included">
-              What is included
-            </Heading>
-            <ul className="m-0 mt-8 grid list-none gap-4 p-0 md:grid-cols-2">
-              {included.map((item) => {
-                const provision = provisionLabel(item.provision);
-                const status = markedStatus(item.status);
-                return (
-                  <li key={item._key} className="flex h-full flex-col rounded-panel border border-stone bg-ivory p-6">
-                    {provision || status ? (
-                      <div className="mb-4 flex flex-wrap items-center gap-2">
-                        {provision ? <Chip>{provision}</Chip> : null}
-                        {status ? <StatusBadge status={status} /> : null}
-                      </div>
-                    ) : null}
-                    <h3 className="text-[22px] leading-snug md:text-[24px]">{item.title}</h3>
-                    {item.description ? <p className="mt-2">{item.description}</p> : null}
-                  </li>
-                );
-              })}
-            </ul>
+          <Section tone="ivory" labelledBy="included">
+            <div className={cn('grid items-center gap-10 lg:gap-16', hasPhoto(service.heroImage) && 'lg:grid-cols-2')}>
+              {hasPhoto(service.heroImage) ? (
+                <div className="relative aspect-[4/3] overflow-hidden rounded-panel bg-sand lg:aspect-[5/4]">
+                  <SanityImage
+                    image={service.heroImage}
+                    width={960}
+                    height={768}
+                    sizes="(min-width: 1200px) 560px, 100vw"
+                    cover
+                    decorative
+                    className="absolute inset-0"
+                  />
+                </div>
+              ) : null}
+              <div>
+                <Heading as="h2" id="included" titleClassName="text-green" className="max-w-none">
+                  What is included
+                </Heading>
+                <ul className="m-0 mt-6 grid list-none gap-x-8 gap-y-3 p-0 sm:grid-cols-2">
+                  {included.map((item) => {
+                    const provision = item.provision && item.provision !== 'included' ? provisionLabel(item.provision) : null;
+                    const status = markedStatus(item.status);
+                    return (
+                      <li key={item._key} className="flex items-start gap-3 text-[16px] leading-snug text-charcoal/90">
+                        <Check />
+                        <div>
+                          <p>{item.title}</p>
+                          {item.description ? <p className="mt-1 text-[15px] leading-snug text-charcoal/70">{item.description}</p> : null}
+                          {provision || status ? (
+                            <div className="mt-2 flex flex-wrap items-center gap-2">
+                              {provision ? <Chip>{provision}</Chip> : null}
+                              {status ? <StatusBadge status={status} /> : null}
+                            </div>
+                          ) : null}
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+                <div className="mt-8">
+                  <EnquiryButton
+                    kind={asFormKind(service.formKind)}
+                    context={service.name}
+                    className="inline-flex min-h-11 items-center gap-2 rounded-full bg-gold px-6 py-3 text-[13px] font-semibold tracking-[0.14em] text-night uppercase transition-colors duration-(--duration-fast) hover:bg-bronze hover:text-ivory"
+                  >
+                    Enquire
+                    <Arrow />
+                  </EnquiryButton>
+                </div>
+              </div>
+            </div>
           </Section>
         ) : null}
       </Region>
