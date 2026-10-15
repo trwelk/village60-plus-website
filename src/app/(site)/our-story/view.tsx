@@ -230,7 +230,7 @@ function ClosingMilestone({ item }: { item: Milestone }) {
     <li className="relative grid grid-cols-1 justify-items-center gap-5 pt-4 pb-2 md:grid-cols-[minmax(0,1fr)_10.5rem_minmax(0,1fr)] md:items-center md:justify-items-stretch md:gap-x-6 md:pt-2 md:pb-1 lg:items-end">
       <div className="relative flex w-full max-w-[14rem] items-center justify-center md:col-start-2 md:max-w-none">
         <div className="relative">
-          <svg viewBox="0 0 80 120" className="pointer-events-none absolute bottom-full left-1/2 hidden h-48 w-16 -translate-x-1/2 md:block" aria-hidden>
+          <svg viewBox="0 0 80 120" className="pointer-events-none absolute bottom-full left-1/2 hidden h-28 w-16 -translate-x-1/2 md:block lg:h-48" aria-hidden>
             <path d="M40 120 C34 78 62 48 40 0" fill="none" stroke="#8d6430" strokeWidth="4.5" strokeLinecap="round" />
             <path d="M40 120 C34 78 62 48 40 0" fill="none" stroke="#c4a15a" strokeWidth="1.7" strokeLinecap="round" />
           </svg>
@@ -410,13 +410,16 @@ export function OurStoryView() {
         <StoryBranches />
       </section>
 
-      <section aria-label="Where the story leads" className="relative z-10 overflow-hidden bg-night text-ivory on-dark lg:-mt-3">
+      <section aria-label="Where the story leads" className="relative z-10 overflow-hidden bg-ivory text-ivory on-dark lg:-mt-3">
         <img src={GARDEN.src} alt="" className="absolute inset-0 h-full w-full object-cover opacity-45" />
         <div className="absolute inset-0 bg-[#0d221b]/84" />
-        <div className="relative mx-auto max-w-[1200px] gutter pt-5 pb-16 lg:pt-0 lg:pb-24">
-          <ul className="grid list-none gap-6 p-0 lg:grid-cols-3">
-            <li>
-              <article className="flex h-full flex-col overflow-hidden rounded-panel border border-ivory/15 bg-[#132e26]">
+        <div className="relative z-10 mx-auto max-w-[1200px] gutter pt-5 pb-16 lg:pt-0 lg:pb-24">
+          <div className="relative">
+            <div aria-hidden className="pointer-events-none absolute -top-[100vh] bottom-1/2 left-1/2 z-0 hidden w-screen -translate-x-1/2 bg-ivory lg:block" />
+            <ul className="relative z-10 grid list-none gap-6 p-0 lg:grid-cols-3">
+            <li className="relative">
+              <div aria-hidden className="pointer-events-none absolute -top-[100vh] bottom-1/2 left-1/2 z-0 w-screen -translate-x-1/2 bg-ivory lg:hidden" />
+              <article className="relative z-10 flex h-full flex-col overflow-hidden rounded-panel border border-ivory/15 bg-[#132e26]">
                 <div className="flex min-h-80 flex-col bg-[#0e241c] px-6 pt-7">
                   <p className="text-center font-display text-[13px] tracking-[0.22em] text-pale-gold uppercase">Silver Roots</p>
                   <p className="text-center text-[10px] tracking-[0.18em] text-ivory/70 uppercase">by Village 60 Plus</p>
@@ -484,8 +487,9 @@ export function OurStoryView() {
               </article>
             </li>
           </ul>
+          </div>
 
-          <div className="mt-16 grid items-center gap-10 lg:mt-24 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.15fr)_minmax(0,0.72fr)] lg:gap-12">
+          <div className="relative z-10 mt-16 grid items-center gap-10 lg:mt-24 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.15fr)_minmax(0,0.72fr)] lg:gap-12">
             <figure className="hidden overflow-hidden border-4 border-ivory/90 shadow-panel lg:block lg:-rotate-3">
               <img src={UPPER_HOUSE.src} alt={UPPER_HOUSE.alt} className="aspect-[4/3] w-full object-cover" />
             </figure>
