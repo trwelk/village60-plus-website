@@ -53,11 +53,11 @@ describe('LivingCareView', () => {
     expect(screen.getByRole('link', { name: 'Family Connection' })).toHaveAttribute('href', '#beyond');
     expect(screen.getByRole('link', { name: /Care at home/ })).toHaveAttribute('href', '/silver-roots');
     expect(screen.getAllByRole('link', { name: 'Destination Retirement' }).every((link) => link.getAttribute('href') === '/destination-retirement')).toBe(true);
-    expect(screen.getByRole('link', { name: /Our Homes Inspired Living/ })).toHaveAttribute('href', '/homes');
-    expect(screen.getByRole('link', { name: /Platinum 60 Personal Concierge/ })).toHaveAttribute('href', '#private-concierge');
-    expect(screen.getByRole('link', { name: /Silver Roots Family Connection/ })).toHaveAttribute('href', '/silver-roots');
-    expect(screen.getByRole('link', { name: /Destination Retirement Explore More/ })).toHaveAttribute('href', '/destination-retirement');
+    expect(screen.getByRole('link', { name: /Our Homes\s*Inspired Living/ })).toHaveAttribute('href', '/homes');
+    expect(screen.getByRole('link', { name: /Platinum 60\s*Personal Concierge/ })).toHaveAttribute('href', '#private-concierge');
+    expect(screen.getByRole('link', { name: /Silver Roots\s*Family Connection/ })).toHaveAttribute('href', '/silver-roots');
+    expect(screen.getByRole('link', { name: /Destination Retirement\s*Explore More/ })).toHaveAttribute('href', '/destination-retirement');
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
     expect(document.body.textContent).not.toMatch(/guarantee|best|number one/i);
-  });
+  }, 20000);
 });

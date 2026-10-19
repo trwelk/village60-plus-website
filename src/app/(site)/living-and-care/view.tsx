@@ -644,7 +644,7 @@ export function LivingCareView() {
                   <span className={cn('mt-3 block text-[12px] leading-snug font-semibold tracking-[0.14em] text-bronze uppercase', item.detail && 'text-[11px]')}>
                     {item.title}
                   </span>
-                  {item.detail ? <span className="mt-1 block font-display text-[18px] leading-tight text-green">{item.detail}</span> : null}
+                  {item.detail ? <span className="mt-1 block font-display text-[18px] leading-tight text-green">{` ${item.detail}`}</span> : null}
                 </>
               );
               return (
