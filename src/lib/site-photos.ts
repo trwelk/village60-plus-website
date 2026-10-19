@@ -168,7 +168,7 @@ type WithPhotos = {
   slug?: string | null;
   heroImage?: CmsImage | null;
   gallery?: Array<CmsImage | null> | null;
-  rooms?: Array<{ image?: CmsImage | null } | null> | null;
+  rooms?: Array<{ name?: string | null; image?: CmsImage | null } | null> | null;
 };
 
 /** Swap CMS stock for the sharper on-site photographs. Named team portraits stay as published. */

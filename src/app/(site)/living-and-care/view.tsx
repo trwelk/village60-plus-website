@@ -21,7 +21,11 @@ type IconName =
   | 'people'
   | 'car'
   | 'sprout'
-  | 'shield';
+  | 'shield'
+  | 'bell'
+  | 'lotus'
+  | 'pin'
+  | 'diamond';
 
 const PORTRAIT = '/silver-roots/hero.jpg';
 const WALK = '/silver-roots/garden.jpg';
@@ -81,8 +85,9 @@ const PROVIDES: Array<{ label: string; icon: IconName; href?: string }> = [
   { label: 'Housekeeping & Laundry', icon: 'linen' },
   { label: 'Health & Wellbeing', icon: 'heart', href: '#health' },
   { label: 'Staying Active', icon: 'walk', href: '#staying-active' },
-  { label: 'Family Connection', icon: 'people' },
+  { label: 'Family Connection', icon: 'people', href: '#beyond' },
   { label: 'Transport & Appointments', icon: 'car', href: '#health' },
+  { label: 'Platinum 60 Concierge', icon: 'bell', href: '#private-concierge' },
   { label: 'Personal Services via Silver Roots', icon: 'sprout', href: '/silver-roots' },
   { label: 'Technology & Safety', icon: 'shield' },
 ];
@@ -101,7 +106,10 @@ const HEALTH = [
   'Prescription collection/delivery',
   'Medication support',
   'Transport to appointments',
-  'Physiotherapy coordination',
+  'Professional nursing support',
+  'Discreet personal assistance',
+  'Physiotherapy, spa, fitness and relaxation',
+  'Beauty and grooming',
   'Health assessments',
   'Wellbeing checks',
   'Family updates',
@@ -110,10 +118,86 @@ const HEALTH = [
 const ACTIVE = [
   'Gentle exercise and walking',
   'Gardening and outdoor areas',
-  'Games, music and movies',
+  'Games, music, movies and entertainment',
   'Cultural and spiritual activities',
-  'Outings and social events',
+  'Excursions and social occasions',
   'Choice and flexibility',
+];
+
+const EXPERIENCE: Array<{
+  id: string;
+  title: string;
+  body: string;
+  icon: IconName;
+  links?: Array<{ href: string; label: string }>;
+}> = [
+  {
+    id: 'elegant-living',
+    title: 'Elegant Living',
+    body: 'Private residences, beautifully furnished accommodation, inviting surroundings and the freedom to live on your own terms.',
+    icon: 'home',
+    links: [{ href: '/homes', label: 'Our homes' }],
+  },
+  {
+    id: 'exceptional-care',
+    title: 'Exceptional Care',
+    body: 'Discreet personal assistance, professional nursing support, health coordination and individually tailored care.',
+    icon: 'heart',
+    links: [{ href: '#residential-care', label: 'Residential care' }],
+  },
+  {
+    id: 'fine-living',
+    title: 'Fine Living & Dining',
+    body: 'Thoughtfully curated menus, personalised dining preferences, daily comforts and attentive hospitality.',
+    icon: 'meal',
+    links: [{ href: '#good-food', label: 'Meals and dining' }],
+  },
+  {
+    id: 'wellness',
+    title: 'Wellness & Rejuvenation',
+    body: 'Spa experiences, physiotherapy, fitness, relaxation, beauty and wellness services designed for your wellbeing.',
+    icon: 'lotus',
+    links: [{ href: '#health', label: 'Health and wellbeing' }],
+  },
+  {
+    id: 'leisure',
+    title: 'Leisure & Experiences',
+    body: 'Social occasions, entertainment, cultural experiences, excursions and opportunities to discover something new.',
+    icon: 'people',
+    links: [{ href: '#staying-active', label: 'Activities' }],
+  },
+  {
+    id: 'private-concierge',
+    title: 'Private Concierge',
+    body: 'From personal shopping and grooming to chauffeur arrangements, appointments and travel, our Platinum 60 concierge services attend to the finer details.',
+    icon: 'bell',
+    links: [{ href: '/contact', label: 'Enquire' }],
+  },
+  {
+    id: 'recovery-respite',
+    title: 'Recovery & Respite',
+    body: 'Comfortable short-term stays, rehabilitation assistance and personalised support during recovery.',
+    icon: 'bed',
+    links: [{ href: '#respite-care', label: 'Short stays' }],
+  },
+  {
+    id: 'beyond-residences',
+    title: 'Living Beyond Our Residences',
+    body: 'Enjoy the Village 60 Plus standard of service in your own home or through our Destination Retirement experiences.',
+    icon: 'pin',
+    links: [
+      { href: '/silver-roots', label: 'Care at home' },
+      { href: '/destination-retirement', label: 'Destination Retirement' },
+    ],
+  },
+];
+
+const PATHWAYS: Array<{ icon: IconName; title: string; detail?: string; href?: string }> = [
+  { icon: 'lotus', title: 'The privilege of living well.' },
+  { icon: 'home', title: 'Our Homes', detail: 'Inspired Living', href: '/homes' },
+  { icon: 'diamond', title: 'Platinum 60', detail: 'Personal Concierge', href: '#private-concierge' },
+  { icon: 'sprout', title: 'Silver Roots', detail: 'Family Connection', href: '/silver-roots' },
+  { icon: 'pin', title: 'Destination Retirement', detail: 'Explore More', href: '/destination-retirement' },
 ];
 
 function Icon({ name, className }: { name: IconName; className?: string }) {
@@ -178,6 +262,37 @@ function iconPaths(name: IconName): ReactNode {
       return <path d="M12 21V11M12 14c-3.5-.2-6-2.4-6-5.5 3.2 0 5.5 1.6 6 5.5zM12 12c3.2-.4 5.5-2.6 5.5-5.5-3 0-5.2 1.8-5.5 5.5z" />;
     case 'shield':
       return <path d="M12 3.5 19 6.5v5.2c0 4.2-2.8 7.2-7 8.8-4.2-1.6-7-4.6-7-8.8V6.5z" />;
+    case 'bell':
+      return (
+        <>
+          <path d="M6.5 16h11" />
+          <path d="M8 16V10.5a4 4 0 0 1 8 0V16" />
+          <path d="M10 16a2 2 0 0 0 4 0" />
+          <path d="M12 6.5V5" />
+        </>
+      );
+    case 'lotus':
+      return (
+        <>
+          <path d="M12 20c0-4 2.4-7 2.4-10.2C14.4 12.6 12 16 12 20z" />
+          <path d="M12 20c0-4-2.4-7-2.4-10.2C9.6 12.6 12 16 12 20z" />
+          <path d="M12 19.2c-3.8-.3-6.8-2.2-7.6-5.2 2.8.2 5.2.8 7.6 2.8 2.4-2 4.8-2.6 7.6-2.8-.8 3-3.8 4.9-7.6 5.2z" />
+        </>
+      );
+    case 'pin':
+      return (
+        <>
+          <path d="M12 21s5.5-4.8 5.5-9a5.5 5.5 0 1 0-11 0c0 4.2 5.5 9 5.5 9z" />
+          <circle cx="12" cy="12" r="1.7" />
+        </>
+      );
+    case 'diamond':
+      return (
+        <>
+          <path d="M12 3.5 20 9.5 12 20.5 4 9.5z" />
+          <path d="M4 9.5h16M8.4 9.5 12 20.5 15.6 9.5M8.4 9.5 12 3.5l3.6 6" />
+        </>
+      );
     default:
       return null;
   }
@@ -336,6 +451,45 @@ export function LivingCareView() {
         </Container>
       </section>
 
+      <section id="experience" aria-labelledby="experience-title" className="section-space scroll-mt-8 bg-sand">
+        <Container>
+          <Heading as="h2" id="experience-title" eyebrow="The Village 60 Plus experience" titleClassName="text-green" className="max-w-3xl">
+            A Distinguished Way of Life.
+          </Heading>
+          <div className="mt-4 max-w-3xl space-y-3 text-charcoal/85">
+            <p>At Village 60 Plus, we believe retirement should be a celebration of life, not a compromise.</p>
+            <p>Discover a world where refined living, personalised attention and exceptional hospitality come together.</p>
+            <p>
+              From beautifully appointed residences and thoughtfully prepared dining to dedicated care, wellness and lifestyle experiences, every detail is considered around you.
+            </p>
+          </div>
+          <h3 className="mt-12 font-display text-[28px] leading-tight text-green">The Village 60 Plus Experience</h3>
+          <ul className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            {EXPERIENCE.map((item) => (
+              <li key={item.id} id={item.id} className="scroll-mt-8">
+                <article className="flex h-full flex-col rounded-card border border-stone/80 bg-paper p-5 shadow-panel">
+                  <span className="inline-flex size-11 items-center justify-center rounded-full bg-sand text-gold">
+                    <Icon name={item.icon} className="size-6" />
+                  </span>
+                  <h3 className="mt-4 font-display text-[22px] leading-tight text-green">{item.title}</h3>
+                  <p className="mt-2 text-[15px] leading-snug text-charcoal/80">{item.body}</p>
+                  {item.links?.length ? (
+                    <p className="mt-auto flex flex-wrap gap-x-4 gap-y-2 pt-4">
+                      {item.links.map((link) => (
+                        <Link key={link.href} href={link.href} className="inline-flex items-center gap-1.5 text-[12px] font-semibold tracking-[0.12em] text-bronze uppercase no-underline hover:text-green">
+                          {link.label}
+                          <Arrow />
+                        </Link>
+                      ))}
+                    </p>
+                  ) : null}
+                </article>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
+
       <section aria-labelledby="more-than-a-room" className="relative overflow-hidden bg-green text-ivory on-dark section-space">
         <div className="absolute inset-0" aria-hidden="true">
           <Cover src={WALK} className="opacity-40" />
@@ -388,7 +542,7 @@ export function LivingCareView() {
                 Good Food Is Part of Good Living.
               </Heading>
               <p className="mt-4 max-w-prose-site text-charcoal/85">
-                Nutritious, home-cooked meals prepared fresh, with options for individual dietary requirements. Enjoy meals in our dining spaces or in the comfort of your own room.
+                Thoughtfully curated menus and nutritious, home-cooked meals prepared fresh, with personalised dining preferences and individual dietary requirements. Enjoy meals in our dining spaces or in the comfort of your own room, with attentive hospitality.
               </p>
               <div className="mt-6">
                 <Checklist items={MEALS} />
@@ -444,6 +598,69 @@ export function LivingCareView() {
             </div>
           </div>
         </Container>
+      </section>
+
+      <section id="beyond" aria-labelledby="connected-title" className="section-space scroll-mt-8 bg-paper">
+        <Container>
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            <Photo src="/silver-roots/sunset.jpg" alt="Warm evening light across the garden" className="aspect-[4/3] lg:aspect-[5/4]" />
+            <div>
+              <Heading as="h2" id="connected-title" eyebrow="Silver Roots" titleClassName="text-green" className="max-w-none">
+                Seamlessly Connected
+              </Heading>
+              <p className="mt-4 max-w-prose-site text-charcoal/85">
+                Through Silver Roots and our integrated service network, your care, lifestyle arrangements and family communication come together effortlessly.
+              </p>
+              <p className="mt-3 max-w-prose-site text-charcoal/85">
+                Living beyond our residences, the same standard of service can continue in your own home or through Destination Retirement.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <GoldLink href="/silver-roots">Silver Roots</GoldLink>
+                <GoldLink href="/destination-retirement">Destination Retirement</GoldLink>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section aria-labelledby="without-compromise" className="border-t border-stone/80 bg-ivory">
+        <Container className="section-space">
+          <div className="mx-auto max-w-3xl text-center">
+            <Heading as="h2" id="without-compromise" titleClassName="text-green" className="mx-auto max-w-3xl text-center">
+              A Life Without Compromise.
+            </Heading>
+            <p className="mt-4 text-[18px] leading-snug text-charcoal">Your preferences. Your pace. Your way of life.</p>
+            <p className="mx-auto mt-3 max-w-2xl text-charcoal/85">
+              At Village 60 Plus, we take care of the details, so you can enjoy what matters most.
+            </p>
+          </div>
+        </Container>
+        <nav aria-label="Ways to live with Village 60 Plus" className="border-t border-stone/80">
+          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+            {PATHWAYS.map((item) => {
+              const inner = (
+                <>
+                  <Icon name={item.icon} className="size-7 text-gold" />
+                  <span className={cn('mt-3 block text-[12px] leading-snug font-semibold tracking-[0.14em] text-bronze uppercase', item.detail && 'text-[11px]')}>
+                    {item.title}
+                  </span>
+                  {item.detail ? <span className="mt-1 block font-display text-[18px] leading-tight text-green">{item.detail}</span> : null}
+                </>
+              );
+              return (
+                <li key={item.title} className="border-stone/80 max-lg:border-b max-lg:odd:border-r lg:border-l lg:first:border-l-0">
+                  {item.href ? (
+                    <Link href={item.href} className="flex h-full flex-col items-center px-4 py-8 text-center text-charcoal no-underline transition-colors hover:text-bronze lg:py-10">
+                      {inner}
+                    </Link>
+                  ) : (
+                    <div className="flex h-full flex-col items-center px-4 py-8 text-center lg:py-10">{inner}</div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
       </section>
     </main>
   );

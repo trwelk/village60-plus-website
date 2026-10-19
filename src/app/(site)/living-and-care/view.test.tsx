@@ -17,6 +17,10 @@ describe('LivingCareView', () => {
     const food = screen.getByRole('heading', { name: 'Good Food Is Part of Good Living.' });
     const health = screen.getByRole('heading', { name: 'Your Health Matters.' });
     const active = screen.getByRole('heading', { name: 'Live Well. Stay Active.' });
+    const distinguished = screen.getByRole('heading', { name: 'A Distinguished Way of Life.' });
+    const experience = screen.getByRole('heading', { name: 'The Village 60 Plus Experience' });
+    const connected = screen.getByRole('heading', { name: 'Seamlessly Connected' });
+    const compromise = screen.getByRole('heading', { name: 'A Life Without Compromise.' });
 
     expect(title.compareDocumentPosition(services) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(services.compareDocumentPosition(independent) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
@@ -24,16 +28,35 @@ describe('LivingCareView', () => {
     expect(residential.compareDocumentPosition(respite) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(respite.compareDocumentPosition(recovery) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(recovery.compareDocumentPosition(rehabilitation) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(rehabilitation.compareDocumentPosition(more) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(rehabilitation.compareDocumentPosition(distinguished) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(distinguished.compareDocumentPosition(experience) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(experience.compareDocumentPosition(more) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(more.compareDocumentPosition(food) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(food.compareDocumentPosition(health) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(health.compareDocumentPosition(active) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(active.compareDocumentPosition(connected) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(connected.compareDocumentPosition(compromise) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+
+    expect(screen.getByRole('heading', { name: 'Private Concierge' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Wellness & Rejuvenation' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Living Beyond Our Residences' })).toBeInTheDocument();
+    expect(screen.getByText(/celebration of life, not a compromise/i)).toBeInTheDocument();
+    expect(screen.getByText(/Platinum 60 concierge services/i)).toBeInTheDocument();
+    expect(screen.getByText(/Your preferences. Your pace. Your way of life./)).toBeInTheDocument();
 
     expect(screen.getByRole('link', { name: /Independent Living A comfortable/ })).toHaveAttribute('href', '/living-and-care/independent-living');
     expect(screen.getByRole('link', { name: /Rehabilitation Support Helping you regain/ })).toHaveAttribute('href', '/living-and-care/rehabilitation');
     expect(screen.getByRole('link', { name: 'Explore our services' })).toHaveAttribute('href', '#our-services');
     expect(screen.getByRole('link', { name: 'Find the right care' })).toHaveAttribute('href', '/find-the-right-care');
     expect(screen.getByRole('link', { name: 'Personal Services via Silver Roots' })).toHaveAttribute('href', '/silver-roots');
+    expect(screen.getByRole('link', { name: 'Platinum 60 Concierge' })).toHaveAttribute('href', '#private-concierge');
+    expect(screen.getByRole('link', { name: 'Family Connection' })).toHaveAttribute('href', '#beyond');
+    expect(screen.getByRole('link', { name: /Care at home/ })).toHaveAttribute('href', '/silver-roots');
+    expect(screen.getAllByRole('link', { name: 'Destination Retirement' }).every((link) => link.getAttribute('href') === '/destination-retirement')).toBe(true);
+    expect(screen.getByRole('link', { name: /Our Homes Inspired Living/ })).toHaveAttribute('href', '/homes');
+    expect(screen.getByRole('link', { name: /Platinum 60 Personal Concierge/ })).toHaveAttribute('href', '#private-concierge');
+    expect(screen.getByRole('link', { name: /Silver Roots Family Connection/ })).toHaveAttribute('href', '/silver-roots');
+    expect(screen.getByRole('link', { name: /Destination Retirement Explore More/ })).toHaveAttribute('href', '/destination-retirement');
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
     expect(document.body.textContent).not.toMatch(/guarantee|best|number one/i);
   });

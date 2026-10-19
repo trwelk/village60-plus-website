@@ -1,7 +1,11 @@
 import type { ClientReturn, QueryParams } from 'next-sanity';
 import { draftMode } from 'next/headers';
+import { unstable_rethrow } from 'next/navigation';
 import { getServerEnv } from '@/lib/env';
+import { trustSystemCertificateAuthorities } from '@/lib/trust-system-cas';
 import { client } from './client';
+
+trustSystemCertificateAuthorities();
 
 export const DEFAULT_REVALIDATE = 3600;
 
@@ -39,12 +43,10 @@ export async function fetchPublished<const Q extends string>(query: Q, params: Q
   try {
     return await client.fetch(query, params, { perspective: 'published', useCdn: true, next: { revalidate: DEFAULT_REVALIDATE, tags } });
   } catch (error: unknown) {
+    unstable_rethrow(error);
     const cause = error instanceof Error ? error.cause : undefined;
-    console.error(
-      'Published Sanity fetch failed',
-      error instanceof Error ? `${error.name}: ${error.message}` : 'Error',
-      cause instanceof Error ? `${cause.name}${ 'code' in cause ? ` ${String(cause.code)}` : ''}: ${cause.message}` : '',
-    );
+    const code = cause instanceof Error && 'code' in cause && cause.code != null ? String(cause.code) : undefined;
+    console.error('Published Sanity fetch failed', code ?? (error instanceof Error ? error.name : 'Error'));
     return null;
   }
 }
