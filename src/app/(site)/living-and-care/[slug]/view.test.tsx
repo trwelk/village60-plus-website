@@ -53,6 +53,7 @@ describe('CareDetailView', () => {
     expect(screen.getByRole('img', { name: 'Serenity exterior' })).toBeInTheDocument();
     expect(screen.getByRole('img', { name: 'The Grove' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Serenity/ })).toHaveAttribute('href', '/homes/serenity');
+    expect(screen.getByRole('link', { name: /The Grove/ })).toHaveAttribute('href', '/look-to-the-future');
     expect(screen.getByText('Coming soon')).toBeInTheDocument();
     expect(screen.getByText('Can we visit first?')).toBeInTheDocument();
     expect(screen.getByText('Respite care', { selector: '[aria-current="page"]' })).toBeInTheDocument();

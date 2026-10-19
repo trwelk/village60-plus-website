@@ -1,22 +1,24 @@
 import { describe, expect, it } from 'vitest';
-import { CARE_SERVICE_SLUGS, LEGAL_SLUGS, ORACLE_HOMES_REDIRECT, PAGE_SLUGS, RESIDENCE_SLUGS, careStaticParams, contextForPath, isLegalSlug, residencePath, residenceStaticParams } from './routes';
+import { CARE_SERVICE_SLUGS, GROVE_HOMES_REDIRECT, LEGAL_SLUGS, ORACLE_HOMES_REDIRECT, PAGE_SLUGS, RESIDENCE_SLUGS, careStaticParams, contextForPath, isLegalSlug, residencePath, residenceStaticParams } from './routes';
 
 describe('routes', () => {
   it('lists the six residences from the spec sitemap', () => {
     expect([...RESIDENCE_SLUGS]).toEqual(['tranquility', 'serenity', 'house-on-the-hill', 'enchanted-fields', 'oracle', 'the-grove']);
   });
-  it('gives Oracle its single canonical URL and other homes a /homes/ URL', () => {
+  it('gives Oracle and The Grove their canonical URLs and other homes a /homes/ URL', () => {
     expect(residencePath('oracle')).toBe('/oracle');
-    expect(residencePath('the-grove')).toBe('/homes/the-grove');
+    expect(residencePath('the-grove')).toBe('/look-to-the-future');
+    expect(residencePath('serenity')).toBe('/homes/serenity');
   });
   it('lists five care services and three legal pages', () => {
     expect(CARE_SERVICE_SLUGS).toHaveLength(5);
     expect([...LEGAL_SLUGS]).toEqual(['privacy', 'terms', 'accessibility']);
     expect(PAGE_SLUGS).toEqual(expect.arrayContaining([...LEGAL_SLUGS, 'home', 'contact']));
   });
-  it('builds residence params without Oracle and redirects /homes/oracle', () => {
-    expect(residenceStaticParams().map((item) => item.slug)).toEqual(['tranquility', 'serenity', 'house-on-the-hill', 'enchanted-fields', 'the-grove']);
+  it('builds residence params without Oracle or The Grove and redirects their old /homes URLs', () => {
+    expect(residenceStaticParams().map((item) => item.slug)).toEqual(['tranquility', 'serenity', 'house-on-the-hill', 'enchanted-fields']);
     expect(ORACLE_HOMES_REDIRECT).toEqual({ source: '/homes/oracle', destination: '/oracle', permanent: true });
+    expect(GROVE_HOMES_REDIRECT).toEqual({ source: '/homes/the-grove', destination: '/look-to-the-future', permanent: true });
   });
   it('builds a static param for each care service', () => {
     expect(careStaticParams().map((item) => item.slug)).toEqual(['independent-living', 'residential-care', 'respite-care', 'recovery', 'rehabilitation']);
@@ -35,6 +37,9 @@ describe('routes', () => {
     expect(contextForPath('/living-and-care/respite-care')).toBe('Respite care');
     expect(contextForPath('/silver-roots')).toBe('Silver Roots');
     expect(contextForPath('/feedback')).toBe('Feedback');
+    expect(contextForPath('/look-to-the-future')).toBe('Look to the Future');
+    expect(contextForPath('/look-to-the-future/heritage')).toBe('The Heritage');
+    expect(contextForPath('/look-to-the-future/grove')).toBe('The Grove');
     expect(contextForPath('/unknown')).toBe('Village 60 Plus');
   });
 });

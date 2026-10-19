@@ -99,7 +99,7 @@ Public details to verify before they are treated as fact:
 
 - [ ] Phone `+94 11 250 4838`
 - [ ] WhatsApp `+94 74 100 3994`
-- [ ] Email `village60plus@gmail.com`
+- [ ] Email `enquiries@village60plus.org`
 - [ ] Head office `133/19 Nawala Road, Narahenpita, Colombo 05`
 
 Must be confirmed:

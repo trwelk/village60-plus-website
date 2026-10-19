@@ -114,7 +114,7 @@ const DEFINITIONS: Record<FormKind, FormDefinition> = {
   'oracle-visit': {
     kind: 'oracle-visit',
     heading: 'Arrange a private visit',
-    intro: 'Request a visit to Oracle. We will confirm by phone or WhatsApp — this is not an instant booking.',
+    intro: 'Request a visit to Oracle. We will confirm by phone or WhatsApp, this is not an instant booking.',
     submitLabel: 'Request my visit',
     fields: [
       name,

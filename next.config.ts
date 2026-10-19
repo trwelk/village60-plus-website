@@ -1,5 +1,5 @@
 import type { NextConfig } from 'next';
-import { ORACLE_HOMES_REDIRECT } from './src/lib/routes';
+import { GROVE_HOMES_REDIRECT, ORACLE_HOMES_REDIRECT } from './src/lib/routes';
 import { securityHeaders } from './src/lib/security-headers';
 
 const nextConfig: NextConfig = {
@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [{ protocol: 'https', hostname: 'cdn.sanity.io' }],
   },
   async redirects() {
-    return [ORACLE_HOMES_REDIRECT];
+    return [ORACLE_HOMES_REDIRECT, GROVE_HOMES_REDIRECT];
   },
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders(process.env.NEXT_PUBLIC_GA_ID) }];

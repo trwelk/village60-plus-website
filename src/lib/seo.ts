@@ -4,7 +4,7 @@ import type { CmsImage } from '@/components/media/SanityImage';
 import { isContentStatus, isOperating } from '@/lib/content-status';
 import type { MapAddress } from '@/lib/maps';
 import { addressLines } from '@/lib/maps';
-import { careServicePath, offeringPath, pagePath, residencePath } from '@/lib/routes';
+import { GROVE_SLUG, careServicePath, offeringPath, pagePath, residencePath } from '@/lib/routes';
 import { urlFor } from '@/sanity/image';
 
 export type JsonLd = Record<string, unknown>;
@@ -194,10 +194,16 @@ export function sitemapEntries(siteUrl: string, data: SitemapGroups): Array<{ ur
     if (!page?.slug || page.noIndex) continue;
     push(pagePath(page.slug), page._updatedAt);
   }
-  for (const residence of data.residences ?? []) push(residence?.slug ? residencePath(residence.slug) : null, residence?._updatedAt);
+  for (const residence of data.residences ?? []) {
+    if (!residence?.slug || residence.slug === GROVE_SLUG) continue;
+    push(residencePath(residence.slug), residence._updatedAt);
+  }
   for (const service of data.careServices ?? []) push(service?.slug ? careServicePath(service.slug) : null, service?._updatedAt);
   for (const offering of data.offerings ?? []) push(offering?.slug ? offeringPath(offering.slug) : null, offering?._updatedAt);
   push('/feedback');
+  push('/look-to-the-future');
+  push('/look-to-the-future/heritage');
+  push('/look-to-the-future/grove');
   return entries;
 }
 

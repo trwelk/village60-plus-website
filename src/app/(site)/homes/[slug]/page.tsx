@@ -6,7 +6,7 @@ import { isSanityProjectConfigured } from '@/lib/sanity-project';
 import { docTag } from '@/lib/revalidation';
 import { breadcrumbJsonLd, localBusinessJsonLd, pageMetadata } from '@/lib/seo';
 import { contactFromSettings } from '@/lib/site-settings';
-import { ORACLE_SLUG, RESIDENCE_SLUGS, residencePath, residenceStaticParams } from '@/lib/routes';
+import { GROVE_PATH, GROVE_SLUG, ORACLE_SLUG, RESIDENCE_SLUGS, residencePath, residenceStaticParams } from '@/lib/routes';
 import { fetchPublished } from '@/sanity/fetch';
 import { RESIDENCE_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/queries';
 import { withResidencePhotos } from '@/lib/site-photos';
@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function ResidencePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   if (slug === ORACLE_SLUG) redirect('/oracle');
+  if (slug === GROVE_SLUG) redirect(GROVE_PATH);
   if (!(RESIDENCE_SLUGS as readonly string[]).includes(slug)) notFound();
 
   const { siteUrl, sanityProjectId, mapsKey } = getPublicEnv();

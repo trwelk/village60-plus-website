@@ -29,7 +29,6 @@ describe('DestinationRetirementView', () => {
     const order = [...document.querySelectorAll('[data-dr-section]')].map((node) => node.getAttribute('data-dr-section'));
     expect(order).toEqual(['hero', 'destinations', 'promises', 'lifestyle', 'places', 'wellness', 'support', 'trial']);
     expect(screen.getByRole('heading', { name: 'Sri Lanka' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Dubai' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Explore destinations/ })).toHaveAttribute('href', '#destinations');
     expect(screen.getByRole('link', { name: /Connected Services via Silver Roots/ })).toHaveAttribute('href', '/silver-roots');
     expect(screen.getByRole('link', { name: /Explore our services/ })).toHaveAttribute('href', '/silver-roots');

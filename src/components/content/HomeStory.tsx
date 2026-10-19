@@ -9,7 +9,7 @@ export function HomeStory() {
             </h2>
             <div className="mt-8 max-w-[46ch] space-y-5 text-[17px] leading-relaxed md:text-[18px]">
               <p>
-                For nearly two decades, Village 60 Plus has been creating places where people can feel safe, supported and — most importantly — at home.
+                For nearly two decades, Village 60 Plus has been creating places where people can feel safe, supported and, most importantly, at home.
               </p>
               <p>
                 But getting older is changing.

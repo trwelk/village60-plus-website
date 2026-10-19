@@ -6,6 +6,7 @@ import { PreviewCard } from '@/components/content/PreviewCard';
 import { ResidenceCard, type ResidenceCardData } from '@/components/content/ResidenceCard';
 import type { HeroVideo } from '@/components/media/VideoHero';
 import type { CmsImage } from '@/components/media/SanityImage';
+import { AwardRecognition } from '@/components/content/AwardRecognition';
 import { HomeHero } from '@/components/content/HomeHero';
 import { HomeStory } from '@/components/content/HomeStory';
 import { OracleSpotlight } from '@/components/content/OracleSpotlight';
@@ -78,6 +79,10 @@ export function HomeView({ home, residences, careServices, offerings, contact, o
 
       <Region name="story">
         <HomeStory />
+      </Region>
+
+      <Region name="recognition">
+        <AwardRecognition />
       </Region>
 
       <Region name="oracle">

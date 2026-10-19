@@ -53,7 +53,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata({
     siteUrl,
     path: '/',
-    fallbackTitle: 'Village 60 Plus — homes, care and support for later life in Sri Lanka',
+    fallbackTitle: 'Village 60 Plus, homes, care and support for later life in Sri Lanka',
     fallbackDescription: 'Homes, care and practical support for later life in Sri Lanka.',
     seo: doc?.seo,
   });

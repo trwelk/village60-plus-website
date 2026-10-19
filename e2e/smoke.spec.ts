@@ -25,7 +25,8 @@ test.describe('empty-state smoke', () => {
   test('home sections are in the approved order', async ({ page }) => {
     await page.goto('/');
     const sections = await page.locator('[data-home-section]').evaluateAll((nodes) => nodes.map((node) => node.getAttribute('data-home-section')));
-    expect(sections).toEqual(['hero', 'story', 'oracle', 'homes', 'care', 'silver-roots', 'ecosystem', 'trust']);
+    expect(sections).toEqual(['hero', 'story', 'recognition', 'oracle', 'homes', 'care', 'silver-roots', 'ecosystem', 'trust']);
+    await expect(page.locator('#home-recognition')).toBeVisible();
     const story = page.getByRole('heading', { name: /A More Meaningful Tomorrow/ });
     const oracle = page.getByRole('heading', { name: 'Oracle' }).first();
     const storyBox = await story.boundingBox();

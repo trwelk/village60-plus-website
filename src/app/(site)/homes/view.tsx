@@ -26,10 +26,22 @@ const ORACLE_TILES = [
 ] as const;
 
 const ESTABLISHED_PHOTOS: Record<(typeof ESTABLISHED)[number], { src: string; alt: string }> = {
-  tranquility: { src: '/homes/tranquility.jpg', alt: 'Tranquility in the evening, with a verandah and garden' },
-  serenity: { src: '/homes/serenity.jpg', alt: 'Serenity at dusk, a smaller home with a front porch' },
-  'house-on-the-hill': { src: '/homes/hill.jpg', alt: 'House on the Hill at dusk, set above a wide lawn' },
-  'enchanted-fields': { src: '/homes/fields.jpg', alt: 'Enchanted Fields in golden light, with open green grounds' },
+  tranquility: {
+    src: '/homes/tranquility.jpg',
+    alt: 'Tranquility at Nawala Road at dusk, a white building with a peaked roof and glass entrance',
+  },
+  serenity: {
+    src: '/homes/serenity.jpg',
+    alt: 'Serenity on Railway Avenue, a white bungalow with a clay-tile roof and pink bougainvillea over the verandah',
+  },
+  'house-on-the-hill': {
+    src: '/homes/hill.jpg',
+    alt: 'House on the Hill at dusk, with the illuminated entrance sign and driveway up to the white residence',
+  },
+  'enchanted-fields': {
+    src: '/homes/fields.jpg',
+    alt: 'Enchanted Fields retirement villas on a sunny afternoon, with a green roof, white verandah and wide lawn',
+  },
 };
 
 const GROVE_POINTS = ['80 New Rooms', 'Modern Design', 'Thoughtful Shared Spaces', 'Beautiful Surroundings', 'The Same Personal Approach'] as const;
@@ -138,7 +150,7 @@ export function HomesView({ residences }: { residences: ResidenceCardData[] }) {
                 A Place for Every Chapter.
               </h1>
               <p className="mt-6 max-w-[36rem] text-[16px] leading-relaxed text-ivory/95 md:text-[17px]">
-                Different homes. Different settings. The same purpose — to help you live well, in comfort, with the right support around you.
+                Different homes. Different settings. The same purpose, to help you live well, in comfort, with the right support around you.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a href={portfolio ? '#portfolio' : '#guidance'} className={heroGold}>
@@ -181,7 +193,7 @@ export function HomesView({ residences }: { residences: ResidenceCardData[] }) {
               </h2>
               <p className="mt-4 font-display text-[clamp(26px,3vw,34px)] leading-tight">A New Standard of Living.</p>
               <p className="mt-5 max-w-[42ch] text-[17px] leading-relaxed text-charcoal/80">
-                Ten individually designed private rooms for independent adults who value their privacy, freedom and way of life. Beautiful spaces, thoughtful details and supportive services — all within an elegant private residence.
+                Ten individually designed private rooms for independent adults who value their privacy, freedom and way of life. Beautiful spaces, thoughtful details and supportive services, all within an elegant private residence.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link href="/oracle" className={filled}>
@@ -305,7 +317,7 @@ export function HomesView({ residences }: { residences: ResidenceCardData[] }) {
               Let&apos;s Find the Right Option.
             </h2>
             <p className="mt-5 max-w-[46ch] text-[17px] leading-relaxed text-charcoal/80">
-              Every person&apos;s circumstances are different. We can help you explore the most suitable home or support option — whether within Village 60 Plus or through our wider network via Silver Roots.
+              Every person&apos;s circumstances are different. We can help you explore the most suitable home or support option, whether within Village 60 Plus or through our wider network via Silver Roots.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/find-the-right-care" className={filled}>

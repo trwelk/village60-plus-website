@@ -8,12 +8,13 @@ export const PRIMARY_NAV: NavItem[] = [
   { label: 'Destination Retirement', href: '/destination-retirement' },
   { label: 'Silver Roots', href: '/silver-roots' },
   { label: 'Our Story', href: '/our-story' },
+  { label: 'Look to the Future', href: '/look-to-the-future' },
+  { label: 'Contact', href: '/contact' },
 ];
 
 export const MORE_NAV: NavItem[] = [
   { label: 'SAGE', href: '/sage' },
   { label: 'Find the Right Care', href: '/find-the-right-care' },
-  { label: 'Contact', href: '/contact' },
   { label: 'Feedback', href: '/feedback' },
 ];
 

@@ -111,7 +111,7 @@ describe('HomesView', () => {
     expect(screen.getByRole('heading', { name: 'The Grove' })).toBeInTheDocument();
     expect(screen.getByText('Coming soon')).toBeInTheDocument();
     expect(screen.getByText('80 New Rooms')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Discover The Grove' })).toHaveAttribute('href', '/homes/the-grove');
+    expect(screen.getByRole('link', { name: 'Discover The Grove' })).toHaveAttribute('href', '/look-to-the-future');
     expect(screen.getByRole('button', { name: 'Register your interest' })).toBeInTheDocument();
 
     expect(screen.getByRole('heading', { name: 'Homes With Their Own Character.' })).toBeInTheDocument();

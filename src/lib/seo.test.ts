@@ -143,10 +143,12 @@ describe('sitemap and robots', () => {
     expect(urls).toEqual([
       'https://www.village60plus.lk/',
       'https://www.village60plus.lk/oracle',
-      'https://www.village60plus.lk/homes/the-grove',
       'https://www.village60plus.lk/living-and-care/respite-care',
       'https://www.village60plus.lk/sage',
       'https://www.village60plus.lk/feedback',
+      'https://www.village60plus.lk/look-to-the-future',
+      'https://www.village60plus.lk/look-to-the-future/heritage',
+      'https://www.village60plus.lk/look-to-the-future/grove',
     ]);
     expect(urls.some((url) => url.includes('/homes/oracle'))).toBe(false);
   });

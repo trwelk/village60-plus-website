@@ -6,7 +6,15 @@
 import type { ContentStatus } from '@/lib/content-status';
 import type { FormKind } from '@/lib/forms/kinds';
 import { type CareServiceSlug, type OfferingSlug, type PageSlug, type ResidenceSlug } from '@/lib/routes';
-import { CLIENT_GALLERY, CLIENT_PHOTOS, type ClientPhotoKey } from './client-photos';
+import {
+  CLIENT_GALLERY,
+  CLIENT_PHOTOS,
+  ENCHANTED_FIELDS_GALLERY,
+  HOUSE_ON_THE_HILL_GALLERY,
+  SERENITY_GALLERY,
+  TRANQUILITY_GALLERY,
+  type ClientPhotoKey,
+} from './client-photos';
 import { STOCK_PHOTOS, type StockPhotoKey } from './stock-photos';
 
 export const PLACEHOLDER_REPLACE_BY = '2027-01-31';
@@ -28,11 +36,11 @@ export function stockImage(photoKey: StockPhotoKey, keySuffix = 'image') {
     _key: key(`${photoKey}-${keySuffix}`),
     alt: photo.alt,
     seedPhoto: photoKey,
-    source: `${photo.photographer} — Unsplash (${photo.page})`,
+    source: `${photo.photographer}, Unsplash (${photo.page})`,
     license: 'other',
     licenseNotes: 'Unsplash License (https://unsplash.com/license). Free for commercial use. Temporary development photograph, not a Village 60 Plus property, resident or staff member.',
     consent: photo.people ? 'obtained' : 'not-required',
-    consentRecord: photo.people ? `Unsplash License model-release warranty — ${photo.page}` : undefined,
+    consentRecord: photo.people ? `Unsplash License model-release warranty, ${photo.page}` : undefined,
     placeholder: true,
     replaceBy: PLACEHOLDER_REPLACE_BY,
     ...('hotspot' in photo && photo.hotspot ? { hotspot: photo.hotspot } : {}),
@@ -48,7 +56,7 @@ export function clientImage(photoKey: ClientPhotoKey, keySuffix = 'image') {
     alt: photo.alt,
     caption: photo.caption,
     seedPhoto: photoKey,
-    source: 'Client — Village 60 Plus, 13 October 2026',
+    source: 'Client, Village 60 Plus, 13 October 2026',
     license: 'client-owned',
     licenseNotes: 'Photograph supplied by Village 60 Plus for this website on 14 October 2026.',
     consent: photo.people ? 'obtained' : 'not-required',
@@ -90,8 +98,8 @@ const siteSettings = {
   // foundedYear deliberately omitted until 2008 vs 2009 is confirmed.
   phone: '+94112504838',
   phoneDisplay: '+94 11 250 4838',
-  whatsapp: '+94741003994',
-  email: 'village60plus@gmail.com',
+  whatsapp: '+94705914095',
+  email: 'enquiries@village60plus.org',
   openingHours: 'Monday to Saturday, 9am to 6pm',
   responseTime: 'within one working day',
   headOffice: {
@@ -108,7 +116,7 @@ const siteSettings = {
   ],
   defaultSeo: {
     _type: 'seo',
-    title: 'Village 60 Plus — homes, care and support for later life in Sri Lanka',
+    title: 'Village 60 Plus, homes, care and support for later life in Sri Lanka',
     description: 'Residential care, independent living, respite, recovery and rehabilitation across Colombo. Speak to a person by phone or WhatsApp.',
   },
 };
@@ -227,7 +235,7 @@ type ResidenceSeed = {
   audienceFit: string[];
   formKind: FormKind;
   comingSoonNote?: string;
-  rooms?: Array<{ name: string; house?: string }>;
+  rooms?: Array<{ name: string; house?: string; photo?: ClientPhotoKey }>;
 };
 
 const residenceSeeds: ResidenceSeed[] = [
@@ -240,6 +248,12 @@ const residenceSeeds: ResidenceSeed[] = [
     careTypes: ['residential-care', 'respite-care', 'recovery'],
     audienceFit: strings('People who want to stay connected to central Colombo', 'Families who visit often', 'Those who need daily support in a familiar, home-like setting'),
     formKind: 'general',
+    rooms: [
+      { name: '1 bed', photo: 'tranquility-1-bed' },
+      { name: '2 share', photo: 'tranquility-2-share' },
+      { name: '3 share', photo: 'tranquility-3-share' },
+      { name: 'Ward', photo: 'tranquility-ward' },
+    ],
   },
   {
     slug: 'serenity',
@@ -313,26 +327,45 @@ const RESIDENCE_PHOTO: Record<ResidenceSlug, { hero: StockPhotoKey }> = {
   'the-grove': { hero: 'flower-path' },
 };
 
-/** Covers for homes these photographs can stand in for. Enchanted Fields and The Grove stay on stand-ins. */
+/** Client photograph used as the hero for each home that has its own set. The Grove stays on stand-ins. */
 const RESIDENCE_CLIENT_HERO: Partial<Record<ResidenceSlug, ClientPhotoKey>> = {
-  tranquility: 'verandah-bougainvillea',
-  serenity: 'upper-house-garden',
-  'house-on-the-hill': 'garden-trees',
+  tranquility: 'tranquility-front',
+  serenity: 'serenity-front',
+  'house-on-the-hill': 'house-on-the-hill-entrance',
+  'enchanted-fields': 'enchanted-fields-front',
   oracle: 'upper-house-garden',
 };
 
 /** Stand-in photographs that follow the client set. The Grove stays empty until it opens. */
 const RESIDENCE_GALLERY: Partial<Record<ResidenceSlug, StockPhotoKey[]>> = {
-  tranquility: ['courtyard', 'tropical-garden', 'bedroom', 'wicker', 'patio', 'bungalow'],
-  serenity: ['patio', 'lush-entrance', 'bedroom', 'flower-path', 'courtyard', 'timber-house'],
   'house-on-the-hill': ['wicker', 'flower-path', 'tea-hills', 'bedroom', 'palm-verandah', 'courtyard'],
   'enchanted-fields': ['courtyard', 'tea-hills', 'lush-entrance', 'bedroom', 'flower-path', 'tropical-garden'],
-  oracle: ['patio', 'flower-path', 'bedroom', 'wicker', 'bungalow', 'timber-house'],
+  oracle: ['patio', 'flower-path', 'bedroom', 'wicker', 'garden-bungalow', 'timber-house'],
 };
 
 const ORACLE_ROOM_PHOTOS: StockPhotoKey[] = ['bedroom', 'patio', 'wicker', 'courtyard'];
 
 function residenceGallery(slug: ResidenceSlug) {
+  if (slug === 'tranquility') {
+    return TRANQUILITY_GALLERY.map((photo) => clientImage(photo, `${slug}-gallery`));
+  }
+  if (slug === 'enchanted-fields') {
+    const stock = RESIDENCE_GALLERY[slug]!;
+    return [
+      ...ENCHANTED_FIELDS_GALLERY.map((photo) => clientImage(photo, `${slug}-gallery`)),
+      ...stock.map((photo) => stockImage(photo, `${slug}-gallery`)),
+    ];
+  }
+  if (slug === 'house-on-the-hill') {
+    const stock = RESIDENCE_GALLERY[slug]!;
+    return [
+      ...HOUSE_ON_THE_HILL_GALLERY.map((photo) => clientImage(photo, `${slug}-gallery`)),
+      ...stock.map((photo) => stockImage(photo, `${slug}-gallery`)),
+    ];
+  }
+  if (slug === 'serenity') {
+    return SERENITY_GALLERY.map((photo) => clientImage(photo, `${slug}-gallery`));
+  }
   const stock = RESIDENCE_GALLERY[slug];
   if (!stock) return undefined;
   const photos = [
@@ -384,7 +417,9 @@ const residences = residenceSeeds.map((r) => {
       name: room.name,
       house: room.house,
       summary: undefined,
-      image: stockImage(ORACLE_ROOM_PHOTOS[index % ORACLE_ROOM_PHOTOS.length], room.name),
+      image: room.photo
+        ? clientImage(room.photo, room.name)
+        : stockImage(ORACLE_ROOM_PHOTOS[index % ORACLE_ROOM_PHOTOS.length], room.name),
     })),
     sharedSpaces: r.status === 'coming-soon' ? undefined : strings('Living room', 'Dining room', 'Garden or terrace'),
     careAndSupport: r.status === 'coming-soon' ? undefined : [
@@ -414,7 +449,7 @@ const residences = residenceSeeds.map((r) => {
     formKind: r.formKind,
     comingSoonNote: r.comingSoonNote,
     editorial: REVIEW,
-    seo: { _type: 'seo', title: `${r.name} — ${r.shortLocation} | Village 60 Plus`, description: r.summary.slice(0, 160) },
+    seo: { _type: 'seo', title: `${r.name}, ${r.shortLocation} | Village 60 Plus`, description: r.summary.slice(0, 160) },
   };
 
   if (r.slug !== 'enchanted-fields') return base;
@@ -432,7 +467,7 @@ const residences = residenceSeeds.map((r) => {
   return {
     ...base,
     description: paragraphs(
-      'Our goal is to provide quality residential care services for an elderly populace who are willing to invest in a retirement lifestyle that is enriched with a comfortable, accessible living community—free of worries and with precious time to relish the joys of retirement.',
+      'Our goal is to provide quality residential care services for an elderly populace who are willing to invest in a retirement lifestyle that is enriched with a comfortable, accessible living community, free of worries and with precious time to relish the joys of retirement.',
       'Enchanted Fields Retirement Villas provide confidence and peace of mind that you are making the right decision for your retirement needs.',
       'We have initiated action to establish a retirement chalet village in Kottawa to cater to the needs of elders such as yourself, who are looking forward to a comfortable and hassle-free lifestyle during your golden, and much deserved, retirement years.',
     ),
@@ -445,7 +480,7 @@ const residences = residenceSeeds.map((r) => {
         house: undefined,
         summary: 'Each chalet is designed for comfortable, accessible living with modern finishes and everyday essentials.',
         facts: chaletAmenities,
-        image: stockImage('bedroom', 'enchanted-chalet'),
+        image: clientImage('enchanted-fields-front', 'enchanted-chalet'),
       },
     ],
     sharedSpaces: strings(
@@ -479,7 +514,7 @@ const residences = residenceSeeds.map((r) => {
     ],
     seo: {
       _type: 'seo' as const,
-      title: `${r.name} Retirement Villas — ${r.shortLocation} | Village 60 Plus`,
+      title: `${r.name} Retirement Villas, ${r.shortLocation} | Village 60 Plus`,
       description: r.summary.slice(0, 160),
     },
   };
@@ -496,14 +531,14 @@ const offeringSeeds: OfferingSeed[] = [
     status: 'in-development',
     tagline: 'Support that reaches beyond our residences.',
     distinction: 'Village 60 Plus runs homes; Silver Roots is how families arrange nursing, everyday help and supplies wherever someone already lives.',
-    summary: 'Home nursing, home management, elder care products and caregiver training — coordinated by the Village 60 Plus team. The online platform is still in development; call or message to arrange services today.',
+    summary: 'Home nursing, home management, elder care products and caregiver training, coordinated by the Village 60 Plus team. The online platform is still in development; call or message to arrange services today.',
     heroTone: 'ivory',
     formKind: 'silver-roots-partner',
     current: [
       capability('Home nursing', 'Nurses visit for personal care, medication support and wound care. Doctor visits, treatment plans and medicine delivery can be arranged where appropriate.', 'available'),
       capability('Home management', 'Cleaning, laundry, grocery shopping and meal preparation so someone can stay comfortably at home.', 'available'),
       capability('Home modifications', 'Practical changes such as handrails, grab bars or lift mechanisms, discussed and arranged case by case.', 'available', 'optional-extra'),
-      capability('Elder care products', 'Diapers, beds, diabetic shoes, oxygen tanks and regulators, walkers, air and water mattresses and other essentials — available on site.', 'available'),
+      capability('Elder care products', 'Diapers, beds, diabetic shoes, oxygen tanks and regulators, walkers, air and water mattresses and other essentials, available on site.', 'available'),
       capability('Caregiver training', 'Training for caregivers working in Sri Lanka and for those preparing to work abroad.', 'available'),
       capability('Help finding care by phone', 'Speak to the team about options inside and outside Village 60 Plus.', 'available'),
     ],
@@ -592,11 +627,11 @@ const pageSeeds: Array<{
 }> = [
   { slug: 'home', title: 'Live well. Age exceptionally.', intro: 'Homes, care and practical support for later life in Sri Lanka, built around the person rather than the institution.' },
   { slug: 'find-the-right-care', title: 'Find the right care', intro: 'You do not need to know the name of the care you are looking for. Tell us a little and a person will call you back.' },
-  { slug: 'homes', title: 'A Place for Every Chapter.', intro: 'Different homes. Different settings. The same purpose — to help you live well, in comfort, with the right support around you.' },
+  { slug: 'homes', title: 'A Place for Every Chapter.', intro: 'Different homes. Different settings. The same purpose, to help you live well, in comfort, with the right support around you.' },
   {
     slug: 'living-and-care',
     title: 'Living and care',
-    intro: 'Care that respects comfort, dignity and independence — in one of our residences or, through Silver Roots, in the home someone already knows.',
+    intro: 'Care that respects comfort, dignity and independence, in one of our residences or, through Silver Roots, in the home someone already knows.',
     sections: [
       {
         eyebrow: 'At home',
@@ -643,7 +678,7 @@ const PAGE_PHOTO: Partial<Record<PageSlug, StockPhotoKey>> = {
 
 const PAGE_CLIENT_PHOTO: Partial<Record<PageSlug, ClientPhotoKey>> = {
   home: 'verandah-bougainvillea',
-  homes: 'upper-house-garden',
+  homes: 'serenity-front',
   'living-and-care': 'garden-trees',
   'our-story': 'garden-trees',
 };
@@ -670,7 +705,7 @@ const pages = pageSeeds.map((p) => {
   body: p.body,
   lastReviewed: p.body ? '2026-10-12' : undefined,
   editorial: REVIEW,
-  seo: { _type: 'seo', title: p.slug === 'home' ? 'Village 60 Plus — homes, care and support for later life in Sri Lanka' : `${p.title} | Village 60 Plus`, description: (p.intro ?? p.title).slice(0, 160) },
+  seo: { _type: 'seo', title: p.slug === 'home' ? 'Village 60 Plus, homes, care and support for later life in Sri Lanka' : `${p.title} | Village 60 Plus`, description: (p.intro ?? p.title).slice(0, 160) },
   };
 });
 

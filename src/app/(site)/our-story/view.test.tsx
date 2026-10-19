@@ -49,11 +49,11 @@ describe('OurStoryView', () => {
     expect(screen.getByText('Encourage SL')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Learn more about Silver Roots' })).toHaveAttribute('href', '/silver-roots');
     expect(screen.getByRole('link', { name: 'View Oracle' })).toHaveAttribute('href', '/oracle');
-    expect(screen.getByRole('link', { name: 'The Grove, coming soon' })).toHaveAttribute('href', '/homes/the-grove');
+    expect(screen.getByRole('link', { name: 'The Grove, coming soon' })).toHaveAttribute('href', '/look-to-the-future');
     expect(screen.getByRole('link', { name: 'Explore Our Homes' })).toHaveAttribute('href', '/homes');
     expect(screen.getByRole('link', { name: 'Discover Living & Care' })).toHaveAttribute('href', '/living-and-care');
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
-    expect(screen.getAllByRole('img', { name: /verandah shaded by pink and purple bougainvillea/ }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('img', { name: /pink bougainvillea along the verandah/ }).length).toBeGreaterThan(0);
     expect(await axe(container)).toHaveNoViolations();
   }, 20000);
 });

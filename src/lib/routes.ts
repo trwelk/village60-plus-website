@@ -2,6 +2,9 @@
 export const RESIDENCE_SLUGS = ['tranquility', 'serenity', 'house-on-the-hill', 'enchanted-fields', 'oracle', 'the-grove'] as const;
 export type ResidenceSlug = (typeof RESIDENCE_SLUGS)[number];
 export const ORACLE_SLUG: ResidenceSlug = 'oracle';
+export const GROVE_SLUG: ResidenceSlug = 'the-grove';
+/** The Grove is presented on Look to the Future, not as a home detail page. */
+export const GROVE_PATH = '/look-to-the-future';
 
 export const CARE_SERVICE_SLUGS = ['independent-living', 'residential-care', 'respite-care', 'recovery', 'rehabilitation'] as const;
 export type CareServiceSlug = (typeof CARE_SERVICE_SLUGS)[number];
@@ -30,9 +33,11 @@ export const FAQ_PAGE_KEYS = [
   'contact',
 ] as const;
 
-/** Oracle's only canonical URL is /oracle (spec §6). */
+/** Oracle's only canonical URL is /oracle. The Grove's is Look to the Future. */
 export function residencePath(slug: string): string {
-  return slug === ORACLE_SLUG ? '/oracle' : `/homes/${slug}`;
+  if (slug === ORACLE_SLUG) return '/oracle';
+  if (slug === GROVE_SLUG) return GROVE_PATH;
+  return `/homes/${slug}`;
 }
 export function careServicePath(slug: string): string {
   return `/living-and-care/${slug}`;
@@ -45,7 +50,7 @@ export function pagePath(slug: string): string {
 }
 
 export function residenceStaticParams(): Array<{ slug: string }> {
-  return RESIDENCE_SLUGS.filter((slug) => slug !== ORACLE_SLUG).map((slug) => ({ slug }));
+  return RESIDENCE_SLUGS.filter((slug) => slug !== ORACLE_SLUG && slug !== GROVE_SLUG).map((slug) => ({ slug }));
 }
 
 export function careStaticParams(): Array<{ slug: string }> {
@@ -57,6 +62,7 @@ export function isLegalSlug(value: string): value is LegalSlug {
 }
 
 export const ORACLE_HOMES_REDIRECT = { source: '/homes/oracle', destination: '/oracle', permanent: true } as const;
+export const GROVE_HOMES_REDIRECT = { source: '/homes/the-grove', destination: GROVE_PATH, permanent: true } as const;
 
 const RESIDENCE_CONTEXT: Record<string, string> = {
   tranquility: 'Tranquility',
@@ -83,6 +89,9 @@ const PAGE_CONTEXT: Record<string, string> = {
   '/living-and-care': 'Living & Care',
   '/silver-roots': 'Silver Roots',
   '/destination-retirement': 'Destination Retirement',
+  '/look-to-the-future': 'Look to the Future',
+  '/look-to-the-future/heritage': 'The Heritage',
+  '/look-to-the-future/grove': 'The Grove',
   '/sage': 'SAGE',
   '/our-story': 'Our story',
   '/contact': 'Contact',

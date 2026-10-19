@@ -7,7 +7,7 @@ import { cn } from '@/lib/cn';
 
 const HERO_TITLE = 'Support That Changes With You.';
 const HERO_INTRO =
-  'Different people. Different needs. The same purpose — to help you live well, with the right level of support around you.';
+  'Different people. Different needs. The same purpose, to help you live well, with the right level of support around you.';
 
 type IconName =
   | 'home'

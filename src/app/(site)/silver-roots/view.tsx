@@ -342,7 +342,7 @@ export function SilverRootsView() {
               </h2>
             </div>
             <p className="max-w-[48ch] text-[17px] leading-relaxed text-charcoal/80 lg:justify-self-end">
-              Whether you&apos;re planning ahead, looking for care for someone you love, or simply need a little help at home — Silver Roots makes it easier to find the right options, all in one place.
+              Whether you&apos;re planning ahead, looking for care for someone you love, or simply need a little help at home, Silver Roots makes it easier to find the right options, all in one place.
             </p>
           </div>
           <ul className="mt-14 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 xl:grid-cols-6">
@@ -420,7 +420,7 @@ export function SilverRootsView() {
               Care. Connected.
             </h2>
             <p className="mt-5 max-w-[40ch] text-[17px] leading-relaxed text-charcoal/80">
-              Manage care, services, appointments and more — all in one place.
+              Manage care, services, appointments and more, all in one place.
             </p>
             <div className="mt-8">
               <EnquiryButton kind="general" context="Silver Roots app" className={filled}>
@@ -452,7 +452,7 @@ export function SilverRootsView() {
               More Comfortable Tomorrow.
             </h2>
             <p className="mt-5 max-w-[42ch] text-[17px] leading-relaxed text-ivory/90">
-              Silver Roots — by Village 60 Plus. Care. Services. Support. Connected for a better tomorrow.
+              Silver Roots, by Village 60 Plus. Care. Services. Support. Connected for a better tomorrow.
             </p>
             <div className="mt-8">
               <EnquiryButton kind="general" context="Silver Roots" className={filled}>

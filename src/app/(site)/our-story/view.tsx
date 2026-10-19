@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { cn } from '@/lib/cn';
+import { GROVE_PATH } from '@/lib/routes';
 
 const VERANDAH = {
   src: '/story/verandah.jpg',
-  alt: 'A single-storey residence with a clay-tile roof and a verandah shaded by pink and purple bougainvillea',
+  alt: 'Tranquility on a sunny afternoon, with pink bougainvillea along the verandah and a clay-tile roof',
 };
 const UPPER_HOUSE = {
   src: '/story/upper-house.jpg',
@@ -20,6 +21,10 @@ const LIVING_ROOM = {
 const ORACLE = {
   src: '/home/hero.jpg',
   alt: 'Oracle residence at dusk',
+};
+const CILS = {
+  src: '/story/cils.jpg',
+  alt: 'A caregiver trainee in uniform taking notes during a CILS class',
 };
 
 type Photo = { src: string; alt: string };
@@ -54,6 +59,7 @@ const MILESTONES: Milestone[] = [
     side: 'left',
     title: 'Education & Training',
     body: 'The Colombo Institute of Life Sciences (CILS) was established, extending our work into professional education, elder-care training, childcare and teacher training.',
+    image: CILS,
     mark: 'cils',
   },
   {
@@ -67,7 +73,7 @@ const MILESTONES: Milestone[] = [
     year: '2020',
     side: 'left',
     title: 'Life at Home',
-    body: 'Platinum 60 and our care at home began, so people could stay in their own homes with independence and support close by — medicine delivery, transport, household help and everyday companionship.',
+    body: 'Platinum 60 and our care at home began, so people could stay in their own homes with independence and support close by, medicine delivery, transport, household help and everyday companionship.',
     image: VERANDAH,
     mark: 'platinum',
   },
@@ -94,8 +100,8 @@ const MILESTONES: Milestone[] = [
     year: '2026',
     side: 'right',
     title: 'The Next Generation',
-    body: 'We launched Silver Roots, our digital platform for modern ageing — connecting people, services and support for life at home and beyond.',
-    more: 'Alongside this, we begin Project Grove — a new purpose-built residence in Kottawa, bringing together private residences and exceptional care for a new generation of retirement living.',
+    body: 'We launched Silver Roots, our digital platform for modern ageing, connecting people, services and support for life at home and beyond.',
+    more: 'Alongside this, we begin Project Grove, a new purpose-built residence in Kottawa, bringing together private residences and exceptional care for a new generation of retirement living.',
     image: ORACLE,
   },
 ];
@@ -380,7 +386,7 @@ export function OurStoryView() {
               </h2>
             </div>
             <p className="max-w-[46ch] text-[17px] leading-relaxed text-charcoal/80 lg:pb-3 md:text-[18px]">
-              Over the years, Village 60 Plus has grown into a diverse ecosystem of services and partnerships, each branch supporting a different stage of the ageing journey — at home, in our residences, and beyond.
+              Over the years, Village 60 Plus has grown into a diverse ecosystem of services and partnerships, each branch supporting a different stage of the ageing journey, at home, in our residences, and beyond.
             </p>
           </div>
         </div>
@@ -480,7 +486,7 @@ export function OurStoryView() {
                   <p className="mt-3 text-[16px] leading-relaxed text-ivory/85">
                     A purpose-built residence in Kottawa, with private homes, landscaped spaces and the same personal approach to care.
                   </p>
-                  <Link href="/homes/the-grove" className={cardLink} aria-label="The Grove, coming soon">
+                  <Link href={GROVE_PATH} className={cardLink} aria-label="The Grove, coming soon">
                     Coming Soon
                   </Link>
                 </div>

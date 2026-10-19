@@ -98,6 +98,29 @@ const HIGHLIGHTS: Array<{ label: string; icon: 'house' | 'leaf' | 'cup' | 'lotus
 
 type EverydayIconName = 'meal' | 'linen' | 'laundry' | 'home' | 'people' | 'shield' | 'lounge' | 'sprout';
 
+const LIFE_PHOTOS: Array<{ src: string; alt: string; caption: string }> = [
+  {
+    src: '/home/living-room.jpg',
+    alt: 'A light-filled living room opening onto a tropical garden',
+    caption: 'The lounge',
+  },
+  {
+    src: '/silver-roots/garden.jpg',
+    alt: 'An older couple walking through a tropical garden',
+    caption: 'The garden',
+  },
+  {
+    src: '/homes/sitting.jpg',
+    alt: 'A private sitting room beside the garden',
+    caption: 'A quiet corner',
+  },
+  {
+    src: '/homes/bedroom.jpg',
+    alt: 'A private bedroom opening onto the garden',
+    caption: 'Your own room',
+  },
+];
+
 const EVERYDAY: Array<{ label: string; icon: EverydayIconName; href?: string }> = [
   { label: 'Dining & Meals', icon: 'meal' },
   { label: 'Housekeeping', icon: 'linen' },
@@ -223,6 +246,35 @@ function SupportCards({ items }: { items: Array<CapabilityItem | null> | null | 
         );
       })}
     </ul>
+  );
+}
+
+function LifeGallery() {
+  return (
+    <section id="oracle-life" aria-labelledby="oracle-life-title" className="scroll-mt-24 bg-ivory text-charcoal">
+      <div className="mx-auto w-full max-w-[1400px] gutter py-16 lg:py-24">
+        <p className="text-[12px] font-semibold tracking-[0.22em] text-bronze uppercase">Life at Oracle</p>
+        <Rule />
+        <h2 id="oracle-life-title" className="mt-5 max-w-[14ch] font-display text-[clamp(2.6rem,4vw,3.6rem)] leading-[1.02] font-normal">
+          The day, in pictures.
+        </h2>
+        <p className="mt-5 max-w-[42ch] text-[16px] leading-relaxed">
+          Garden mornings, a shared meal, the lounge, and time that is yours.
+        </p>
+        <ul className="mt-10 grid list-none gap-3 p-0 sm:grid-cols-2">
+          {LIFE_PHOTOS.map((photo) => (
+            <li key={photo.src} className="relative aspect-[4/3] overflow-hidden bg-sand">
+              <figure className="absolute inset-0 m-0">
+                <img src={photo.src} alt={photo.alt} width={1600} height={1200} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-night/80 via-night/35 to-transparent px-4 pt-16 pb-4 text-[12px] font-semibold tracking-[0.18em] text-ivory uppercase">
+                  {photo.caption}
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }
 
@@ -389,10 +441,10 @@ export function OracleView({
                 Live Your Day, Your Way.
               </h2>
               <p className="mt-5 max-w-[38ch] text-[16px] leading-relaxed text-ivory/85">
-                Beautiful spaces, good company and the freedom to enjoy the things you love. Whether it&apos;s a quiet morning in the garden, a shared meal, a movie in the lounge or time with family — Oracle gives you the lifestyle, with support close by when you need it.
+                Beautiful spaces, good company and the freedom to enjoy the things you love. Whether it&apos;s a quiet morning in the garden, a shared meal, a movie in the lounge or time with family, Oracle gives you the lifestyle, with support close by when you need it.
               </p>
               <div className="mt-8">
-                <Cta href="#oracle-spaces" tone="solid">Discover life at Oracle</Cta>
+                <Cta href="#oracle-life" tone="solid">Discover life at Oracle</Cta>
               </div>
             </div>
           </div>
@@ -529,6 +581,10 @@ export function OracleView({
             <StaticMap address={residence.address} mapsKey={mapsKey} label="Map of Oracle" expand />
           </div>
         </Section>
+      </Region>
+
+      <Region name="life">
+        <LifeGallery />
       </Region>
 
       <Region name="visit">

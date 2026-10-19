@@ -2,7 +2,14 @@ import { describe, expect, it } from 'vitest';
 import { CONTENT_STATUSES } from '@/lib/content-status';
 import { CARE_SERVICE_SLUGS, OFFERING_SLUGS, PAGE_SLUGS, RESIDENCE_SLUGS } from '@/lib/routes';
 import { seedDocuments } from './seed-data';
-import { CLIENT_PHOTOS } from './client-photos';
+import {
+  CLIENT_GALLERY,
+  SERENITY_GALLERY,
+  CLIENT_PHOTOS,
+  ENCHANTED_FIELDS_GALLERY,
+  HOUSE_ON_THE_HILL_GALLERY,
+  TRANQUILITY_GALLERY,
+} from './client-photos';
 import { STOCK_PHOTOS } from './stock-photos';
 
 type Doc = { _id: string; _type: string; [key: string]: unknown };
@@ -59,8 +66,23 @@ describe('seed data', () => {
       }
       expect(gallery, slug).toBeDefined();
       const real = gallery!.filter((image) => image.placeholder === false);
-      expect(real, slug).toHaveLength(Object.keys(CLIENT_PHOTOS).length);
-      expect(gallery!.length, slug).toBeGreaterThanOrEqual(10);
+      const expectedClientPhotos =
+        slug === 'tranquility'
+          ? TRANQUILITY_GALLERY.length
+          : slug === 'enchanted-fields'
+            ? ENCHANTED_FIELDS_GALLERY.length
+            : slug === 'house-on-the-hill'
+              ? HOUSE_ON_THE_HILL_GALLERY.length
+              : slug === 'serenity'
+                ? SERENITY_GALLERY.length
+                : CLIENT_GALLERY.length;
+      expect(real, slug).toHaveLength(expectedClientPhotos);
+      if (slug === 'tranquility' || slug === 'serenity') {
+        expect(gallery!.length, slug).toBe(expectedClientPhotos);
+      } else {
+        expect(gallery!.length, slug).toBeGreaterThanOrEqual(expectedClientPhotos + 6);
+        expect(gallery!.length, slug).toBeLessThanOrEqual(expectedClientPhotos + 7);
+      }
       expect(gallery!.slice(0, real.length).every((image) => image.placeholder === false), slug).toBe(true);
     }
   });

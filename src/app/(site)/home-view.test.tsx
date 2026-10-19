@@ -47,6 +47,7 @@ describe('HomeView', () => {
     expect([...container.querySelectorAll('[data-home-section]')].map((node) => node.getAttribute('data-home-section'))).toEqual([
       'hero',
       'story',
+      'recognition',
       'oracle',
       'homes',
       'care',
@@ -68,6 +69,10 @@ describe('HomeView', () => {
     expect(within(spotlight as HTMLElement).queryByRole('button', { name: /private visit/i })).not.toBeInTheDocument();
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Live well. Age exceptionally.');
+    const recognition = container.querySelector('[data-home-section="recognition"]');
+    expect(recognition).not.toBeNull();
+    expect(within(recognition as HTMLElement).getByRole('region', { name: /Excellence in Elder Care/ })).toBeInTheDocument();
+    expect(within(recognition as HTMLElement).getByText(/Global Business Excellence Awards 2026/)).toBeInTheDocument();
   });
 
   it('overlaps the two tallest Oracle photographs', () => {
@@ -94,6 +99,7 @@ describe('HomeView', () => {
     const grove = screen.getByRole('heading', { name: 'The Grove' }).closest('article');
     expect(grove).not.toBeNull();
     expect(within(grove as HTMLElement).getByText('Coming soon')).toBeInTheDocument();
+    expect(within(grove as HTMLElement).getByRole('link')).toHaveAttribute('href', '/look-to-the-future');
   });
 
   it('does not describe Silver Roots marketplace, payments, or accounts as live', () => {

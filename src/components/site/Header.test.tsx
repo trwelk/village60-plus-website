@@ -23,6 +23,8 @@ describe('Header', () => {
     expect(within(nav).getByRole('link', { name: 'Destination Retirement' })).toHaveAttribute('href', '/destination-retirement');
     expect(within(nav).getByRole('link', { name: 'Silver Roots' })).toHaveAttribute('href', '/silver-roots');
     expect(within(nav).getByRole('link', { name: 'Our Story' })).toHaveAttribute('href', '/our-story');
+    expect(within(nav).getByRole('link', { name: 'Look to the Future' })).toHaveAttribute('href', '/look-to-the-future');
+    expect(within(nav).getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '/contact');
     expect(within(nav).queryByRole('link', { name: 'Find the Right Care' })).not.toBeInTheDocument();
     expect(within(nav).queryByText('More')).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Call \+94 11 250 4838/ })).toHaveAttribute('href', 'tel:+94112504838');
@@ -42,7 +44,7 @@ describe('Header', () => {
   });
 
   it('lays a light bar over full heroes and keeps a solid bar on pages without one', () => {
-    const light = ['/', '/homes', '/homes/serenity', '/find-the-right-care', '/living-and-care', '/living-and-care/respite-care', '/oracle', '/destination-retirement', '/silver-roots', '/sage', '/our-story', '/contact', '/feedback'];
+    const light = ['/', '/homes', '/homes/serenity', '/find-the-right-care', '/living-and-care', '/living-and-care/respite-care', '/oracle', '/destination-retirement', '/silver-roots', '/sage', '/our-story', '/contact', '/feedback', '/look-to-the-future', '/look-to-the-future/heritage', '/look-to-the-future/grove'];
     const solid = ['/privacy', '/terms', '/accessibility'];
     try {
       for (const path of light) {
@@ -64,11 +66,12 @@ describe('Header', () => {
     } finally {
       pathState.value = '/not-a-page';
     }
-  });
+  }, 15000);
 
   it('keeps Find the Right Care, SAGE and Contact in the mobile menu', () => {
     render(<Header contact={contactFixture} />);
     const mobile = screen.getByRole('navigation', { name: 'Mobile' });
+    expect(within(mobile).getByRole('link', { name: 'Look to the Future' })).toHaveAttribute('href', '/look-to-the-future');
     expect(within(mobile).getByRole('link', { name: 'Find the Right Care' })).toHaveAttribute('href', '/find-the-right-care');
     expect(within(mobile).getByRole('link', { name: 'SAGE' })).toHaveAttribute('href', '/sage');
     expect(within(mobile).getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '/contact');

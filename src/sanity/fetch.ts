@@ -39,7 +39,12 @@ export async function fetchPublished<const Q extends string>(query: Q, params: Q
   try {
     return await client.fetch(query, params, { perspective: 'published', useCdn: true, next: { revalidate: DEFAULT_REVALIDATE, tags } });
   } catch (error: unknown) {
-    console.error('Published Sanity fetch failed', error instanceof Error ? error.name : 'Error');
+    const cause = error instanceof Error ? error.cause : undefined;
+    console.error(
+      'Published Sanity fetch failed',
+      error instanceof Error ? `${error.name}: ${error.message}` : 'Error',
+      cause instanceof Error ? `${cause.name}${ 'code' in cause ? ` ${String(cause.code)}` : ''}: ${cause.message}` : '',
+    );
     return null;
   }
 }

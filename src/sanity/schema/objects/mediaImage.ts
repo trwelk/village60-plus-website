@@ -11,7 +11,7 @@ export const LICENSES = [
 export const CONSENT_STATES = [
   { title: 'Not required (no identifiable people)', value: 'not-required' },
   { title: 'Obtained (record filed)', value: 'obtained' },
-  { title: 'Pending — do not publish', value: 'pending' },
+  { title: 'Pending, do not publish', value: 'pending' },
 ];
 
 type MediaImageValue = { placeholder?: boolean; replaceBy?: string; consent?: string };
@@ -34,7 +34,7 @@ export const mediaImage = defineType({
       name: 'source',
       title: 'Source',
       type: 'string',
-      description: 'Photographer, agency or "Client — <residence>, <date>".',
+      description: 'Photographer, agency or "Client, <residence>, <date>".',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -70,7 +70,7 @@ export const mediaImage = defineType({
   validation: (Rule) =>
     Rule.custom((value: MediaImageValue | undefined) => {
       if (value?.placeholder && !value.replaceBy) return 'Placeholder images need a replacement deadline.';
-      if (value?.consent === 'pending') return 'Consent is pending — this image cannot be published yet.';
+      if (value?.consent === 'pending') return 'Consent is pending, this image cannot be published yet.';
       return true;
     }),
   preview: {

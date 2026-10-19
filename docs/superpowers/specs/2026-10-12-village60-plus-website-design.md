@@ -981,7 +981,7 @@ The current public contact details found during research are:
 
 - Phone: `+94 11 250 4838`.
 - WhatsApp widget: `+94 74 100 3994`.
-- Email: `village60plus@gmail.com`.
+- Email: `enquiries@village60plus.org`.
 - Head office: `133/19 Nawala Road, Narahenpita, Colombo 05`.
 
 These details still require client confirmation before launch.

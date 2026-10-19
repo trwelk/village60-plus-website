@@ -46,7 +46,7 @@ describe('OracleView', () => {
   it('lists the rooms it is given and places the visit form at the end', () => {
     const { container } = render(<OracleView residence={oracle} contact={contactFixture} mapsKey={null} />);
     expect([...container.querySelectorAll('[data-oracle-section]')].map((node) => node.getAttribute('data-oracle-section'))).toEqual([
-      'hero', 'rooms', 'daily-life', 'highlights', 'spaces', 'everyday', 'optional', 'independence', 'map', 'visit',
+      'hero', 'rooms', 'daily-life', 'highlights', 'spaces', 'everyday', 'optional', 'independence', 'map', 'life', 'visit',
     ]);
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
     expect(screen.getByRole('heading', { level: 1, name: 'Oracle' })).toHaveAttribute('id', 'page-title');
@@ -56,6 +56,10 @@ describe('OracleView', () => {
     expect(screen.getByText('Aspect to be confirmed')).toBeInTheDocument();
     expect(screen.queryByText('Onyx')).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Live Your Day, Your Way.' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Discover life at Oracle' })).toHaveAttribute('href', '#oracle-life');
+    expect(screen.getByRole('heading', { name: 'The day, in pictures.' })).toHaveAttribute('id', 'oracle-life-title');
+    expect(screen.getByRole('img', { name: 'A light-filled living room opening onto a tropical garden' })).toBeInTheDocument();
+    expect(screen.getByText('The garden')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'We take care of the rest.' })).toBeInTheDocument();
     expect(screen.getByText('Dining & Meals')).toBeInTheDocument();
     expect(screen.getByText('Security & Reassurance')).toBeInTheDocument();

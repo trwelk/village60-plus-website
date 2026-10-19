@@ -119,14 +119,7 @@ export function DestinationRetirementView() {
               imageAlt="Palm trees along a pale tropical beach"
               title="Sri Lanka"
               text="Beaches, culture, nature and a warmer way of life."
-              context="Destination Retirement — Sri Lanka"
-            />
-            <DestinationCard
-              image="/destination-retirement/dubai.jpg"
-              imageAlt="The Dubai skyline at dusk"
-              title="Dubai"
-              text="Modern living, luxury and world-class experiences."
-              context="Destination Retirement — Dubai"
+              context="Destination Retirement, Sri Lanka"
             />
           </ul>
         </div>
@@ -170,7 +163,7 @@ export function DestinationRetirementView() {
             <Eyebrow>Places to stay</Eyebrow>
             <Headline id="places-title">Find Your Kind of Place.</Headline>
             <p className="mt-6 text-[16px] leading-relaxed md:text-[17px]">
-              Villas, apartments, resorts, boutique properties and serviced residences — all carefully selected for longer, more comfortable stays.
+              Villas, apartments, resorts, boutique properties and serviced residences, all carefully selected for longer, more comfortable stays.
             </p>
             <ul className="mt-8 grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-4">
               <PlaceThumb src="/destination-retirement/villa.jpg" label="Villas" />
@@ -178,7 +171,7 @@ export function DestinationRetirementView() {
               <PlaceThumb src="/destination-retirement/serviced.jpg" label="Serviced Residences" />
               <PlaceThumb src="/destination-retirement/partner.jpg" label="Partner Properties" />
             </ul>
-            <EnquiryButton kind="destination-retirement" context="Destination Retirement — places to stay" className={`${textLink} mt-6`}>
+            <EnquiryButton kind="destination-retirement" context="Destination Retirement, places to stay" className={`${textLink} mt-6`}>
               Explore places to stay
               <Arrow />
             </EnquiryButton>
@@ -197,7 +190,7 @@ export function DestinationRetirementView() {
             <p className="mt-6 text-[16px] leading-relaxed md:text-[17px]">
               From wellness retreats and spa days to Ayurveda therapies, fish therapy, yoga and personalised experiences, we connect you with the best of relaxation and wellbeing.
             </p>
-            <EnquiryButton kind="destination-retirement" context="Destination Retirement — wellness" className={`${textLink} mt-6`}>
+            <EnquiryButton kind="destination-retirement" context="Destination Retirement, wellness" className={`${textLink} mt-6`}>
               Explore wellness experiences
               <Arrow />
             </EnquiryButton>
@@ -214,7 +207,7 @@ export function DestinationRetirementView() {
             <Eyebrow>Seamless support</Eyebrow>
             <Headline id="support-title">Everything Around You.</Headline>
             <p className="mt-6 max-w-[34rem] text-[16px] leading-relaxed md:text-[17px]">
-              From airport arrivals and drivers to meals, shopping, appointments and personalised assistance — we help organise the details so you can simply enjoy your stay.
+              From airport arrivals and drivers to meals, shopping, appointments and personalised assistance, we help organise the details so you can simply enjoy your stay.
             </p>
             <Link href="/silver-roots" className={`${textLink} mt-6`}>
               Explore our services
@@ -250,7 +243,7 @@ export function DestinationRetirementView() {
               <p className="mt-5 max-w-[34rem] text-[16px] leading-relaxed text-ivory/95 md:text-[17px]">
                 Come for a few weeks, experience the destination, try the services and see how it feels. Stay longer, come back next year or explore somewhere else.
               </p>
-              <EnquiryButton kind="destination-retirement" context="Destination Retirement — trial stay" className={`${goldButton} mt-8`}>
+              <EnquiryButton kind="destination-retirement" context="Destination Retirement, trial stay" className={`${goldButton} mt-8`}>
                 Plan a trial stay
                 <Arrow />
               </EnquiryButton>
