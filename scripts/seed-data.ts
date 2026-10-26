@@ -296,13 +296,13 @@ const residenceSeeds: ResidenceSeed[] = [
     status: 'limited',
     isFlagship: true,
     shortLocation: 'Pepiliyana',
-    summary: 'Ten individually designed rooms within a private residence for independent adults, with shared spaces and support quietly available.',
+    summary: 'Eight individually designed rooms within a private residence for independent adults, with shared spaces and support quietly available.',
     careTypes: ['independent-living'],
     audienceFit: strings('Independent adults who want privacy without isolation', 'People who would like everyday chores taken care of', 'Those planning ahead so support can grow with them'),
     formKind: 'oracle-visit',
     rooms: [
-      { name: 'Jade', house: 'House 1' }, { name: 'Onyx', house: 'House 1' }, { name: 'Ruby', house: 'House 1' }, { name: 'Ivory', house: 'House 1' }, { name: 'Coral', house: 'House 1' },
-      { name: 'Pearl', house: 'House 2' }, { name: 'Amber', house: 'House 2' }, { name: 'Sapphire', house: 'House 2' }, { name: 'Opal', house: 'House 2' }, { name: 'Emerald', house: 'House 2' },
+      { name: 'Jade', house: 'House 1' }, { name: 'Onyx', house: 'House 1' }, { name: 'Ruby', house: 'House 1' }, { name: 'Ivory', house: 'House 1' },
+      { name: 'Amber', house: 'House 2' }, { name: 'Sapphire', house: 'House 2' }, { name: 'Opal', house: 'House 2' }, { name: 'Emerald', house: 'House 2' },
     ],
   },
   {
@@ -330,7 +330,7 @@ const RESIDENCE_PHOTO: Record<ResidenceSlug, { hero: StockPhotoKey }> = {
 /** Client photograph used as the hero for each home that has its own set. The Grove stays on stand-ins. */
 const RESIDENCE_CLIENT_HERO: Partial<Record<ResidenceSlug, ClientPhotoKey>> = {
   tranquility: 'tranquility-front',
-  serenity: 'serenity-front',
+  serenity: 'serenity-verandah',
   'house-on-the-hill': 'house-on-the-hill-entrance',
   'enchanted-fields': 'enchanted-fields-front',
   oracle: 'upper-house-garden',
@@ -678,7 +678,7 @@ const PAGE_PHOTO: Partial<Record<PageSlug, StockPhotoKey>> = {
 
 const PAGE_CLIENT_PHOTO: Partial<Record<PageSlug, ClientPhotoKey>> = {
   home: 'verandah-bougainvillea',
-  homes: 'serenity-front',
+  homes: 'serenity-verandah',
   'living-and-care': 'garden-trees',
   'our-story': 'garden-trees',
 };

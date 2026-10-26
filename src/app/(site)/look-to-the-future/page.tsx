@@ -6,7 +6,7 @@ import { LookToTheFutureView } from './view';
 
 const PATH = '/look-to-the-future';
 const TITLE = 'Look to the Future';
-const INTRO = 'Two residences still ahead: The Grove in Kottawa, and The Heritage on the Keunaman Bungalow Estate in Matara, coming in 2027.';
+const INTRO = 'Two residences still ahead: The Heritage on the Keunaman Bungalow Estate in Matara, coming in 2027, and The Grove in Kottawa.';
 
 export async function generateMetadata(): Promise<Metadata> {
   const { siteUrl } = getPublicEnv();

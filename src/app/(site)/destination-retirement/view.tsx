@@ -230,7 +230,7 @@ export function DestinationRetirementView() {
       </section>
 
       <section data-dr-section="trial" aria-labelledby="trial-title" className="relative flex min-h-[78svh] items-end overflow-hidden bg-night text-ivory on-dark">
-        <img src="/destination-retirement/trial.jpg" alt="" className="absolute inset-0 h-full w-full object-cover object-[center_70%]" />
+        <img src="/people/courtyard.jpg" alt="A caregiver walking with a resident across the courtyard" className="absolute inset-0 h-full w-full object-cover object-center" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/80 via-night/25 to-night/20" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/70 via-night/25 to-transparent" />
         <div className="relative z-10 w-full py-16 lg:py-20">

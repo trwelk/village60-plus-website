@@ -29,6 +29,19 @@ describe('Gallery', () => {
     expect(screen.queryByRole('region')).not.toBeInTheDocument();
   });
 
+  it('drops a trailing at when the chip shortens a long description', () => {
+    render(
+      <Gallery
+        images={[
+          imageFixture('House on the Hill at dusk, with the illuminated entrance sign and driveway'),
+          imageFixture('The terraced courtyard'),
+        ]}
+        label="Photographs of House on the Hill"
+      />,
+    );
+    expect(screen.getByRole('button', { name: /Show House on the Hill at dusk/ })).toHaveTextContent('House on the Hill');
+  });
+
   it('hides the controls when there is only one image', () => {
     render(<Gallery images={[images[0]]} label="Photographs of Serenity" />);
     expect(screen.queryByRole('button')).not.toBeInTheDocument();

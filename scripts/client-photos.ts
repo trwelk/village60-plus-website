@@ -54,8 +54,8 @@ export const CLIENT_PHOTOS = {
   },
   'tranquility-garden': {
     file: 'tranquility-garden.jpg',
-    alt: 'Two residents playing chess in the garden at Tranquility',
-    caption: 'The garden',
+    alt: 'Chess on the lawn at Tranquility, in the shade of the palms',
+    caption: 'Chess on the lawn',
     people: true,
   },
   'upper-house-garden': {
@@ -100,12 +100,6 @@ export const CLIENT_PHOTOS = {
     caption: 'The courtyard',
     people: false,
   },
-  'serenity-front': {
-    file: 'serenity-front.jpg',
-    alt: 'Serenity on Railway Avenue, a white bungalow with a clay-tile roof and pink bougainvillea over the verandah',
-    caption: 'Serenity',
-    people: true,
-  },
   'serenity-verandah': {
     file: 'serenity-verandah.jpg',
     alt: 'The verandah at Serenity in the evening light, with purple bougainvillea along the roofline',
@@ -114,8 +108,8 @@ export const CLIENT_PHOTOS = {
   },
   'serenity-garden-walk': {
     file: 'serenity-garden-walk.jpg',
-    alt: 'A caregiver walking with a resident through the garden courtyard at Serenity',
-    caption: 'In the garden',
+    alt: 'A nurse sitting with a resident in the lounge',
+    caption: 'In the lounge',
     people: true,
   },
   'serenity-walker-path': {
@@ -130,6 +124,24 @@ export const CLIENT_PHOTOS = {
     caption: 'The courtyard',
     people: true,
   },
+  'serenity-pool': {
+    file: 'serenity-pool.jpg',
+    alt: 'The swimming pool at Serenity, with clear blue water beside the white residence',
+    caption: 'The pool',
+    people: false,
+  },
+  'serenity-grounds': {
+    file: 'serenity-grounds.jpg',
+    alt: 'The lawn and verandah at Serenity, with white buildings, green roofs and tropical planting',
+    caption: 'The grounds',
+    people: false,
+  },
+  'serenity-bedroom': {
+    file: 'serenity-bedroom.jpg',
+    alt: 'A bright bedroom at Serenity with a wooden ceiling, terracotta floor tiles and white linens',
+    caption: 'A bedroom',
+    people: false,
+  },
 } as const satisfies Record<string, ClientPhoto>;
 
 export type ClientPhotoKey = keyof typeof CLIENT_PHOTOS;
@@ -140,9 +152,9 @@ export const CLIENT_GALLERY: ClientPhotoKey[] = ['upper-house-garden', 'garden-t
 /** Photographs taken at Tranquility, supplied October 2026. */
 export const TRANQUILITY_GALLERY: ClientPhotoKey[] = [
   'tranquility-front',
-  'tranquility-3-share',
-  'tranquility-2-share',
   'tranquility-1-bed',
+  'tranquility-2-share',
+  'tranquility-3-share',
   'tranquility-ward',
   'tranquility-garden',
 ];
@@ -155,9 +167,11 @@ export const HOUSE_ON_THE_HILL_GALLERY: ClientPhotoKey[] = ['house-on-the-hill-e
 
 /** Photographs taken at Serenity, supplied October 2026. */
 export const SERENITY_GALLERY: ClientPhotoKey[] = [
-  'serenity-front',
   'serenity-verandah',
   'serenity-garden-walk',
   'serenity-walker-path',
   'serenity-courtyard',
+  'serenity-pool',
+  'serenity-grounds',
+  'serenity-bedroom',
 ];

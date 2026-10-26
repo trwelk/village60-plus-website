@@ -2,6 +2,7 @@ import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { EnquiryProvider } from '@/components/forms/EnquiryPanel';
 import { contactFixture } from '@/test/contact-fixture';
+import { HOME_PORTRAITS } from '@/lib/site-photos';
 import { imageFixture } from '@/test/fixtures';
 import { HomeView, type HomeOffering, type HomeViewProps } from './home-view';
 
@@ -90,6 +91,15 @@ describe('HomeView', () => {
     expect(photos.map((photo) => photo.getAttribute('alt'))).toEqual([
       'A long wooden verandah',
       'A white bungalow and bougainvillea',
+    ]);
+  });
+
+  it('shows photographs of the Oracle home in the spotlight', () => {
+    const { container } = renderHome({ oracleImages: HOME_PORTRAITS });
+    const spotlight = container.querySelector('[data-home-section="oracle"]') as HTMLElement;
+    expect(within(spotlight).getAllByRole('img').map((photo) => photo.getAttribute('src'))).toEqual([
+      '/home/oracle-sign.jpg',
+      '/homes/court.jpg',
     ]);
   });
 

@@ -20,7 +20,7 @@ describe('OurStoryView', () => {
     const next = screen.getByRole('heading', { name: 'The Next Generation' });
     const silver = screen.getByRole('heading', { name: 'Care, connected.' });
     const oracle = screen.getByRole('heading', { name: 'An enlightened retirement residence.' });
-    const grove = screen.getByRole('heading', { name: 'Our next chapter.' });
+    const destination = screen.getByRole('heading', { name: 'Your next chapter.' });
     const close = screen.getByRole('heading', { name: 'Nearly Two Decades. One Purpose.' });
 
     for (const [earlier, later] of [
@@ -36,8 +36,8 @@ describe('OurStoryView', () => {
       [global, next],
       [next, silver],
       [silver, oracle],
-      [oracle, grove],
-      [grove, close],
+      [oracle, destination],
+      [destination, close],
     ] as const) {
       expect(earlier.compareDocumentPosition(later) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     }
@@ -49,7 +49,8 @@ describe('OurStoryView', () => {
     expect(screen.getByText('Encourage SL')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Learn more about Silver Roots' })).toHaveAttribute('href', '/silver-roots');
     expect(screen.getByRole('link', { name: 'View Oracle' })).toHaveAttribute('href', '/oracle');
-    expect(screen.getByRole('link', { name: 'The Grove, coming soon' })).toHaveAttribute('href', '/look-to-the-future');
+    expect(screen.getByRole('link', { name: 'Explore Destination Retirement' })).toHaveAttribute('href', '/destination-retirement');
+    expect(screen.getByRole('img', { name: 'A cliffside pool looking out to the ocean' })).toHaveAttribute('src', '/destination-retirement/hero.jpg');
     expect(screen.getByRole('link', { name: 'Explore Our Homes' })).toHaveAttribute('href', '/homes');
     expect(screen.getByRole('link', { name: 'Discover Living & Care' })).toHaveAttribute('href', '/living-and-care');
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);

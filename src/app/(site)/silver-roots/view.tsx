@@ -142,36 +142,36 @@ const SERVICES: Array<{ title: string; body: string; href: string; src: string; 
     title: 'Care Homes',
     body: 'Independent living, residential care and specialised support.',
     href: '/homes',
-    src: '/silver-roots/care-homes.jpg',
-    alt: 'An illuminated residence with a planted entrance at dusk',
+    src: '/people/courtyard.jpg',
+    alt: 'A caregiver walking with a resident across the courtyard',
   },
   {
     title: 'Home Care',
     body: 'Nursing, personal care, meals, housekeeping and more.',
     href: '/living-and-care',
-    src: '/silver-roots/home-care.jpg',
-    alt: 'A caregiver sitting with an older woman at home',
+    src: '/people/lounge.jpg',
+    alt: 'A nurse sitting with a resident in the lounge',
   },
   {
     title: 'Health & Wellbeing',
     body: 'Acupuncture, physiotherapy, medicine delivery and wellness services.',
     href: '/living-and-care#health',
-    src: '/silver-roots/wellbeing.jpg',
-    alt: 'A physiotherapy session in a bright clinic',
+    src: '/people/hands.jpg',
+    alt: 'A nurse holding hands with a resident',
   },
   {
     title: 'Transport & Appointments',
     body: 'Assistance for medical appointments, shopping, social outings and more.',
     href: '/living-and-care#health',
-    src: '/silver-roots/transport.jpg',
-    alt: 'A dark car parked on a drive beside a home',
+    src: '/people/walker.jpg',
+    alt: 'A caregiver supporting a resident with a walker along a garden path',
   },
   {
     title: 'Everyday Services',
     body: 'Groceries, errands, deliveries, concierge and lifestyle support.',
     href: '/contact',
-    src: '/silver-roots/everyday.jpg',
-    alt: 'A calm spa treatment room with white linens and soft daylight',
+    src: '/people/lounge.jpg',
+    alt: 'A nurse sitting with a resident in the lounge',
   },
 ];
 
@@ -273,8 +273,8 @@ export function SilverRootsView() {
     <main id="main">
       <section aria-labelledby="page-title" data-silver-section="hero" className="relative flex min-h-[100svh] items-center overflow-hidden bg-night text-ivory on-dark">
         <img
-          src="/silver-roots/hero.jpg"
-          alt="An older man and a caregiver sharing tea in a bright living room"
+          src="/people/hands.jpg"
+          alt="A nurse holding hands with a resident"
           fetchPriority="high"
           className="absolute inset-0 h-full w-full object-cover object-[70%_center]"
         />
@@ -377,7 +377,7 @@ export function SilverRootsView() {
           </div>
           <div className="px-5 pb-12 sm:px-6 lg:py-16 lg:pr-8 lg:pl-2">
             <div className="relative min-h-[22rem] overflow-hidden rounded-[20px] lg:min-h-[32rem]">
-              <Photo src="/silver-roots/garden.jpg" alt="An older couple walking through a tropical garden" />
+              <Photo src="/people/courtyard.jpg" alt="A caregiver walking with a resident across the courtyard" />
             </div>
           </div>
         </div>

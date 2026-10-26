@@ -76,7 +76,7 @@ describe('ResidenceView', () => {
     expect(screen.getByRole('link', { name: 'Explore Silver Roots' })).toHaveAttribute('href', '/silver-roots');
     expect(screen.getByText('Garden room')).toBeInTheDocument();
     expect(screen.getByText('Care team on site')).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: 'A caregiver sitting with a resident over tea' })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'A nurse holding hands with a resident' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Explore care & support' })).toHaveAttribute('href', '/living-and-care#health');
     expect(screen.getByText('Meals')).toBeInTheDocument();
     expect(screen.getByRole('img', { name: 'A dining table beside open doors to the garden' })).toBeInTheDocument();

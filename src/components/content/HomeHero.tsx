@@ -2,14 +2,17 @@ import { EnquiryButton } from '@/components/forms/EnquiryPanel';
 import { VideoHero, type HeroVideo } from '@/components/media/VideoHero';
 import Link from 'next/link';
 
-const HERO_PHOTO = '/home/hero.jpg';
+const HERO_PHOTO = {
+  src: '/home/hero.jpg',
+  alt: 'A white residence with a clay-tile roof and verandah draped in pink and purple bougainvillea in the golden-hour light',
+};
 
 export function HomeHero({ video }: { video?: HeroVideo | null }) {
   return (
     <section aria-labelledby="page-title" className="relative flex min-h-[100svh] items-center overflow-hidden bg-night text-ivory on-dark">
       <div className="absolute inset-0">
-        {/* The dusk photograph is the designed still. A video, when published, plays over it. */}
-        <img src={HERO_PHOTO} alt="Oracle residence at dusk" className="h-full w-full object-cover object-[72%_center]" />
+        {/* Client photograph is the designed still. A video, when published, plays over it. */}
+        <img src={HERO_PHOTO.src} alt={HERO_PHOTO.alt} className="h-full w-full object-cover object-[42%_center]" />
         {video ? <VideoHero video={video} fill appearance="watch" /> : null}
       </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/80 via-night/35 to-transparent" />

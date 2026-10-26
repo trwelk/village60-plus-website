@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { cn } from '@/lib/cn';
-import { GROVE_PATH } from '@/lib/routes';
 
 const VERANDAH = {
   src: '/story/verandah.jpg',
@@ -19,8 +18,12 @@ const LIVING_ROOM = {
   alt: 'A light-filled living room opening onto a tropical garden',
 };
 const ORACLE = {
-  src: '/home/hero.jpg',
+  src: '/home/oracle-sign.jpg',
   alt: 'Oracle residence at dusk',
+};
+const DESTINATION = {
+  src: '/destination-retirement/hero.jpg',
+  alt: 'A cliffside pool looking out to the ocean',
 };
 const CILS = {
   src: '/story/cils.jpg',
@@ -471,23 +474,26 @@ export function OurStoryView() {
             <li>
               <article className="flex h-full flex-col overflow-hidden rounded-panel border border-ivory/15 bg-[#132e26]">
                 <div className="relative min-h-80">
-                  <img src={GARDEN.src} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                  <img src={DESTINATION.src} alt={DESTINATION.alt} className="absolute inset-0 h-full w-full object-cover object-[center_55%]" />
                   <div className="absolute inset-0 bg-[#10241c]/40" />
                   <div className="absolute inset-0 grid place-items-center px-6 text-center text-pale-gold">
                     <div>
                       <Lotus className="mx-auto size-8" />
-                      <p className="font-display text-[26px] tracking-[0.2em] text-ivory">THE GROVE</p>
-                      <p className="mt-1 text-[10px] tracking-[0.18em]">BY VILLAGE 60 PLUS</p>
+                      <p className="font-display text-[18px] leading-snug tracking-[0.16em] text-ivory">
+                        DESTINATION
+                        <span className="mt-1 block">RETIREMENT</span>
+                      </p>
+                      <p className="mt-2 text-[10px] tracking-[0.18em]">BY VILLAGE 60 PLUS</p>
                     </div>
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col gap-4 px-6 py-7">
-                  <h2 className="font-display text-[clamp(1.7rem,2vw,2.1rem)] leading-tight">Our next chapter.</h2>
+                  <h2 className="font-display text-[clamp(1.7rem,2vw,2.1rem)] leading-tight">Your next chapter.</h2>
                   <p className="mt-3 text-[16px] leading-relaxed text-ivory/85">
-                    A purpose-built residence in Kottawa, with private homes, landscaped spaces and the same personal approach to care.
+                    Beautiful places to stay, new experiences and a different way to enjoy later life, with Village 60 Plus behind you.
                   </p>
-                  <Link href={GROVE_PATH} className={cardLink} aria-label="The Grove, coming soon">
-                    Coming Soon
+                  <Link href="/destination-retirement" className={cardLink} aria-label="Explore Destination Retirement">
+                    Explore
                   </Link>
                 </div>
               </article>

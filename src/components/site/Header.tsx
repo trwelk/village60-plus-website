@@ -7,24 +7,8 @@ import { EnquiryButton } from '@/components/forms/EnquiryPanel';
 import { MORE_NAV, PRIMARY_NAV, overlayHeader } from '@/lib/navigation';
 import { telHref, type SiteContact } from '@/lib/contact';
 import { cn } from '@/lib/cn';
+import { SiteLogo } from '@/components/site/SiteLogo';
 import { WhatsAppLink } from '@/components/site/WhatsAppLink';
-
-function BrandMark() {
-  return (
-    <span className="inline-flex items-center gap-2.5">
-      <svg viewBox="0 0 48 48" className="size-9 shrink-0" aria-hidden>
-        <path d="M24 44.5v-12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-        <ellipse cx="24" cy="16" rx="6.2" ry="9" fill="currentColor" />
-        <ellipse cx="15.2" cy="22.5" rx="6" ry="8" transform="rotate(-32 15.2 22.5)" fill="currentColor" />
-        <ellipse cx="32.8" cy="22.5" rx="6" ry="8" transform="rotate(32 32.8 22.5)" fill="currentColor" />
-      </svg>
-      <span className="flex flex-col leading-none">
-        <span className="font-display text-[12px] tracking-[0.22em] uppercase">Village</span>
-        <span className="mt-1 font-display text-[15px] tracking-[0.16em] uppercase">60 Plus</span>
-      </span>
-    </span>
-  );
-}
 
 function closeMenu(event: MouseEvent<HTMLAnchorElement>) {
   event.currentTarget.closest('details')?.removeAttribute('open');
@@ -66,8 +50,12 @@ export function Header({ contact, enquiryTrigger }: { contact: SiteContact; enqu
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-night/55 via-night/20 to-transparent" aria-hidden />
       ) : null}
       <div className="relative mx-auto flex w-full max-w-[1520px] min-h-[72px] items-center gap-x-3 gutter py-3 lg:gap-x-5">
-        <Link href="/" aria-label="Village 60 Plus" className={overlay ? 'shrink-0 text-pale-gold no-underline' : 'shrink-0 text-green no-underline'}>
-          <BrandMark />
+        <Link
+          href="/"
+          aria-label="Village 60 Plus"
+          className={cn('shrink-0 no-underline', overlay && 'rounded-sm bg-paper/95 p-1')}
+        >
+          <SiteLogo decorative />
         </Link>
 
         <nav aria-label="Primary" className="hidden min-w-0 flex-1 items-center justify-center gap-x-2 lg:flex xl:gap-x-3">

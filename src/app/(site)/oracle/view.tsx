@@ -25,10 +25,10 @@ function hasPhoto(image: CmsImage | null | undefined): image is CmsImage {
 }
 
 function roomsCopy(count: number): { heading: string; body: string } {
-  if (count === 10) {
+  if (count === 8) {
     return {
-      heading: 'Ten Rooms. Ten Identities.',
-      body: 'Oracle is intentionally small. Just ten individually designed private rooms, each with its own name, character and carefully considered details.',
+      heading: 'Eight Rooms. Eight Identities.',
+      body: 'Oracle is intentionally small. Just eight individually designed private rooms, each with its own name, character and carefully considered details.',
     };
   }
   const label = count === 1 ? 'One room' : `${count} rooms`;
@@ -105,8 +105,8 @@ const LIFE_PHOTOS: Array<{ src: string; alt: string; caption: string }> = [
     caption: 'The lounge',
   },
   {
-    src: '/silver-roots/garden.jpg',
-    alt: 'An older couple walking through a tropical garden',
+    src: '/homes/court.jpg',
+    alt: 'The Oracle residence by day, with the pool and planted courtyard',
     caption: 'The garden',
   },
   {
@@ -546,11 +546,11 @@ export function OracleView({
         <Region name="independence">
           <section aria-labelledby="oracle-independence" className="relative scroll-mt-24 overflow-hidden bg-green text-ivory on-dark">
             <div className="absolute inset-0">
-              <img src="/silver-roots/garden.jpg" alt="" className="absolute inset-0 h-full w-full object-cover object-[center_42%]" loading="lazy" decoding="async" />
+              <img src="/home/oracle-sign.jpg" alt="" className="absolute inset-0 h-full w-full object-cover object-[62%_center]" loading="lazy" decoding="async" />
             </div>
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/25 via-night/40 to-night/80" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/85 via-night/55 to-night/25" />
             <div className="relative mx-auto flex min-h-[34rem] w-full max-w-[1400px] items-center gutter py-16 lg:min-h-[40rem] lg:py-24">
-              <div className="ml-auto w-full max-w-xl">
+              <div className="w-full max-w-xl">
                 <Heading as="h2" id="oracle-independence" eyebrow="Independent living" onDark titleClassName="scroll-mt-28 text-ivory" className="max-w-none">
                   Independence comes first.
                 </Heading>

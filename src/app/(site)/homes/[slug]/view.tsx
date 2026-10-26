@@ -196,8 +196,8 @@ type FeatureBandCopy = {
 
 const CARE_BAND: FeatureBandCopy = {
   intro: 'We support your wider health and wellbeing by coordinating appointments, medication and other healthcare services.',
-  imageSrc: '/silver-roots/hero.jpg',
-  imageAlt: 'A caregiver sitting with a resident over tea',
+  imageSrc: '/people/hands.jpg',
+  imageAlt: 'A nurse holding hands with a resident',
   side: 'right',
   ctaHref: '/living-and-care#health',
   ctaLabel: 'Explore care & support',

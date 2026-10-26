@@ -26,6 +26,7 @@ export function ResidenceCard({ residence, surface = 'paper' }: { residence: Res
       eyebrow={residence.shortLocation || 'Residence'}
       description={residence.summary}
       image={residence.heroImage}
+      imageClassName={residence.slug === 'the-grove' ? 'object-[70%_center]' : undefined}
       overlay={residence.summary}
       surface={surface}
     >

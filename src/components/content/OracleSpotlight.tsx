@@ -71,7 +71,7 @@ export function OracleSpotlight({
                   height={960}
                   sizes="(min-width: 1200px) 22rem, 64vw"
                   cover
-                  className="absolute inset-0"
+                  className="absolute inset-0 object-[78%_center]"
                 />
               </div>
             </div>
@@ -85,7 +85,7 @@ export function OracleSpotlight({
                   height={700}
                   sizes="(min-width: 1200px) 17rem, 46vw"
                   cover
-                  className="absolute inset-0"
+                  className="absolute inset-0 object-[center_40%]"
                 />
               </div>
             </div>

@@ -53,7 +53,7 @@ export default async function FindCarePage({ searchParams }: { searchParams: Pro
       <FindCareView
         title={doc?.title || 'Find the right care'}
         intro={doc?.intro}
-        image={sitePhoto('/homes/guidance.jpg', 'A caregiver sitting with a resident in a bright room')}
+        image={sitePhoto('/people/lounge.jpg', 'A nurse sitting with a resident in the lounge')}
         contact={contactFromSettings(settings)}
         defaults={pathwayDefaults(pathway)}
       />

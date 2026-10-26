@@ -20,6 +20,7 @@ export function PreviewCard({
   overlay,
   surface = 'paper',
   fill = 'bg-green',
+  imageClassName,
   children,
 }: {
   href?: string;
@@ -32,6 +33,8 @@ export function PreviewCard({
   surface?: PreviewCardSurface;
   /** Colour of the photo well when there is no image. */
   fill?: string;
+  /** Extra classes on the photograph, for example an object-position crop. */
+  imageClassName?: string;
   children?: ReactNode;
 }) {
   const body = (
@@ -43,7 +46,7 @@ export function PreviewCard({
           height={800}
           sizes="(min-width: 1200px) 400px, 100vw"
           cover
-          className="absolute inset-0"
+          className={cn('absolute inset-0', imageClassName)}
         />
         {overlay ? (
           <p

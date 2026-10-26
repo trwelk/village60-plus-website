@@ -94,7 +94,7 @@ function renderHomes(props: Partial<Parameters<typeof HomesView>[0]> = {}) {
 }
 
 describe('HomesView', () => {
-  it('presents the portfolio, with Oracle, The Grove and the established homes', () => {
+  it('presents the portfolio, with Oracle, The Heritage and the established homes', () => {
     renderHomes();
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
     expect(screen.getByRole('heading', { level: 1, name: 'A Place for Every Chapter.' })).toBeInTheDocument();
@@ -105,13 +105,14 @@ describe('HomesView', () => {
     expect(screen.getByText('Pepiliyana')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Discover Oracle' })).toHaveAttribute('href', '/oracle');
     expect(screen.getByRole('link', { name: 'View the rooms' })).toHaveAttribute('href', '/oracle#oracle-rooms');
-    expect(screen.getByText('Ten unique rooms')).toBeInTheDocument();
+    expect(screen.getByText('Eight unique rooms')).toBeInTheDocument();
     expect(screen.getByText('Independent living')).toBeInTheDocument();
 
-    expect(screen.getByRole('heading', { name: 'The Grove' })).toBeInTheDocument();
-    expect(screen.getByText('Coming soon')).toBeInTheDocument();
-    expect(screen.getByText('80 New Rooms')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Discover The Grove' })).toHaveAttribute('href', '/look-to-the-future');
+    expect(screen.getByRole('heading', { name: 'The Heritage' })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'The Grove' })).not.toBeInTheDocument();
+    expect(screen.getByText('Coming 2027')).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: /The Heritage estate/ })).toHaveAttribute('src', '/look-to-the-future/heritage.jpg');
+    expect(screen.getByRole('link', { name: 'Discover The Heritage' })).toHaveAttribute('href', '/look-to-the-future/heritage');
     expect(screen.getByRole('button', { name: 'Register your interest' })).toBeInTheDocument();
 
     expect(screen.getByRole('heading', { name: 'Homes With Their Own Character.' })).toBeInTheDocument();
@@ -131,6 +132,7 @@ describe('HomesView', () => {
     renderHomes({ residences: residences.filter((residence) => residence.slug !== 'oracle' && residence.slug !== 'the-grove') });
     expect(screen.queryByRole('heading', { name: 'Oracle' })).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'The Grove' })).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'The Heritage' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Tranquility' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Explore our homes' })).toHaveAttribute('href', '#portfolio');
   });

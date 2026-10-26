@@ -54,13 +54,13 @@ describe('Header', () => {
             <Header contact={contactFixture} enquiryTrigger={<button type="button">Enquire</button>} />
           </EnquiryProvider>,
         );
-        expect(screen.getByRole('link', { name: 'Village 60 Plus' }).className, path).toContain('text-pale-gold');
+        expect(screen.getByRole('link', { name: 'Village 60 Plus' }).className, path).toContain('bg-paper/95');
         view.unmount();
       }
       for (const path of solid) {
         pathState.value = path;
         const view = render(<Header contact={contactFixture} enquiryTrigger={<button type="button">Enquire</button>} />);
-        expect(screen.getByRole('link', { name: 'Village 60 Plus' }).className, path).toContain('text-green');
+        expect(screen.getByRole('link', { name: 'Village 60 Plus' }).className, path).not.toContain('bg-paper/95');
         view.unmount();
       }
     } finally {

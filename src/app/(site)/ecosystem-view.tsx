@@ -301,7 +301,7 @@ function SagePlannedSection({ items, lead }: { items: Array<CapabilityItem & { t
             </div>
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded-panel bg-sand lg:aspect-[5/4]">
-            <img src="/silver-roots/hero.jpg" alt="A caregiver sitting with a resident over tea" className="absolute inset-0 h-full w-full object-cover" />
+            <img src="/people/hands.jpg" alt="A nurse holding hands with a resident" className="absolute inset-0 h-full w-full object-cover" />
           </div>
         </div>
       </Container>
@@ -315,7 +315,7 @@ function SageAudienceSection({ groups }: { groups: BenefitGroup[] }) {
   return (
     <section id="who-it-helps" aria-labelledby={headingId} className="relative scroll-mt-8 overflow-hidden bg-green text-ivory on-dark">
       <div className="absolute inset-0">
-        <img src="/silver-roots/garden.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <img src="/people/courtyard.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" />
       </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/75 via-night/55 to-night/35 lg:bg-gradient-to-r lg:from-night/10 lg:via-night/35 lg:to-night/75" />
       <Container className="relative flex min-h-[34rem] items-center py-16 lg:min-h-[40rem] lg:py-24">

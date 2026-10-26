@@ -33,7 +33,7 @@ export default async function FeedbackPage() {
           intro={INTRO}
           eyebrow="Village 60 Plus"
           tone="night"
-          photo={{ src: '/homes/guidance.jpg', alt: '' }}
+          photo={{ src: '/people/lounge.jpg', alt: '' }}
         />
         <Section tone="paper" labelledBy="feedback-form">
           <EnquiryForm kind="feedback" context="Feedback" headingId="feedback-form" layout="aside" eyebrow="Write to us" />

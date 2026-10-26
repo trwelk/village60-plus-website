@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { LEGAL_NAV, MORE_NAV, PRIMARY_NAV } from '@/lib/navigation';
 import { mailtoHref, telHref, type SiteContact } from '@/lib/contact';
+import { SiteLogo } from '@/components/site/SiteLogo';
 import { WhatsAppLink } from '@/components/site/WhatsAppLink';
 
 export function Footer({
@@ -22,7 +23,9 @@ export function Footer({
     <footer className="on-dark bg-green pb-24 text-ivory md:pb-0">
       <Container className="grid gap-10 py-16 md:grid-cols-3">
         <div>
-          <p className="font-display text-[24px] text-ivory">Village 60 Plus</p>
+          <div className="inline-block rounded-sm bg-paper p-1.5">
+            <SiteLogo className="h-11 max-w-[15rem]" decorative />
+          </div>
           <p className="mt-2 text-ivory/80">Live well. Age exceptionally.</p>
           {foundedYear ? <p className="mt-4 text-[14px] text-pale-gold">Established {foundedYear} · Sri Lanka</p> : null}
         </div>

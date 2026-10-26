@@ -14,7 +14,7 @@ function usable(images: Array<GalleryImage | null> | null | undefined): UsableIm
   return (images ?? []).filter((image): image is UsableImage => Boolean(image?.asset?.url && image.alt?.trim()));
 }
 
-const CHIP_TRAIL = new Set(['a', 'an', 'the', 'and', 'or', 'with', 'to', 'of', 'in', 'on', 'for', 'from', 'among', 'into', 'over', 'leading', 'open']);
+const CHIP_TRAIL = new Set(['a', 'an', 'the', 'and', 'or', 'at', 'with', 'to', 'of', 'in', 'on', 'for', 'from', 'among', 'into', 'over', 'leading', 'open']);
 
 function chipText(image: UsableImage): string {
   const source = (image.caption?.trim() || image.alt.trim()).replace(/\s+/g, ' ');

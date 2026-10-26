@@ -14,12 +14,15 @@ const ESTABLISHED_COPY: Record<(typeof ESTABLISHED)[number], string> = {
 };
 
 const HERO_PHOTO = { src: '/homes/hero.jpg', alt: 'A residence entrance at dusk, with warm light in the windows' };
-const ORACLE_PHOTO = { src: '/home/hero.jpg', alt: 'Oracle at dusk, with the illuminated residence sign' };
-const GROVE_PHOTO = { src: '/homes/grove.jpg', alt: 'The Grove, a larger residence among palms at dusk' };
-const GUIDANCE_PHOTO = { src: '/homes/guidance.jpg', alt: 'A caregiver sitting with a resident in a bright room' };
+const ORACLE_PHOTO = { src: '/home/oracle-sign.jpg', alt: 'Oracle at dusk, with the illuminated residence sign' };
+const HERITAGE_PHOTO = {
+  src: '/look-to-the-future/heritage.jpg',
+  alt: 'The Heritage estate in Matara, a colonial bungalow and gardens above the coast at sunset',
+};
+const GUIDANCE_PHOTO = { src: '/people/lounge.jpg', alt: 'A nurse sitting with a resident in the lounge' };
 
 const ORACLE_TILES = [
-  { src: '/homes/bedroom.jpg', alt: 'A private bedroom opening onto the garden', caption: 'Ten unique rooms' },
+  { src: '/homes/bedroom.jpg', alt: 'A private bedroom opening onto the garden', caption: 'Eight unique rooms' },
   { src: '/home/living-room.jpg', alt: 'A shared lounge looking onto palms', caption: 'Elegant shared spaces' },
   { src: '/homes/court.jpg', alt: 'A quiet courtyard beside the residence', caption: 'Private and peaceful' },
   { src: '/homes/sitting.jpg', alt: 'A private sitting room beside the garden', caption: 'Independent living' },
@@ -31,8 +34,8 @@ const ESTABLISHED_PHOTOS: Record<(typeof ESTABLISHED)[number], { src: string; al
     alt: 'Tranquility at Nawala Road at dusk, a white building with a peaked roof and glass entrance',
   },
   serenity: {
-    src: '/homes/serenity.jpg',
-    alt: 'Serenity on Railway Avenue, a white bungalow with a clay-tile roof and pink bougainvillea over the verandah',
+    src: '/homes/serenity/serenity-verandah.jpg',
+    alt: 'The verandah at Serenity in the evening light, with purple bougainvillea along the roofline',
   },
   'house-on-the-hill': {
     src: '/homes/hill.jpg',
@@ -44,7 +47,12 @@ const ESTABLISHED_PHOTOS: Record<(typeof ESTABLISHED)[number], { src: string; al
   },
 };
 
-const GROVE_POINTS = ['80 New Rooms', 'Modern Design', 'Thoughtful Shared Spaces', 'Beautiful Surroundings', 'The Same Personal Approach'] as const;
+const HERITAGE_TILES = [
+  { src: '/destination-retirement/beach.jpg', alt: 'A quiet beach at sunset on the southern coast', caption: 'Southern coast' },
+  { src: '/destination-retirement/bedroom.jpg', alt: 'A bright bedroom opening onto a tropical garden', caption: '50 private chalets' },
+  { src: '/destination-retirement/spa.jpg', alt: 'A spa treatment in a quiet treatment room', caption: 'Spa and wellness' },
+  { src: '/destination-retirement/hero.jpg', alt: 'A cliffside pool looking out to the ocean', caption: 'Wellness destination' },
+] as const;
 
 const filled =
   'inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-night px-5 text-[11px] font-semibold tracking-[0.14em] text-ivory uppercase no-underline transition-colors duration-(--duration-fast) hover:bg-green';
@@ -129,12 +137,11 @@ function Frame({ src, alt, priority = false, className = '' }: { src: string; al
 
 export function HomesView({ residences }: { residences: ResidenceCardData[] }) {
   const oracle = findResidence(residences, 'oracle');
-  const grove = findResidence(residences, 'the-grove');
   const established = ESTABLISHED.flatMap((slug) => {
     const residence = findResidence(residences, slug);
     return residence ? [residence] : [];
   });
-  const portfolio = oracle ? 'oracle' : grove ? 'grove' : established.length > 0 ? 'established' : '';
+  const portfolio = oracle ? 'oracle' : 'heritage';
 
   return (
     <main id="main">
@@ -193,7 +200,7 @@ export function HomesView({ residences }: { residences: ResidenceCardData[] }) {
               </h2>
               <p className="mt-4 font-display text-[clamp(26px,3vw,34px)] leading-tight">A New Standard of Living.</p>
               <p className="mt-5 max-w-[42ch] text-[17px] leading-relaxed text-charcoal/80">
-                Ten individually designed private rooms for independent adults who value their privacy, freedom and way of life. Beautiful spaces, thoughtful details and supportive services, all within an elegant private residence.
+                Eight individually designed private rooms for independent adults who value their privacy, freedom and way of life. Beautiful spaces, thoughtful details and supportive services, all within an elegant private residence.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link href="/oracle" className={filled}>
@@ -223,55 +230,51 @@ export function HomesView({ residences }: { residences: ResidenceCardData[] }) {
         </section>
       ) : null}
 
-      {grove ? (
-        <section
-          aria-labelledby="grove-title"
-          className="bg-night text-ivory on-dark"
-          data-homes-section="grove"
-          id={portfolio === 'grove' ? 'portfolio' : undefined}
-        >
-          <div className="grid items-center lg:grid-cols-2">
-            <div className="mx-auto w-full max-w-[40rem] gutter py-14 lg:ml-auto lg:py-20 lg:pr-16">
-              <p className="text-[12px] font-semibold tracking-[0.18em] text-pale-gold uppercase">Coming soon</p>
-              <h2 id="grove-title" className="mt-3 font-display text-[clamp(52px,6vw,84px)] leading-none font-medium tracking-[0.04em] text-ivory uppercase">
-                {grove.name}
-              </h2>
-              <p className="mt-4 font-display text-[clamp(26px,3vw,34px)] leading-tight text-ivory">Something Bigger Is Growing.</p>
-              <p className="mt-5 max-w-[44ch] text-[17px] leading-relaxed text-ivory/85">
-                Our next generation residence will introduce 80 new rooms, designed for modern later living with spacious accommodation, thoughtfully planned shared spaces and the same personal approach that has defined Village 60 Plus since 2008.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Link href={residencePath('the-grove')} className={filledOnDark}>
-                  Discover The Grove
-                  <Arrow />
-                </Link>
-                <EnquiryButton kind="grove-interest" context="The Grove" className={outlineOnDark}>
-                  Register your interest
-                  <Arrow />
-                </EnquiryButton>
-              </div>
-            </div>
-            <div className="relative min-h-[20rem] sm:min-h-[28rem] lg:min-h-[36rem]">
-              <Frame src={GROVE_PHOTO.src} alt={GROVE_PHOTO.alt} className="object-[center_40%]" />
+      <section
+        aria-labelledby="heritage-title"
+        className="bg-night text-ivory on-dark"
+        data-homes-section="heritage"
+        id={portfolio === 'heritage' ? 'portfolio' : undefined}
+      >
+        <div className="grid items-center lg:grid-cols-2">
+          <div className="mx-auto w-full max-w-[40rem] gutter py-14 lg:ml-auto lg:py-20 lg:pr-16">
+            <p className="text-[12px] font-semibold tracking-[0.18em] text-pale-gold uppercase">Coming 2027</p>
+            <h2 id="heritage-title" className="mt-3 font-display text-[clamp(52px,6vw,84px)] leading-none font-medium tracking-[0.04em] text-ivory uppercase">
+              The Heritage
+            </h2>
+            <p className="mt-4 font-display text-[clamp(26px,3vw,34px)] leading-tight text-ivory">Where History Meets a New Era.</p>
+            <p className="mt-5 max-w-[44ch] text-[17px] leading-relaxed text-ivory/85">
+              A luxury retirement and wellness destination on the historic Keunaman Bungalow Estate in Matara — gardens, the old bungalow, and the same personal approach that has defined Village 60 Plus since 2008.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/look-to-the-future/heritage" className={filledOnDark}>
+                Discover The Heritage
+                <Arrow />
+              </Link>
+              <EnquiryButton kind="destination-retirement" context="The Heritage" className={outlineOnDark}>
+                Register your interest
+                <Arrow />
+              </EnquiryButton>
             </div>
           </div>
-          <ul className="mx-auto grid max-w-site grid-cols-2 gap-y-6 border-t border-ivory/15 gutter py-8 md:grid-cols-5 md:divide-x md:divide-ivory/20 md:py-10">
-            {GROVE_POINTS.map((point) => (
-              <li key={point} className="px-3 text-center text-[13px] leading-snug text-ivory/90 md:text-[14px]">
-                {point}
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
+          <div className="relative min-h-[20rem] sm:min-h-[28rem] lg:min-h-[36rem]">
+            <Frame src={HERITAGE_PHOTO.src} alt={HERITAGE_PHOTO.alt} className="object-[center_55%]" />
+          </div>
+        </div>
+        <ul className="mx-auto grid max-w-site grid-cols-2 gap-4 gutter pt-8 pb-14 md:grid-cols-4 lg:pb-16">
+          {HERITAGE_TILES.map((photo) => (
+            <li key={photo.caption}>
+              <div className="relative aspect-[3/2] bg-night">
+                <Frame src={photo.src} alt={photo.alt} />
+              </div>
+              <p className="mt-3 text-center text-[11px] font-semibold tracking-[0.16em] text-ivory/90 uppercase">{photo.caption}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       {established.length > 0 ? (
-        <section
-          aria-labelledby="established-title"
-          className="bg-ivory"
-          data-homes-section="established"
-          id={portfolio === 'established' ? 'portfolio' : undefined}
-        >
+        <section aria-labelledby="established-title" className="bg-ivory" data-homes-section="established">
           <div className="mx-auto max-w-site gutter py-16 lg:py-24">
             <p className="text-[12px] font-semibold tracking-[0.18em] text-bronze uppercase">Our established residences</p>
             <h2 id="established-title" className="mt-3 max-w-[16ch] font-display text-[clamp(36px,4.4vw,58px)] leading-[1.05] font-medium">

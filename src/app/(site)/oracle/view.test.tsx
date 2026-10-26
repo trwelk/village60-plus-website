@@ -59,7 +59,11 @@ describe('OracleView', () => {
     expect(screen.getByRole('link', { name: 'Discover life at Oracle' })).toHaveAttribute('href', '#oracle-life');
     expect(screen.getByRole('heading', { name: 'The day, in pictures.' })).toHaveAttribute('id', 'oracle-life-title');
     expect(screen.getByRole('img', { name: 'A light-filled living room opening onto a tropical garden' })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'The Oracle residence by day, with the pool and planted courtyard' })).toBeInTheDocument();
     expect(screen.getByText('The garden')).toBeInTheDocument();
+    expect(container.querySelector('[aria-labelledby="oracle-independence"] img')).toHaveAttribute('src', '/home/oracle-sign.jpg');
+    expect(container.innerHTML).not.toContain('/people/courtyard.jpg');
+    expect(container.innerHTML).not.toContain('/people/lounge.jpg');
     expect(screen.getByRole('heading', { name: 'We take care of the rest.' })).toBeInTheDocument();
     expect(screen.getByText('Dining & Meals')).toBeInTheDocument();
     expect(screen.getByText('Security & Reassurance')).toBeInTheDocument();

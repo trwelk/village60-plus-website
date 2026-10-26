@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { Container } from '@/components/ui/Container';
 import { Heading } from '@/components/ui/Heading';
 import { careServicePath } from '@/lib/routes';
+import { PEOPLE_PHOTOS } from '@/lib/site-photos';
 import { cn } from '@/lib/cn';
 
 const HERO_TITLE = 'Support That Changes With You.';
@@ -27,8 +28,8 @@ type IconName =
   | 'pin'
   | 'diamond';
 
-const PORTRAIT = '/silver-roots/hero.jpg';
-const WALK = '/silver-roots/garden.jpg';
+const PORTRAIT = PEOPLE_PHOTOS.hands.src;
+const WALK = PEOPLE_PHOTOS.courtyard.src;
 
 const SERVICES: Array<{
   slug: string;
@@ -44,7 +45,7 @@ const SERVICES: Array<{
     strip: 'Independent\nLiving',
     blurb: 'A comfortable, secure home with the freedom to live your life, your way.',
     icon: 'home',
-    src: '/silver-roots/home-care.jpg',
+    src: PEOPLE_PHOTOS.lounge.src,
   },
   {
     slug: 'residential-care',
@@ -68,7 +69,7 @@ const SERVICES: Array<{
     strip: 'Post-Hospital\nRecovery',
     blurb: 'A supportive place to recover before returning home.',
     icon: 'bed',
-    src: '/silver-roots/wellbeing.jpg',
+    src: PEOPLE_PHOTOS.walker.src,
   },
   {
     slug: 'rehabilitation',
@@ -568,11 +569,8 @@ export function LivingCareView() {
               <div className="mt-6">
                 <Checklist items={HEALTH} />
               </div>
-              <div className="mt-8">
-                <GoldLink href="#health">Explore health &amp; wellbeing</GoldLink>
-              </div>
             </div>
-            <Photo src={PORTRAIT} alt="A caregiver sitting with a resident over tea" className="aspect-[4/3] lg:order-2 lg:aspect-[5/4]" />
+            <Photo src={PORTRAIT} alt={PEOPLE_PHOTOS.hands.alt} className="aspect-[4/3] lg:order-2 lg:aspect-[5/4]" />
           </div>
         </Container>
       </section>

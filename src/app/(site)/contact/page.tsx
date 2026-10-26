@@ -51,7 +51,10 @@ export default async function ContactPage() {
       <ContactView
         title={doc?.title || 'Contact us'}
         intro={doc?.intro}
-        image={sitePhoto('/home/hero.jpg', 'Oracle residence at dusk')}
+        image={sitePhoto(
+          '/home/hero.jpg',
+          'A white residence with a clay-tile roof and verandah draped in pink and purple bougainvillea in the golden-hour light',
+        )}
         contact={contactFromSettings(settings)}
         openingHours={settings?.openingHours}
         emergencyNotice={settings?.emergencyNotice}

@@ -31,10 +31,10 @@ export function LookToTheFutureView() {
     <main id="main" className="bg-ivory text-charcoal">
       <section data-future-section="hero" aria-labelledby="page-title" className="relative flex min-h-[100svh] items-center overflow-hidden bg-night text-ivory on-dark">
         <img
-          src="/homes/grove.jpg"
-          alt="The Grove at dusk, a new residence with lit rooms among palm trees"
+          src="/look-to-the-future/heritage.jpg"
+          alt="The Heritage estate in Matara, a colonial bungalow and gardens above the coast at sunset"
           fetchPriority="high"
-          className="absolute inset-0 h-full w-full object-cover object-[62%_center]"
+          className="absolute inset-0 h-full w-full object-cover object-[78%_center]"
         />
         <div className="pointer-events-none absolute inset-0 bg-night/45 lg:hidden" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/78 via-night/32 to-transparent" />
@@ -48,46 +48,20 @@ export function LookToTheFutureView() {
                 <span className="block">Still Ahead.</span>
               </h1>
               <p className="mt-6 max-w-[36rem] text-[16px] leading-relaxed text-ivory/95 md:text-[17px]">
-                The Grove is taking shape in Kottawa. The Heritage opens in 2027 on the Keunaman Bungalow Estate in Matara — the same personal care Village 60 Plus has offered since 2008.
+                The Heritage opens in 2027 on the Keunaman Bungalow Estate in Matara. The Grove is taking shape in Kottawa — the same personal care Village 60 Plus has offered since 2008.
               </p>
               <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap">
-                <Link href="/look-to-the-future/grove" className={goldButton}>
-                  The Grove
+                <Link href="/look-to-the-future/heritage" className={goldButton}>
+                  The Heritage
                   <Arrow />
                 </Link>
-                <Link href="#heritage" className={ghostButton}>
-                  The Heritage
+                <Link href="#grove" className={ghostButton}>
+                  The Grove
                   <Arrow />
                 </Link>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section id="grove" data-future-section="grove" aria-labelledby="grove-title" className="scroll-mt-8 lg:grid lg:grid-cols-2">
-        <div className="flex items-center px-5 py-16 sm:px-8 lg:py-24 lg:pr-14 lg:pl-[max(2rem,calc((100vw-1520px)/2+2rem))]">
-          <div className="max-w-[34rem]">
-            <Eyebrow>Kottawa</Eyebrow>
-            <Headline id="grove-title" as="h2">
-              The Grove.
-              <span className="block">A Warm Welcome.</span>
-            </Headline>
-            <p className="mt-6 text-[16px] leading-relaxed md:text-[17px]">
-              Our next residence is taking shape in Kottawa. Forty private rooms in two buildings, a gated entrance, and the same personal care Village 60 Plus has offered since 2008. Spacious rooms, shared spaces, and a welcome that starts at the gate.
-            </p>
-            <Link href="/look-to-the-future/grove" className={`${goldButton} mt-8`}>
-              Discover The Grove
-              <Arrow />
-            </Link>
-          </div>
-        </div>
-        <div className="relative min-h-[70vw] lg:min-h-[640px]">
-          <img
-            src="/look-to-the-future/grove.jpg"
-            alt="The Grove entrance at dusk, with timber gates and an illuminated sign on a stone wall"
-            className="absolute inset-0 h-full w-full object-cover object-[68%_center]"
-          />
         </div>
       </section>
 
@@ -113,6 +87,32 @@ export function LookToTheFutureView() {
             src="/look-to-the-future/heritage.jpg"
             alt="The Heritage estate in Matara, a colonial bungalow and gardens above the coast at sunset"
             className="absolute inset-0 h-full w-full object-cover object-[center_55%]"
+          />
+        </div>
+      </section>
+
+      <section id="grove" data-future-section="grove" aria-labelledby="grove-title" className="scroll-mt-8 lg:grid lg:grid-cols-2">
+        <div className="flex items-center px-5 py-16 sm:px-8 lg:py-24 lg:pr-14 lg:pl-[max(2rem,calc((100vw-1520px)/2+2rem))]">
+          <div className="max-w-[34rem]">
+            <Eyebrow>Kottawa</Eyebrow>
+            <Headline id="grove-title" as="h2">
+              The Grove.
+              <span className="block">A Warm Welcome.</span>
+            </Headline>
+            <p className="mt-6 text-[16px] leading-relaxed md:text-[17px]">
+              Our next residence is taking shape in Kottawa. Forty private rooms in two buildings, a gated entrance, and the same personal care Village 60 Plus has offered since 2008. Spacious rooms, shared spaces, and a welcome that starts at the gate.
+            </p>
+            <Link href="/look-to-the-future/grove" className={`${goldButton} mt-8`}>
+              Discover The Grove
+              <Arrow />
+            </Link>
+          </div>
+        </div>
+        <div className="relative min-h-[70vw] lg:min-h-[640px]">
+          <img
+            src="/look-to-the-future/grove.jpg"
+            alt="The Grove entrance at dusk, with timber gates and an illuminated sign on a stone wall"
+            className="absolute inset-0 h-full w-full object-cover object-[68%_center]"
           />
         </div>
       </section>
