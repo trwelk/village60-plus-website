@@ -1,14 +1,14 @@
 const PILLARS = [
   { label: 'Quality care', icon: 'heart' },
   { label: 'People first', icon: 'people' },
-  { label: 'A stronger community', icon: 'leaf' },
+  { label: 'A stronger community', icon: 'leaf', lines: ['A stronger', 'community'] },
 ] as const;
 
 export function AwardRecognition() {
   return (
     <section aria-labelledby="home-recognition" className="relative overflow-hidden bg-ivory text-charcoal">
-      <div className="flex flex-col md:grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:min-h-[760px]">
-        <div className="relative order-2 flex justify-center px-6 pb-16 md:order-1 md:block md:h-full md:p-0">
+      <div className="md:grid md:min-h-[680px] md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:min-h-[760px]">
+        <div className="relative bg-sand md:h-full">
           <picture>
             <source srcSet="/home/excellence-award.webp" type="image/webp" />
             <img
@@ -18,34 +18,52 @@ export function AwardRecognition() {
               height={731}
               loading="lazy"
               decoding="async"
-              sizes="(min-width: 768px) 50vw, 18rem"
-              className="aspect-[5/6] w-full max-w-[18rem] border border-stone object-cover object-center shadow-panel md:absolute md:inset-0 md:aspect-auto md:h-full md:max-w-none md:border-0 md:object-[center_32%] md:shadow-none"
+              sizes="(min-width: 900px) 46vw, 100vw"
+              className="h-auto w-full object-cover object-[62%_center] md:absolute md:inset-0 md:h-full"
             />
           </picture>
         </div>
-        <div className="relative z-10 order-1 flex items-center px-6 pt-16 pb-10 sm:px-8 md:order-2 md:px-10 md:py-14 xl:px-14">
-          <Flourish />
-          <div className="relative mx-auto w-full max-w-[32rem]">
-            <Lockup />
-            <p className="mt-5 text-[11px] font-semibold tracking-[0.28em] text-bronze uppercase">Global recognition</p>
-            <p id="home-recognition" className="mt-2 font-display text-[clamp(1.85rem,2.6vw,2.75rem)] leading-[1.02] font-medium tracking-[-0.02em] text-green">
-              Excellence <span className="block">in Elder Care</span>
-            </p>
-            <p className="mt-3 max-w-[46ch] text-[15px] leading-relaxed md:text-[16px]">
-              We are honoured to have received the Global Business Excellence Awards 2026 for Excellence in Elder Care, recognising our commitment to providing exceptional care, dignity and quality of life for our residents.
-            </p>
-            <ul className="mt-6 grid grid-cols-3">
-              {PILLARS.map((pillar, index) => (
-                <li key={pillar.label} className={index > 0 ? 'border-l border-stone' : undefined}>
-                  <div className="flex flex-col items-center gap-2 px-2 text-center">
-                    <PillarIcon name={pillar.icon} />
-                    <span className="max-w-[7.5rem] text-[10px] leading-tight font-medium tracking-[0.12em] text-bronze uppercase">
-                      {pillar.label}
-                    </span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+        <div className="relative flex items-center px-6 py-16 sm:px-10 md:px-12 md:py-20 xl:px-16">
+          <Botanical />
+          <div className="relative mx-auto w-full max-w-[30rem]">
+        <Lockup />
+        <p className="mt-12 font-sans text-[12px] font-medium tracking-[0.26em] text-bronze uppercase">
+          Global recognition
+        </p>
+        <h2
+          id="home-recognition"
+          className="mt-3.5 font-display text-[clamp(2.25rem,4.4vw,3.45rem)] leading-[1.08] font-medium tracking-[-0.02em] text-green"
+        >
+          Excellence <span className="block">in Elder Care</span>
+        </h2>
+        <p className="mt-6 text-[17px] leading-[1.65] md:text-[18px]">
+          We are honoured to have received the Global Business Excellence Awards 2026 for Excellence in Elder Care,
+          recognising our commitment to providing exceptional care, dignity and quality of life for our residents.
+        </p>
+        <ul className="mt-12 flex items-start sm:mt-14">
+          {PILLARS.map((pillar, index) => (
+            <li key={pillar.label} className="flex min-w-0 flex-1 items-start">
+              <span
+                aria-hidden
+                className={index > 0 ? 'h-14 w-px shrink-0 self-center bg-stone' : 'h-14 w-px shrink-0'}
+              />
+              <div className="flex flex-1 flex-col items-center gap-3 px-1 text-center">
+                <PillarIcon name={pillar.icon} />
+                <span className="font-sans text-[11px] leading-snug font-medium tracking-[0.14em] text-bronze uppercase sm:text-[12px] sm:tracking-[0.16em]">
+                  {'lines' in pillar ? (
+                    <>
+                      {pillar.lines[0]}
+                      <br />
+                      {pillar.lines[1]}
+                    </>
+                  ) : (
+                    pillar.label
+                  )}
+                </span>
+              </div>
+            </li>
+          ))}
+        </ul>
           </div>
         </div>
       </div>
@@ -56,15 +74,17 @@ export function AwardRecognition() {
 function Lockup() {
   return (
     <div className="flex flex-col items-center text-center text-green">
-      <svg viewBox="0 0 48 48" className="size-7" aria-hidden>
-        <path d="M24 44.5v-12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-        <ellipse cx="24" cy="16" rx="6.2" ry="9" fill="currentColor" />
-        <ellipse cx="15.2" cy="22.5" rx="6" ry="8" transform="rotate(-32 15.2 22.5)" fill="currentColor" />
-        <ellipse cx="32.8" cy="22.5" rx="6" ry="8" transform="rotate(32 32.8 22.5)" fill="currentColor" />
+      <svg viewBox="0 0 32 40" className="h-8 w-7" aria-hidden>
+        <g fill="currentColor">
+          <circle cx="16" cy="10.5" r="5.4" />
+          <circle cx="10.2" cy="18.4" r="5.4" />
+          <circle cx="21.8" cy="18.4" r="5.4" />
+        </g>
+        <path d="M16 22.2v12.2" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
       </svg>
-      <p className="mt-2 font-display text-[11px] tracking-[0.42em] uppercase">Village</p>
-      <p className="mt-0.5 font-display text-[16px] tracking-[0.26em] uppercase">60 Plus</p>
-      <p className="mt-2 text-[9px] tracking-[0.2em] text-charcoal uppercase">
+      <p className="mt-3 font-sans text-[12px] font-medium tracking-[0.48em] uppercase pl-[0.48em]">Village</p>
+      <p className="mt-1 font-sans text-[1.15rem] font-medium tracking-[0.3em] uppercase pl-[0.3em]">60 Plus</p>
+      <p className="mt-3 font-sans text-[11px] font-medium tracking-[0.18em] text-charcoal uppercase">
         People <span className="px-1.5 text-bronze">|</span> Care <span className="px-1.5 text-bronze">|</span> Community
       </p>
     </div>
@@ -74,57 +94,64 @@ function Lockup() {
 function PillarIcon({ name }: { name: (typeof PILLARS)[number]['icon'] }) {
   const common = {
     viewBox: '0 0 48 48',
-    className: 'size-7 text-green',
+    className: 'size-8 text-green',
     fill: 'none',
     stroke: 'currentColor',
-    strokeWidth: 1.3,
+    strokeWidth: 1.4,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
     'aria-hidden': true as const,
   };
   if (name === 'heart') {
     return (
       <svg {...common}>
-        <path d="M24 40s-13-8.4-13-16.6C11 17.6 14.6 14 19.2 14c2.7 0 4.3 1.3 4.8 2.8.5-1.5 2.1-2.8 4.8-2.8 4.6 0 8.2 3.6 8.2 9.4C37 31.6 24 40 24 40Z" strokeLinejoin="round" />
+        <path d="M24 39.5c-7.4-4.8-12.2-9.6-12.2-15.4 0-4.3 3.1-7.6 7.4-7.6 2.5 0 4.1 1.2 4.8 2.9.7-1.7 2.3-2.9 4.8-2.9 4.3 0 7.4 3.3 7.4 7.6 0 5.8-4.8 10.6-12.2 15.4Z" />
       </svg>
     );
   }
   if (name === 'people') {
     return (
       <svg {...common}>
-        <circle cx="24" cy="13" r="4" />
-        <circle cx="12.5" cy="16.5" r="3" />
-        <circle cx="35.5" cy="16.5" r="3" />
-        <path d="M15.5 36.5c.7-6.2 3.6-9.5 8.5-9.5s7.8 3.3 8.5 9.5" strokeLinecap="round" />
-        <path d="M6 36.5c.5-4.6 2.4-7.2 5.6-7.2" strokeLinecap="round" />
-        <path d="M42 36.5c-.5-4.6-2.4-7.2-5.6-7.2" strokeLinecap="round" />
+        <circle cx="24" cy="13.5" r="3.4" />
+        <circle cx="12.5" cy="16.5" r="2.6" />
+        <circle cx="35.5" cy="16.5" r="2.6" />
+        <path d="M16.2 36.5c.6-5.4 3.2-8.4 7.8-8.4s7.2 3 7.8 8.4" />
+        <path d="M6.8 36.5c.4-4 2.1-6.3 5.2-6.6" />
+        <path d="M41.2 36.5c-.4-4-2.1-6.3-5.2-6.6" />
       </svg>
     );
   }
   return (
     <svg {...common}>
-      <path d="M24 40c0-16 9-24 20-26-3 16-11 24-20 26Z" strokeLinejoin="round" />
-      <path d="M24 40V16" strokeLinecap="round" />
-      <path d="M24 28c-4-1-7-4-8-8" strokeLinecap="round" />
+      <path d="M24 40V21" />
+      <path d="M24 28.5c-6.2-1.4-10.4-6.2-11.2-11.6 6.4 1.1 10.2 5.2 11.2 11.6Z" />
+      <path d="M24 21.5c5.2-6.4 12.6-8.6 17-7.4-2.2 6.6-8.4 10.6-17 11.6" />
     </svg>
   );
 }
 
-function Flourish() {
+function Botanical() {
   return (
     <svg
-      viewBox="0 0 180 460"
-      className="pointer-events-none absolute top-4 -right-1 hidden h-[88%] w-auto text-green/15 xl:block"
+      viewBox="0 0 200 900"
+      className="pointer-events-none absolute inset-y-0 -right-4 hidden h-full w-28 text-[#b7ae9c] xl:block"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.15"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       aria-hidden
     >
-      <path d="M168 8c-8 48-22 78-28 124-8 58 6 96 2 150-4 48-22 86-18 140" strokeLinecap="round" />
-      <path d="M146 78c-16 2-26-6-30-18 8 8 20 10 30 18Z" strokeLinejoin="round" />
-      <path d="M138 150c-20 4-32-4-38-18 12 8 26 10 38 18Z" strokeLinejoin="round" />
-      <path d="M150 168c14-2 24-12 28-24-6 12-16 20-28 24Z" strokeLinejoin="round" />
-      <path d="M142 248c-22 2-34-8-40-22 12 10 28 14 40 22Z" strokeLinejoin="round" />
-      <path d="M148 292c16 0 28-10 34-22-8 12-20 20-34 22Z" strokeLinejoin="round" />
-      <path d="M140 360c-18 6-30-2-36-16 10 10 24 12 36 16Z" strokeLinejoin="round" />
+      <path d="M168 -8c-6 78-16 128-6 198 12 82-20 140-4 224 16 86-22 156-2 236 16 68-10 140 4 250" />
+      <path d="M164 72c-26-8-52 2-64 18 20-2 44 0 64-6" />
+      <path d="M166 108c22-14 48-8 58 10-18 2-40 6-58 8" />
+      <path d="M160 196c-30-14-62-2-74 18 24-2 50 4 74 8" />
+      <path d="M166 258c28-16 56-6 66 16-22 2-46 6-66 10" />
+      <path d="M156 388c-34-18-72-2-86 22 28-2 58 6 86 12" />
+      <path d="M164 462c30-18 60-4 70 18-24 2-48 8-70 12" />
+      <path d="M154 588c-32-16-66 0-78 22 26-2 54 6 78 12" />
+      <path d="M162 672c28-16 54-4 64 16-20 2-44 8-64 12" />
+      <path d="M156 792c-28-14-56 0-66 20 22-2 46 4 66 10" />
     </svg>
   );
 }
