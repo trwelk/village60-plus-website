@@ -1,14 +1,17 @@
 import { describe, expect, it } from 'vitest';
+import type { CmsImage } from '@/components/media/SanityImage';
 import { withResidencePhotos } from './site-photos';
 
-const room = (name: string) => ({ name, image: null });
+const noPhoto = (): CmsImage | null => null;
+const room = (name: string): { name: string; image: CmsImage | null } => ({ name, image: noPhoto() });
 
 describe('withResidencePhotos', () => {
   it('keeps the courtyard walk and lounge portraits off Oracle', () => {
+    const gallery: Array<CmsImage | null> = [];
     const residence = withResidencePhotos({
       slug: 'oracle',
-      heroImage: null,
-      gallery: [],
+      heroImage: noPhoto(),
+      gallery,
       rooms: ['Jade', 'Onyx', 'Ruby', 'Ivory', 'Amber', 'Sapphire', 'Opal', 'Emerald'].map(room),
     });
     const urls = [
