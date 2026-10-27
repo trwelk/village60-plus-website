@@ -296,13 +296,13 @@ const residenceSeeds: ResidenceSeed[] = [
     status: 'limited',
     isFlagship: true,
     shortLocation: 'Pepiliyana',
-    summary: 'Eight individually designed rooms within a private residence for independent adults, with shared spaces and support quietly available.',
+    summary: 'Ten individually designed rooms within a private residence for independent adults, with shared spaces and support quietly available.',
     careTypes: ['independent-living'],
     audienceFit: strings('Independent adults who want privacy without isolation', 'People who would like everyday chores taken care of', 'Those planning ahead so support can grow with them'),
     formKind: 'oracle-visit',
     rooms: [
-      { name: 'Jade', house: 'House 1' }, { name: 'Onyx', house: 'House 1' }, { name: 'Ruby', house: 'House 1' }, { name: 'Ivory', house: 'House 1' },
-      { name: 'Amber', house: 'House 2' }, { name: 'Sapphire', house: 'House 2' }, { name: 'Opal', house: 'House 2' }, { name: 'Emerald', house: 'House 2' },
+      { name: 'Jade', house: 'House 1' }, { name: 'Onyx', house: 'House 1' }, { name: 'Ruby', house: 'House 1' }, { name: 'Ivory', house: 'House 1' }, { name: 'Coral', house: 'House 1' },
+      { name: 'Pearl', house: 'House 2' }, { name: 'Amber', house: 'House 2' }, { name: 'Sapphire', house: 'House 2' }, { name: 'Opal', house: 'House 2' }, { name: 'Emerald', house: 'House 2' },
     ],
   },
   {

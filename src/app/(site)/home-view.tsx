@@ -136,10 +136,12 @@ export function HomeView({ home, residences, careServices, offerings, contact, o
 
       <Region name="ecosystem">
         <Section tone="sand" labelledBy="home-ecosystem">
-          <Heading as="h2" id="home-ecosystem">Destination Retirement and SAGE</Heading>
+          <Heading as="h2" id="home-ecosystem">
+            Destination Retirement<span className="hidden md:inline"> and SAGE</span>
+          </Heading>
           <ul className="mt-8 grid gap-8 md:grid-cols-2">
             {secondary.map((item) => (
-              <li key={item.slug}>
+              <li key={item.slug} className={item.slug === 'sage' ? 'hidden md:block' : undefined}>
                 <PreviewCard
                   href={offeringPath(item.slug)}
                   title={item.name}

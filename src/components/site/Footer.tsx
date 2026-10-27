@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { LEGAL_NAV, MORE_NAV, PRIMARY_NAV } from '@/lib/navigation';
-import { mailtoHref, telHref, type SiteContact } from '@/lib/contact';
+import { displayPhone, mailtoHref, telHref, type SiteContact } from '@/lib/contact';
 import { SiteLogo } from '@/components/site/SiteLogo';
 import { WhatsAppLink } from '@/components/site/WhatsAppLink';
 
@@ -42,18 +42,18 @@ export function Footer({
         </nav>
         <address className="not-italic">
           <p className="whitespace-pre-line">{address}</p>
-          {contact.phone ? (
+          {contact.whatsapp ? (
             <p className="mt-3">
+              <WhatsAppLink contact={contact} className="text-ivory no-underline hover:text-pale-gold">
+                WhatsApp {displayPhone(contact.whatsapp)}
+              </WhatsAppLink>
+            </p>
+          ) : null}
+          {contact.phone ? (
+            <p className={contact.whatsapp ? undefined : 'mt-3'}>
               <a href={telHref(contact.phone)} className="text-ivory no-underline hover:text-pale-gold" data-track="call_click">
                 {contact.phoneDisplay}
               </a>
-            </p>
-          ) : null}
-          {contact.whatsapp ? (
-            <p>
-              <WhatsAppLink contact={contact} className="text-ivory no-underline hover:text-pale-gold">
-                WhatsApp {contact.whatsapp}
-              </WhatsAppLink>
             </p>
           ) : null}
           {contact.email ? (

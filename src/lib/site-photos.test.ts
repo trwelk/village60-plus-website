@@ -1,9 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import type { CmsImage } from '@/components/media/SanityImage';
-import { withResidencePhotos } from './site-photos';
+import { photoForResidence, withResidencePhotos } from './site-photos';
 
 const noPhoto = (): CmsImage | null => null;
 const room = (name: string): { name: string; image: CmsImage | null } => ({ name, image: noPhoto() });
+
+describe('photoForResidence', () => {
+  it('uses the Grove aerial wherever a residence card shows The Grove', () => {
+    expect(photoForResidence('the-grove')?.asset?.url).toBe('/look-to-the-future/grove-aerial.jpg');
+  });
+});
 
 describe('withResidencePhotos', () => {
   it('keeps the courtyard walk and lounge portraits off Oracle', () => {

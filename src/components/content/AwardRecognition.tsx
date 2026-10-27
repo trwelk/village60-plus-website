@@ -6,9 +6,11 @@ const PILLARS = [
 
 export function AwardRecognition() {
   return (
-    <section aria-labelledby="home-recognition" className="relative overflow-hidden bg-ivory text-charcoal">
+    <section aria-labelledby="home-recognition" className="relative overflow-hidden bg-sand text-charcoal md:bg-ivory">
+      <div className="gutter mx-auto w-full max-w-[36rem] py-8 sm:py-10 md:max-w-none md:p-0">
+        <div className="rounded-panel bg-paper p-3 shadow-panel md:rounded-none md:bg-transparent md:p-0 md:shadow-none">
       <div className="flex flex-col md:grid md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
-        <div className="relative order-2 overflow-hidden bg-sand md:order-1">
+        <div className="relative overflow-hidden rounded-[14px] bg-sand md:rounded-none">
           {/* Holds the row at the photo's own shape, so a taller text column crops the sides and not the trophy. */}
           <div className="aspect-[1024/731]" aria-hidden />
           <picture className="absolute inset-0">
@@ -21,11 +23,11 @@ export function AwardRecognition() {
               loading="lazy"
               decoding="async"
               sizes="(min-width: 900px) 58vw, 100vw"
-              className="h-full w-full object-cover object-[96%_center]"
+              className="h-full w-full object-cover object-center md:object-[96%_center]"
             />
           </picture>
         </div>
-        <div className="relative order-1 flex items-center px-6 py-12 sm:px-8 md:order-2 md:px-8 md:py-8 lg:px-12 lg:py-10 xl:px-14">
+        <div className="relative flex items-center px-2 pt-5 pb-2 md:px-8 md:py-8 lg:px-12 lg:py-10 xl:px-14">
           <Botanical />
           <div className="relative mx-auto w-full max-w-[28rem]">
             <Lockup />
@@ -66,6 +68,8 @@ export function AwardRecognition() {
               ))}
             </ul>
           </div>
+        </div>
+      </div>
         </div>
       </div>
     </section>

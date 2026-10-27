@@ -24,11 +24,26 @@ function hasPhoto(image: CmsImage | null | undefined): image is CmsImage {
   return Boolean(image?.asset?.url && image.alt?.trim());
 }
 
+const ORACLE_ROOMS = [
+  ['Jade', 'House 1'],
+  ['Onyx', 'House 1'],
+  ['Ruby', 'House 1'],
+  ['Ivory', 'House 1'],
+  ['Coral', 'House 1'],
+  ['Pearl', 'House 2'],
+  ['Amber', 'House 2'],
+  ['Sapphire', 'House 2'],
+  ['Opal', 'House 2'],
+  ['Emerald', 'House 2'],
+] as const;
+
+const PUBLISHED_EIGHT = ['Jade', 'Onyx', 'Ruby', 'Ivory', 'Amber', 'Sapphire', 'Opal', 'Emerald'];
+
 function roomsCopy(count: number): { heading: string; body: string } {
-  if (count === 8) {
+  if (count === 10) {
     return {
-      heading: 'Eight Rooms. Eight Identities.',
-      body: 'Oracle is intentionally small. Just eight individually designed private rooms, each with its own name, character and carefully considered details.',
+      heading: 'Ten Rooms. Ten Identities.',
+      body: 'Oracle is intentionally small. Just ten individually designed private rooms, each with its own name, character and carefully considered details.',
     };
   }
   const label = count === 1 ? 'One room' : `${count} rooms`;
@@ -36,6 +51,19 @@ function roomsCopy(count: number): { heading: string; body: string } {
     heading: count === 1 ? 'One Room.' : `${count} Rooms.`,
     body: `Oracle is intentionally small. Just ${label} individually designed private rooms, each with its own name, character and carefully considered details.`,
   };
+}
+
+// shortcut: fills Coral and Pearl into the old eight-name CMS list, drop once those two are published
+function completeOracleRooms(rooms: Room[]): Room[] {
+  const byName = new Map(rooms.map((room) => [room.name, room]));
+  const publishedEight = rooms.length === PUBLISHED_EIGHT.length && PUBLISHED_EIGHT.every((name) => byName.has(name));
+  if (!publishedEight) return rooms;
+  return ORACLE_ROOMS.map(([name, house], index) => {
+    const published = byName.get(name);
+    if (published) return published;
+    const source = rooms[index % rooms.length]?.image;
+    return { _key: name, name, house, summary: null, facts: [], image: source ? { ...source, alt: name } : null };
+  });
 }
 
 function Arrow() {
@@ -344,7 +372,7 @@ export function OracleView({
   }
 
   const future = isContentStatus(residence.status) && isFuture(residence.status);
-  const rooms = (residence.rooms ?? []).filter((room): room is Room => Boolean(room?.name));
+  const rooms = completeOracleRooms((residence.rooms ?? []).filter((room): room is Room => Boolean(room?.name)));
   const spaces = (residence.sharedSpaces ?? []).filter((space): space is string => Boolean(space));
   const fit = (residence.audienceFit ?? []).filter((item): item is string => Boolean(item));
   const optional = (residence.careAndSupport ?? []).filter((item) => item?.title && item.provision && item.provision !== 'included');

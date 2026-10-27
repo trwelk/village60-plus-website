@@ -118,7 +118,9 @@ describe('HomeView', () => {
     expect(silver?.textContent).toMatch(/In development/);
     expect(silver?.textContent).not.toMatch(/marketplace|payments|accounts/i);
     expect(screen.getByRole('link', { name: /Destination Retirement/ })).toHaveAttribute('href', '/destination-retirement');
-    expect(screen.getByRole('link', { name: /SAGE/ })).toHaveAttribute('href', '/sage');
+    const sage = screen.getByRole('link', { name: /SAGE/ });
+    expect(sage).toHaveAttribute('href', '/sage');
+    expect(sage.closest('li')).toHaveClass('hidden', 'md:block');
     expect(screen.getByText('Planned')).toBeInTheDocument();
     expect(screen.getByText('Pilot')).toBeInTheDocument();
   });

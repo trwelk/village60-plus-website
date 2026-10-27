@@ -15,6 +15,9 @@ describe('Footer', () => {
     expect(screen.getByRole('link', { name: 'Accessibility' })).toHaveAttribute('href', '/accessibility');
     expect(screen.getByText(/Village 60 Plus \(Pvt\) Ltd/)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: contactFixture.email })).toHaveAttribute('href', `mailto:${contactFixture.email}`);
+    const whatsapp = screen.getByRole('link', { name: 'WhatsApp +94 74 100 3994' });
+    const landline = screen.getByRole('link', { name: contactFixture.phoneDisplay });
+    expect(whatsapp.compareDocumentPosition(landline) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
   it('omits the founding year when unconfirmed', () => {
     render(<Footer contact={contactFixture} legalName="Village 60 Plus" address="Colombo" />);

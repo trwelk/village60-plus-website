@@ -81,6 +81,49 @@ describe('OracleView', () => {
     expect(screen.queryByText(/international standard/i)).not.toBeInTheDocument();
   });
 
+  it('calls a full Oracle list ten rooms and ten identities', () => {
+    const names = ['Jade', 'Onyx', 'Ruby', 'Ivory', 'Coral', 'Pearl', 'Amber', 'Sapphire', 'Opal', 'Emerald'];
+    render(
+      <OracleView
+        residence={{
+          ...oracle,
+          rooms: names.map((name) => ({ _key: name, name, house: null, summary: null, facts: [], image: null })),
+        }}
+        contact={contactFixture}
+        mapsKey={null}
+      />,
+    );
+    expect(screen.getByRole('heading', { name: 'Ten Rooms. Ten Identities.' })).toBeInTheDocument();
+    expect(screen.getByText(/Just ten individually designed private rooms/)).toBeInTheDocument();
+  });
+
+  it('adds Coral and Pearl to the old eight-name list', () => {
+    const names = ['Jade', 'Onyx', 'Ruby', 'Ivory', 'Amber', 'Sapphire', 'Opal', 'Emerald'];
+    render(
+      <OracleView
+        residence={{
+          ...oracle,
+          rooms: names.map((name) => ({ _key: name, name, house: null, summary: null, facts: [], image: imageFixture(name) })),
+        }}
+        contact={contactFixture}
+        mapsKey={null}
+      />,
+    );
+    const list = screen.getByRole('list', { name: 'Rooms' });
+    expect([...list.querySelectorAll('li')].map((item) => item.querySelector('p')?.textContent)).toEqual([
+      'Jade',
+      'Onyx',
+      'Ruby',
+      'Ivory',
+      'Coral',
+      'Pearl',
+      'Amber',
+      'Sapphire',
+      'Opal',
+      'Emerald',
+    ]);
+  });
+
   it('shows every named room in one filmstrip', () => {
     render(
       <OracleView

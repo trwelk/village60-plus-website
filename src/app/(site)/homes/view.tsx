@@ -22,7 +22,7 @@ const HERITAGE_PHOTO = {
 const GUIDANCE_PHOTO = { src: '/people/lounge.jpg', alt: 'A nurse sitting with a resident in the lounge' };
 
 const ORACLE_TILES = [
-  { src: '/homes/bedroom.jpg', alt: 'A private bedroom opening onto the garden', caption: 'Eight unique rooms' },
+  { src: '/homes/bedroom.jpg', alt: 'A private bedroom opening onto the garden', caption: 'Ten unique rooms' },
   { src: '/home/living-room.jpg', alt: 'A shared lounge looking onto palms', caption: 'Elegant shared spaces' },
   { src: '/homes/court.jpg', alt: 'A quiet courtyard beside the residence', caption: 'Private and peaceful' },
   { src: '/homes/sitting.jpg', alt: 'A private sitting room beside the garden', caption: 'Independent living' },
@@ -200,7 +200,7 @@ export function HomesView({ residences }: { residences: ResidenceCardData[] }) {
               </h2>
               <p className="mt-4 font-display text-[clamp(26px,3vw,34px)] leading-tight">A New Standard of Living.</p>
               <p className="mt-5 max-w-[42ch] text-[17px] leading-relaxed text-charcoal/80">
-                Eight individually designed private rooms for independent adults who value their privacy, freedom and way of life. Beautiful spaces, thoughtful details and supportive services, all within an elegant private residence.
+                Ten individually designed private rooms for independent adults who value their privacy, freedom and way of life. Beautiful spaces, thoughtful details and supportive services, all within an elegant private residence.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link href="/oracle" className={filled}>

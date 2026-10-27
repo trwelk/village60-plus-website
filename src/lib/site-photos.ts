@@ -16,8 +16,8 @@ export function sitePhoto(src: string, alt: string): CmsImage {
 const RESIDENCE_PHOTOS: Record<ResidenceSlug, Shot> = {
   oracle: { src: '/home/oracle-sign.jpg', alt: 'Oracle at dusk, with the illuminated residence sign' },
   'the-grove': {
-    src: '/look-to-the-future/grove.jpg',
-    alt: 'The Grove entrance at dusk, with timber gates and an illuminated sign on a stone wall',
+    src: '/look-to-the-future/grove-aerial.jpg',
+    alt: 'Aerial view of The Grove in Kottawa, two long buildings set in a landscaped garden',
   },
   tranquility: {
     src: '/homes/tranquility.jpg',
@@ -48,7 +48,10 @@ export const PEOPLE_PHOTOS = {
 const CARE_PHOTOS: Record<CareServiceSlug, Shot> = {
   'independent-living': PEOPLE_PHOTOS.lounge,
   'residential-care': PEOPLE_PHOTOS.hands,
-  'respite-care': { src: '/homes/bedroom.jpg', alt: 'A private bedroom opening onto the garden' },
+  'respite-care': {
+    src: '/homes/serenity/serenity-bedroom.jpg',
+    alt: 'A bright bedroom at Serenity with a wooden ceiling, terracotta floor tiles and white linens',
+  },
   recovery: PEOPLE_PHOTOS.walker,
   rehabilitation: PEOPLE_PHOTOS.courtyard,
 };

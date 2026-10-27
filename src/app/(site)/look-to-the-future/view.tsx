@@ -110,9 +110,9 @@ export function LookToTheFutureView() {
         </div>
         <div className="relative min-h-[70vw] lg:min-h-[640px]">
           <img
-            src="/look-to-the-future/grove.jpg"
-            alt="The Grove entrance at dusk, with timber gates and an illuminated sign on a stone wall"
-            className="absolute inset-0 h-full w-full object-cover object-[68%_center]"
+            src="/look-to-the-future/grove-aerial.jpg"
+            alt="Aerial view of The Grove in Kottawa, two long buildings set in a landscaped garden"
+            className="absolute inset-0 h-full w-full object-cover"
           />
         </div>
       </section>

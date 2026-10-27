@@ -105,7 +105,7 @@ describe('HomesView', () => {
     expect(screen.getByText('Pepiliyana')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Discover Oracle' })).toHaveAttribute('href', '/oracle');
     expect(screen.getByRole('link', { name: 'View the rooms' })).toHaveAttribute('href', '/oracle#oracle-rooms');
-    expect(screen.getByText('Eight unique rooms')).toBeInTheDocument();
+    expect(screen.getByText('Ten unique rooms')).toBeInTheDocument();
     expect(screen.getByText('Independent living')).toBeInTheDocument();
 
     expect(screen.getByRole('heading', { name: 'The Heritage' })).toBeInTheDocument();

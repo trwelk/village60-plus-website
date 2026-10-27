@@ -61,7 +61,7 @@ const SERVICES: Array<{
     strip: 'Respite\nCare',
     blurb: 'Short-term stays for family breaks, recovery or additional support.',
     icon: 'clock',
-    src: '/homes/bedroom.jpg',
+    src: '/homes/serenity/serenity-bedroom.jpg',
   },
   {
     slug: 'recovery',

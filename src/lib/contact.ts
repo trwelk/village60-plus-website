@@ -13,6 +13,17 @@ export function telHref(phone: string): string {
   return `tel:${digits.startsWith('+') ? digits : `+${digits}`}`;
 }
 
+/** Sri Lankan numbers read as +94 77 876 8901. Text that already has spaces is left as written. */
+export function displayPhone(phone: string): string {
+  const trimmed = phone.trim();
+  if (/\s/.test(trimmed)) return trimmed;
+  const digits = trimmed.replace(/\D/g, '');
+  if (digits.startsWith('94') && digits.length === 11) {
+    return `+94 ${digits.slice(2, 4)} ${digits.slice(4, 7)} ${digits.slice(7)}`;
+  }
+  return trimmed;
+}
+
 export function waMeNumber(phone: string): string {
   return phone.replace(/\D/g, '').replace(/^0+/, '');
 }

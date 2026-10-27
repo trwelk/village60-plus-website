@@ -1,9 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { mailtoHref, telHref, waMeNumber, whatsappHref, whatsappMessage } from './contact';
+import { displayPhone, mailtoHref, telHref, waMeNumber, whatsappHref, whatsappMessage } from './contact';
 
 describe('contact helpers', () => {
   it('builds tel: links from display-formatted numbers', () => {
     expect(telHref('+94 11 250 4838')).toBe('tel:+94112504838');
+  });
+  it('spaces a Sri Lankan number and leaves an already spaced one alone', () => {
+    expect(displayPhone('+94778768901')).toBe('+94 77 876 8901');
+    expect(displayPhone('+94 77 876 8901')).toBe('+94 77 876 8901');
   });
   it('normalises WhatsApp numbers to digits without + or leading zeros', () => {
     expect(waMeNumber('+94 74 100 3994')).toBe('94741003994');
