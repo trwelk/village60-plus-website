@@ -40,9 +40,11 @@ export function AwardRecognition() {
   }, []);
 
   return (
-    <section aria-labelledby="home-recognition" className="bg-ivory text-charcoal">
-      <div className="lg:flex lg:items-stretch">
-        <div ref={mediaRef} className="relative aspect-[600/682] w-full lg:h-[760px] lg:w-auto lg:shrink-0">
+    <section aria-labelledby="home-recognition" className="bg-sand px-5 py-8 text-charcoal sm:px-6 sm:py-12 lg:bg-ivory lg:p-0">
+      <div className="mx-auto w-full max-w-site lg:flex lg:max-w-none lg:items-stretch">
+        {/* lg:contents drops the card frame so the photo and copy become the desktop split. */}
+        <article className="flex flex-col rounded-panel bg-paper p-3 lg:contents">
+        <div ref={mediaRef} className="relative aspect-[4/5] w-full overflow-hidden rounded-[14px] lg:aspect-[600/682] lg:h-[760px] lg:w-auto lg:shrink-0 lg:rounded-none">
           <picture className="absolute inset-0">
             <source srcSet="/home/excellence-award.webp" type="image/webp" />
             <img
@@ -57,24 +59,24 @@ export function AwardRecognition() {
             />
           </picture>
         </div>
-        <div className="relative flex items-center px-5 py-16 sm:px-8 lg:min-w-0 lg:flex-1 lg:py-16 lg:pr-[max(2rem,calc((100vw-1520px)/2+2rem))] lg:pl-10 xl:py-20 xl:pl-16">
+        <div className="flex flex-col gap-2 px-2 pt-4 pb-2 lg:relative lg:min-w-0 lg:flex-1 lg:items-center lg:justify-center lg:gap-0 lg:px-14 lg:py-16 xl:px-20 xl:py-20">
           <Botanical />
-          <div className="relative mx-auto w-full max-w-[28rem] lg:mx-0">
+          <div className="lg:relative lg:w-full lg:max-w-[28rem]">
             <Lockup />
-            <p className="mt-8 font-sans text-[12px] font-medium tracking-[0.26em] text-bronze uppercase">
+            <p className="text-[14px] text-bronze lg:mt-8 lg:font-sans lg:text-[12px] lg:font-medium lg:tracking-[0.26em] lg:uppercase">
               Global recognition
             </p>
             <h2
               id="home-recognition"
-              className="mt-3 font-display text-[clamp(2.15rem,3.6vw,3.15rem)] leading-[1.08] font-medium tracking-[-0.02em] text-green"
+              className="text-[22px] leading-tight text-green lg:mt-3 lg:font-display lg:text-[clamp(2.15rem,3.6vw,3.15rem)] lg:leading-[1.08] lg:font-medium lg:tracking-[-0.02em]"
             >
-              Excellence <span className="block">in Elder Care</span>
+              Excellence <span className="lg:block">in Elder Care</span>
             </h2>
-            <p className="mt-4 text-[17px] leading-[1.6] md:text-[18px]">
+            <p className="text-[15px] leading-snug text-charcoal/80 lg:mt-4 lg:text-[18px] lg:leading-[1.6] lg:text-charcoal">
               We are honoured to have received the Global Business Excellence Awards 2026 for Excellence in Elder Care,
               recognising our commitment to providing exceptional care, dignity and quality of life for our residents.
             </p>
-            <ul className="mt-8 flex items-start">
+            <ul className="mt-8 hidden items-start lg:flex">
               {PILLARS.map((pillar, index) => (
                 <li
                   key={pillar.label}
@@ -99,6 +101,7 @@ export function AwardRecognition() {
             </ul>
           </div>
         </div>
+        </article>
       </div>
     </section>
   );
@@ -106,7 +109,7 @@ export function AwardRecognition() {
 
 function Lockup() {
   return (
-    <div className="flex flex-col items-center text-center text-green">
+    <div className="hidden flex-col items-center text-center text-green lg:flex">
       <svg viewBox="0 0 32 40" className="h-8 w-7" aria-hidden>
         <g fill="currentColor">
           <circle cx="16" cy="10.5" r="5.4" />
