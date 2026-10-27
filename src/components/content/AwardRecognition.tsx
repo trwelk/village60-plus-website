@@ -7,9 +7,11 @@ const PILLARS = [
 export function AwardRecognition() {
   return (
     <section aria-labelledby="home-recognition" className="relative overflow-hidden bg-ivory text-charcoal">
-      <div className="md:grid md:min-h-[680px] md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:min-h-[760px]">
-        <div className="relative bg-sand md:h-full">
-          <picture>
+      <div className="flex flex-col md:grid md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+        <div className="relative order-2 overflow-hidden bg-sand md:order-1">
+          {/* Holds the row at the photo's own shape, so a taller text column crops the sides and not the trophy. */}
+          <div className="aspect-[1024/731]" aria-hidden />
+          <picture className="absolute inset-0">
             <source srcSet="/home/excellence-award.webp" type="image/webp" />
             <img
               src="/home/excellence-award.jpg"
@@ -18,52 +20,51 @@ export function AwardRecognition() {
               height={731}
               loading="lazy"
               decoding="async"
-              sizes="(min-width: 900px) 46vw, 100vw"
-              className="h-auto w-full object-cover object-[62%_center] md:absolute md:inset-0 md:h-full"
+              sizes="(min-width: 900px) 58vw, 100vw"
+              className="h-full w-full object-cover object-[96%_center]"
             />
           </picture>
         </div>
-        <div className="relative flex items-center px-6 py-16 sm:px-10 md:px-12 md:py-20 xl:px-16">
+        <div className="relative order-1 flex items-center px-6 py-12 sm:px-8 md:order-2 md:px-8 md:py-8 lg:px-12 lg:py-10 xl:px-14">
           <Botanical />
-          <div className="relative mx-auto w-full max-w-[30rem]">
-        <Lockup />
-        <p className="mt-12 font-sans text-[12px] font-medium tracking-[0.26em] text-bronze uppercase">
-          Global recognition
-        </p>
-        <h2
-          id="home-recognition"
-          className="mt-3.5 font-display text-[clamp(2.25rem,4.4vw,3.45rem)] leading-[1.08] font-medium tracking-[-0.02em] text-green"
-        >
-          Excellence <span className="block">in Elder Care</span>
-        </h2>
-        <p className="mt-6 text-[17px] leading-[1.65] md:text-[18px]">
-          We are honoured to have received the Global Business Excellence Awards 2026 for Excellence in Elder Care,
-          recognising our commitment to providing exceptional care, dignity and quality of life for our residents.
-        </p>
-        <ul className="mt-12 flex items-start sm:mt-14">
-          {PILLARS.map((pillar, index) => (
-            <li key={pillar.label} className="flex min-w-0 flex-1 items-start">
-              <span
-                aria-hidden
-                className={index > 0 ? 'h-14 w-px shrink-0 self-center bg-stone' : 'h-14 w-px shrink-0'}
-              />
-              <div className="flex flex-1 flex-col items-center gap-3 px-1 text-center">
-                <PillarIcon name={pillar.icon} />
-                <span className="font-sans text-[11px] leading-snug font-medium tracking-[0.14em] text-bronze uppercase sm:text-[12px] sm:tracking-[0.16em]">
-                  {'lines' in pillar ? (
-                    <>
-                      {pillar.lines[0]}
-                      <br />
-                      {pillar.lines[1]}
-                    </>
-                  ) : (
-                    pillar.label
-                  )}
-                </span>
-              </div>
-            </li>
-          ))}
-        </ul>
+          <div className="relative mx-auto w-full max-w-[28rem]">
+            <Lockup />
+            <p className="mt-8 font-sans text-[12px] font-medium tracking-[0.26em] text-bronze uppercase">
+              Global recognition
+            </p>
+            <h2
+              id="home-recognition"
+              className="mt-3 font-display text-[clamp(2.15rem,3.6vw,3.15rem)] leading-[1.08] font-medium tracking-[-0.02em] text-green"
+            >
+              Excellence <span className="block">in Elder Care</span>
+            </h2>
+            <p className="mt-4 text-[17px] leading-[1.6] md:text-[18px]">
+              We are honoured to have received the Global Business Excellence Awards 2026 for Excellence in Elder Care,
+              recognising our commitment to providing exceptional care, dignity and quality of life for our residents.
+            </p>
+            <ul className="mt-8 flex items-start">
+              {PILLARS.map((pillar, index) => (
+                <li
+                  key={pillar.label}
+                  className={index > 0 ? 'min-w-0 flex-1 border-l border-stone' : 'min-w-0 flex-1'}
+                >
+                  <div className="flex flex-col items-center gap-2.5 px-2 text-center">
+                    <PillarIcon name={pillar.icon} />
+                    <span className="font-sans text-[11px] leading-snug font-medium tracking-[0.14em] text-bronze uppercase sm:text-[12px] sm:tracking-[0.16em]">
+                      {'lines' in pillar ? (
+                        <>
+                          {pillar.lines[0]}
+                          <br />
+                          {pillar.lines[1]}
+                        </>
+                      ) : (
+                        pillar.label
+                      )}
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
@@ -134,7 +135,7 @@ function Botanical() {
   return (
     <svg
       viewBox="0 0 200 900"
-      className="pointer-events-none absolute inset-y-0 -right-4 hidden h-full w-28 text-[#b7ae9c] xl:block"
+      className="pointer-events-none absolute inset-y-0 right-0 hidden h-full w-24 text-[#b7ae9c] xl:block"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.15"
