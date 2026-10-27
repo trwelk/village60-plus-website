@@ -82,13 +82,18 @@ export function LookToTheFutureView() {
             </Link>
           </div>
         </div>
-        <div className="lg:order-1 lg:self-center">
+        <figure className="relative min-h-[70vw] lg:order-1 lg:min-h-[640px]">
           <img
             src="/look-to-the-future/heritage-house.jpg"
-            alt="The Keunaman bungalow at The Heritage, a colonial house with a red-tiled roof and a long verandah. Historic charm, modern comfort."
-            className="h-auto w-full"
+            alt="The Keunaman bungalow at The Heritage, a colonial house with a red-tiled roof and a long verandah"
+            className="absolute inset-0 h-full w-full object-cover"
           />
-        </div>
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/75 via-night/20 to-transparent" />
+          <figcaption className="absolute right-5 bottom-5 text-right font-display text-[clamp(1.7rem,2.3vw,2.25rem)] leading-[1.05] font-medium text-ivory italic [text-shadow:0_2px_16px_rgba(0,0,0,0.4)] sm:right-8 sm:bottom-7">
+            Historic Charm.
+            <span className="block">Modern Comfort.</span>
+          </figcaption>
+        </figure>
       </section>
 
       <section id="grove" data-future-section="grove" aria-labelledby="grove-title" className="scroll-mt-8 lg:grid lg:grid-cols-2">

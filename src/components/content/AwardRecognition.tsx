@@ -1,18 +1,48 @@
+'use client';
+
+import { useLayoutEffect, useRef } from 'react';
+
 const PILLARS = [
   { label: 'Quality care', icon: 'heart' },
   { label: 'People first', icon: 'people' },
   { label: 'A stronger community', icon: 'leaf', lines: ['A stronger', 'community'] },
 ] as const;
 
+/** Story section switches to its split at the site `lg` breakpoint. */
+const STORY_SPLIT = '(min-width: 1200px)';
+
 export function AwardRecognition() {
+  const mediaRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const media = mediaRef.current;
+    const source = document.querySelector('#home-story img')?.parentElement;
+    if (!media || !source) return;
+
+    const desktop = window.matchMedia(STORY_SPLIT);
+    const apply = () => {
+      if (!desktop.matches) {
+        media.style.height = '';
+        return;
+      }
+      const height = source.getBoundingClientRect().height;
+      media.style.height = height > 0 ? `${Math.round(height)}px` : '';
+    };
+
+    apply();
+    const observer = new ResizeObserver(apply);
+    observer.observe(source);
+    desktop.addEventListener('change', apply);
+    return () => {
+      observer.disconnect();
+      desktop.removeEventListener('change', apply);
+    };
+  }, []);
+
   return (
-    <section aria-labelledby="home-recognition" className="relative overflow-hidden bg-sand text-charcoal md:bg-ivory">
-      <div className="gutter mx-auto w-full max-w-[36rem] py-8 sm:py-10 md:max-w-none md:p-0">
-        <div className="rounded-panel bg-paper p-3 shadow-panel md:rounded-none md:bg-transparent md:p-0 md:shadow-none">
-      <div className="flex flex-col md:grid md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
-        <div className="relative overflow-hidden rounded-[14px] bg-sand md:rounded-none">
-          {/* Holds the row at the photo's own shape, so a taller text column crops the sides and not the trophy. */}
-          <div className="aspect-[600/682]" aria-hidden />
+    <section aria-labelledby="home-recognition" className="bg-ivory text-charcoal">
+      <div className="lg:flex lg:items-stretch">
+        <div ref={mediaRef} className="relative aspect-[600/682] w-full lg:h-[760px] lg:w-auto lg:shrink-0">
           <picture className="absolute inset-0">
             <source srcSet="/home/excellence-award.webp" type="image/webp" />
             <img
@@ -22,14 +52,14 @@ export function AwardRecognition() {
               height={682}
               loading="lazy"
               decoding="async"
-              sizes="(min-width: 900px) 58vw, 100vw"
+              sizes="(min-width: 1200px) 42vw, 100vw"
               className="h-full w-full object-cover object-center"
             />
           </picture>
         </div>
-        <div className="relative flex items-center px-2 pt-5 pb-2 md:px-8 md:py-8 lg:px-12 lg:py-10 xl:px-14">
+        <div className="relative flex items-center px-5 py-16 sm:px-8 lg:min-w-0 lg:flex-1 lg:py-16 lg:pr-[max(2rem,calc((100vw-1520px)/2+2rem))] lg:pl-10 xl:py-20 xl:pl-16">
           <Botanical />
-          <div className="relative mx-auto w-full max-w-[28rem]">
+          <div className="relative mx-auto w-full max-w-[28rem] lg:mx-0">
             <Lockup />
             <p className="mt-8 font-sans text-[12px] font-medium tracking-[0.26em] text-bronze uppercase">
               Global recognition
@@ -68,8 +98,6 @@ export function AwardRecognition() {
               ))}
             </ul>
           </div>
-        </div>
-      </div>
         </div>
       </div>
     </section>

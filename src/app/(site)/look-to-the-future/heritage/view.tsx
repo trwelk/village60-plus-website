@@ -138,9 +138,15 @@ export function HeritageView({ scriptFontClassName = '' }: { scriptFontClassName
             <img
               src="/look-to-the-future/heritage-house.jpg"
               alt="The Keunaman bungalow at The Heritage, a colonial house with a red-tiled roof and a long verandah"
+              width={1280}
+              height={720}
               className="h-auto w-full"
             />
-            <figcaption className="visually-hidden">Historic Charm. Modern Comfort.</figcaption>
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/75 via-night/20 to-transparent" />
+            <figcaption className="absolute right-5 bottom-5 text-right text-ivory sm:right-8 sm:bottom-7">
+              <p className="font-display text-[clamp(1.7rem,2.4vw,2.35rem)] leading-tight font-medium italic">Historic Charm.</p>
+              <p className={`${scriptFace} text-[clamp(1.85rem,2.6vw,2.5rem)] leading-none`}>Modern Comfort.</p>
+            </figcaption>
           </figure>
         </div>
       </section>

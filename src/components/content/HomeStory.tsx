@@ -27,7 +27,7 @@ export function HomeStory() {
             <div className="mt-4 h-px w-16 bg-gold" />
           </div>
         </div>
-        <div className="relative min-h-[70vw] lg:min-h-[760px]">
+        <div className="relative min-h-[70vw] lg:min-h-[760px] lg:-ml-[8vw] lg:w-[calc(100%+8vw)]">
           <img
             src="/home/living-room.jpg"
             alt="A living room opening onto a tropical garden"

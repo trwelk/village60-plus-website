@@ -53,7 +53,7 @@ export function Header({ contact, enquiryTrigger }: { contact: SiteContact; enqu
         <Link
           href="/"
           aria-label="Village 60 Plus"
-          className={cn('shrink-0 no-underline', overlay && 'rounded-sm bg-paper/95 p-1')}
+          className="shrink-0 no-underline"
         >
           <SiteLogo decorative />
         </Link>

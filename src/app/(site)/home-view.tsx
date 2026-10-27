@@ -80,6 +80,7 @@ function HeritageCard() {
         '/look-to-the-future/heritage-house.jpg',
         'The Keunaman bungalow at The Heritage, a colonial house with a red-tiled roof and a long verandah',
       )}
+      imageClassName="object-[center_42%]"
     >
       <StatusBadge status="coming-soon" />
     </PreviewCard>

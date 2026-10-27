@@ -43,7 +43,7 @@ describe('Header', () => {
     expect(screen.getByRole('button', { name: 'Enquire' })).toBeInTheDocument();
   });
 
-  it('lays a light bar over full heroes and keeps a solid bar on pages without one', () => {
+  it('keeps the logo free of a light backing on photo heroes and plain pages', () => {
     const light = ['/', '/homes', '/homes/serenity', '/find-the-right-care', '/living-and-care', '/living-and-care/respite-care', '/oracle', '/destination-retirement', '/silver-roots', '/sage', '/our-story', '/contact', '/feedback', '/look-to-the-future', '/look-to-the-future/heritage', '/look-to-the-future/grove'];
     const solid = ['/privacy', '/terms', '/accessibility'];
     try {
@@ -54,7 +54,7 @@ describe('Header', () => {
             <Header contact={contactFixture} enquiryTrigger={<button type="button">Enquire</button>} />
           </EnquiryProvider>,
         );
-        expect(screen.getByRole('link', { name: 'Village 60 Plus' }).className, path).toContain('bg-paper/95');
+        expect(screen.getByRole('link', { name: 'Village 60 Plus' }).className, path).not.toContain('bg-paper');
         view.unmount();
       }
       for (const path of solid) {
