@@ -32,7 +32,8 @@ describe('withResidencePhotos', () => {
   });
 
   it('leaves the lounge and hands portraits out of Serenity', () => {
-    const residence = withResidencePhotos({ slug: 'serenity', heroImage: noPhoto(), gallery: [], rooms: [room('Garden')] });
+    const gallery: Array<CmsImage | null> = [];
+    const residence = withResidencePhotos({ slug: 'serenity', heroImage: noPhoto(), gallery, rooms: [room('Garden')] });
     const urls = [
       residence.heroImage?.asset?.url,
       ...(residence.gallery ?? []).map((image) => image?.asset?.url),
