@@ -1,10 +1,10 @@
 import { cn } from '@/lib/cn';
 
 export const SITE_LOGO = {
-  src: '/brand/logo.jpg',
+  src: '/brand/logo.svg',
   alt: 'Village 60 Plus',
-  width: 828,
-  height: 304,
+  width: 1876,
+  height: 670,
 } as const;
 
 export function SiteLogo({ className, decorative }: { className?: string; decorative?: boolean }) {

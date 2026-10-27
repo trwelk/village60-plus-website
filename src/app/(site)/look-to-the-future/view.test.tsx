@@ -31,9 +31,9 @@ describe('LookToTheFutureView', () => {
     expect(screen.getByRole('img', { name: /Aerial view of The Grove/ })).toHaveAttribute('src', '/look-to-the-future/grove-aerial.jpg');
     const heritage = document.querySelector('[data-future-section="heritage"]');
     expect(heritage).toBeTruthy();
-    expect(within(heritage as HTMLElement).getByRole('img', { name: /The Heritage estate/ })).toHaveAttribute(
+    expect(within(heritage as HTMLElement).getByRole('img', { name: /Keunaman bungalow/ })).toHaveAttribute(
       'src',
-      '/look-to-the-future/heritage.jpg',
+      '/look-to-the-future/heritage-house.jpg',
     );
   });
 

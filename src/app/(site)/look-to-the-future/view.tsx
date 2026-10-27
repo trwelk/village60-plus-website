@@ -82,11 +82,11 @@ export function LookToTheFutureView() {
             </Link>
           </div>
         </div>
-        <div className="relative min-h-[70vw] lg:order-1 lg:min-h-[680px]">
+        <div className="lg:order-1 lg:self-center">
           <img
-            src="/look-to-the-future/heritage.jpg"
-            alt="The Heritage estate in Matara, a colonial bungalow and gardens above the coast at sunset"
-            className="absolute inset-0 h-full w-full object-cover object-[center_55%]"
+            src="/look-to-the-future/heritage-house.jpg"
+            alt="The Keunaman bungalow at The Heritage, a colonial house with a red-tiled roof and a long verandah. Historic charm, modern comfort."
+            className="h-auto w-full"
           />
         </div>
       </section>

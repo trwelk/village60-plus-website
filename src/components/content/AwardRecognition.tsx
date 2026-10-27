@@ -12,18 +12,18 @@ export function AwardRecognition() {
       <div className="flex flex-col md:grid md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
         <div className="relative overflow-hidden rounded-[14px] bg-sand md:rounded-none">
           {/* Holds the row at the photo's own shape, so a taller text column crops the sides and not the trophy. */}
-          <div className="aspect-[1024/731]" aria-hidden />
+          <div className="aspect-[600/682]" aria-hidden />
           <picture className="absolute inset-0">
             <source srcSet="/home/excellence-award.webp" type="image/webp" />
             <img
               src="/home/excellence-award.jpg"
               alt="The Global Business Excellence Awards 2026 trophy for Excellence in Elder Care, presented to Village 60 Plus."
-              width={1024}
-              height={731}
+              width={600}
+              height={682}
               loading="lazy"
               decoding="async"
               sizes="(min-width: 900px) 58vw, 100vw"
-              className="h-full w-full object-cover object-center md:object-[96%_center]"
+              className="h-full w-full object-cover object-center"
             />
           </picture>
         </div>

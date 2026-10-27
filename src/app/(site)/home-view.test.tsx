@@ -103,13 +103,19 @@ describe('HomeView', () => {
     ]);
   });
 
-  it('links Oracle to /oracle and labels The Grove as coming soon', () => {
+  it('links Oracle to /oracle and shows The Heritage where The Grove would have been', () => {
     renderHome();
     expect(screen.getByRole('link', { name: /Ten rooms for independent adults/ })).toHaveAttribute('href', '/oracle');
-    const grove = screen.getByRole('heading', { name: 'The Grove' }).closest('article');
-    expect(grove).not.toBeNull();
-    expect(within(grove as HTMLElement).getByText('Coming soon')).toBeInTheDocument();
-    expect(within(grove as HTMLElement).getByRole('link')).toHaveAttribute('href', '/look-to-the-future');
+    expect(screen.queryByRole('heading', { name: 'The Grove' })).not.toBeInTheDocument();
+    const heritage = screen.getByRole('heading', { name: 'The Heritage' }).closest('article');
+    expect(heritage).not.toBeNull();
+    expect(within(heritage as HTMLElement).getByText('Matara')).toBeInTheDocument();
+    expect(within(heritage as HTMLElement).getByText('Coming soon')).toBeInTheDocument();
+    expect(within(heritage as HTMLElement).getByRole('link')).toHaveAttribute('href', '/look-to-the-future/heritage');
+    expect(within(heritage as HTMLElement).getByRole('img', { name: /Keunaman bungalow/ })).toHaveAttribute(
+      'src',
+      '/look-to-the-future/heritage-house.jpg',
+    );
   });
 
   it('does not describe Silver Roots marketplace, payments, or accounts as live', () => {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { FORM_KINDS, type FormKind } from './kinds';
-import { formDefinition, summaryLines } from './definitions';
+import { formDefinition, summaryLines, VISIT_TIMES } from './definitions';
 import { parseEnquiry, valuesFromRaw } from './schemas';
 
 const TODAY = '2026-10-12';
@@ -17,6 +17,29 @@ describe('form definitions', () => {
       expect(def.fields.some((field) => field.name === 'privacy' && field.required)).toBe(true);
       expect(def.fields.filter((field) => field.name !== 'privacy').length).toBeLessThanOrEqual(kind.value === 'general' ? 5 : 8);
     }
+  });
+
+  it('offers Oracle visits as 30-minute windows from 9:00 AM to 5:00 PM', () => {
+    const times = formDefinition('oracle-visit').fields.find((field) => field.name === 'preferredTime')?.options;
+    expect(times).toBe(VISIT_TIMES);
+    expect(times?.map((option) => option.label)).toEqual([
+      '9:00 AM – 9:30 AM',
+      '9:30 AM – 10:00 AM',
+      '10:00 AM – 10:30 AM',
+      '10:30 AM – 11:00 AM',
+      '11:00 AM – 11:30 AM',
+      '11:30 AM – 12:00 PM',
+      '12:00 PM – 12:30 PM',
+      '12:30 PM – 1:00 PM',
+      '1:00 PM – 1:30 PM',
+      '1:30 PM – 2:00 PM',
+      '2:00 PM – 2:30 PM',
+      '2:30 PM – 3:00 PM',
+      '3:00 PM – 3:30 PM',
+      '3:30 PM – 4:00 PM',
+      '4:00 PM – 4:30 PM',
+      '4:30 PM – 5:00 PM',
+    ]);
   });
 
   it('keeps the general panel to five primary fields', () => {
@@ -92,7 +115,7 @@ describe('parseEnquiry', () => {
         name: 'Anjali Fernando',
         phone: '+94771234567',
         preferredDate: '2026-10-01',
-        preferredTime: 'morning',
+        preferredTime: '09:00-09:30',
         visitors: '2',
         privacy: 'on',
       }),

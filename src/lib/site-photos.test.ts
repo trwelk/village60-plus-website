@@ -30,4 +30,15 @@ describe('withResidencePhotos', () => {
     expect(residence.rooms?.find((entry) => entry?.name === 'Amber')?.image?.asset?.url).toBe('/homes/bedroom.jpg');
     expect(residence.rooms?.find((entry) => entry?.name === 'Sapphire')?.image?.asset?.url).toBe('/home/living-room.jpg');
   });
+
+  it('leaves the lounge and hands portraits out of Serenity', () => {
+    const residence = withResidencePhotos({ slug: 'serenity', heroImage: noPhoto(), gallery: [], rooms: [room('Garden')] });
+    const urls = [
+      residence.heroImage?.asset?.url,
+      ...(residence.gallery ?? []).map((image) => image?.asset?.url),
+      ...(residence.rooms ?? []).map((entry) => entry?.image?.asset?.url),
+    ];
+    expect(urls).not.toContain('/people/lounge.jpg');
+    expect(urls).not.toContain('/people/hands.jpg');
+  });
 });

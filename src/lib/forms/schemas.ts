@@ -1,4 +1,5 @@
 import * as z from 'zod';
+import { VISIT_TIMES } from './definitions';
 import type { FormKind } from './kinds';
 
 const phone = z.string().trim().regex(/^\+?[0-9][0-9\s-]{6,18}$/, 'Enter a phone number we can call or message on WhatsApp.');
@@ -49,7 +50,7 @@ const schemas = {
     name: personName,
     phone,
     preferredDate: z.iso.date('Choose a date.'),
-    preferredTime: oneOf(['morning', 'afternoon', 'evening'], 'Choose a preferred time.'),
+    preferredTime: oneOf(VISIT_TIMES.map((option) => option.value), 'Choose a preferred time.'),
     visitors: oneOf(['1', '2', '3', '4-plus'], 'Choose the number of visitors.'),
     note: optionalText(1000),
     privacy,

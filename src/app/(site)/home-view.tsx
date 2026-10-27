@@ -16,7 +16,8 @@ import { Section } from '@/components/ui/Section';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import type { SiteContact } from '@/lib/contact';
 import { isContentStatus, isFuture, isOperating } from '@/lib/content-status';
-import { offeringPath } from '@/lib/routes';
+import { GROVE_SLUG, offeringPath } from '@/lib/routes';
+import { sitePhoto } from '@/lib/site-photos';
 
 export type HomePageFields = {
   title?: string | null;
@@ -65,6 +66,26 @@ function Region({ name, children }: { name: string; children: ReactNode }) {
   return <div data-home-section={name}>{children}</div>;
 }
 
+const HERITAGE_SUMMARY = 'The next residence, opening in 2027 on the historic Keunaman Bungalow Estate in Matara.';
+
+function HeritageCard() {
+  return (
+    <PreviewCard
+      href="/look-to-the-future/heritage"
+      title="The Heritage"
+      eyebrow="Matara"
+      description={HERITAGE_SUMMARY}
+      overlay={HERITAGE_SUMMARY}
+      image={sitePhoto(
+        '/look-to-the-future/heritage-house.jpg',
+        'The Keunaman bungalow at The Heritage, a colonial house with a red-tiled roof and a long verandah',
+      )}
+    >
+      <StatusBadge status="coming-soon" />
+    </PreviewCard>
+  );
+}
+
 export function HomeView({ home, residences, careServices, offerings, contact, oracleImages }: HomeViewProps) {
   const video = home?.heroVideo?.videoUrl || home?.heroVideo?.poster?.asset?.url ? home.heroVideo : null;
   const oracle = residences.find((item) => item.slug === 'oracle');
@@ -100,9 +121,9 @@ export function HomeView({ home, residences, careServices, offerings, contact, o
             heading={<Heading as="h2" id="home-homes">Our homes</Heading>}
             empty={<p>Residence details will appear here once they are published.</p>}
           >
-            {residences.map((residence) => (
-              <ResidenceCard key={residence._id} residence={residence} />
-            ))}
+            {residences.map((residence) =>
+              residence.slug === GROVE_SLUG ? <HeritageCard key="heritage" /> : <ResidenceCard key={residence._id} residence={residence} />,
+            )}
           </CardCarousel>
         </Section>
       </Region>

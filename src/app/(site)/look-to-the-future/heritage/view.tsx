@@ -134,17 +134,13 @@ export function HeritageView({ scriptFontClassName = '' }: { scriptFontClassName
               Now, this remarkable estate is being transformed into a luxury retirement and wellness destination — preserving its rich history while embracing a new future.
             </p>
           </div>
-          <figure className="relative min-h-[320px] overflow-hidden sm:min-h-[420px] lg:min-h-[520px]">
+          <figure className="relative w-full">
             <img
-              src="/look-to-the-future/heritage.jpg"
-              alt="The bungalow and gardens of the Keunaman Bungalow Estate"
-              className="absolute inset-0 h-full w-full object-cover object-[18%_center]"
+              src="/look-to-the-future/heritage-house.jpg"
+              alt="The Keunaman bungalow at The Heritage, a colonial house with a red-tiled roof and a long verandah"
+              className="h-auto w-full"
             />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/70 via-night/10 to-transparent" />
-            <figcaption className="absolute right-6 bottom-6 text-right text-ivory sm:right-8 sm:bottom-8">
-              <p className="font-display text-[clamp(1.7rem,2.4vw,2.35rem)] leading-tight font-medium text-ivory italic">Historic Charm.</p>
-              <p className={`${scriptFace} text-[clamp(1.7rem,2.6vw,2.45rem)] leading-none`}>Modern Comfort.</p>
-            </figcaption>
+            <figcaption className="visually-hidden">Historic Charm. Modern Comfort.</figcaption>
           </figure>
         </div>
       </section>

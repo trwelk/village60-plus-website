@@ -532,7 +532,15 @@ export function ResidenceView({
               id="care-here"
               title={residenceSectionLabel(residence.slug, 'care', 'Care and support at this home')}
               items={residence.careAndSupport}
-              copy={CARE_BAND}
+              copy={
+                residence.slug === 'serenity'
+                  ? {
+                      ...CARE_BAND,
+                      imageSrc: '/homes/serenity/serenity-grounds.jpg',
+                      imageAlt: 'The lawn and verandah at Serenity, with white buildings, green roofs and tropical planting',
+                    }
+                  : CARE_BAND
+              }
             />
           </Section>
         </Region>

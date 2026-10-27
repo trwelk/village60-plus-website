@@ -48,11 +48,22 @@ export const ENQUIRY_TOPICS: FieldOption[] = [
   { value: 'other', label: 'Something else' },
 ];
 
-export const VISIT_TIMES: FieldOption[] = [
-  { value: 'morning', label: 'Morning' },
-  { value: 'afternoon', label: 'Afternoon' },
-  { value: 'evening', label: 'Evening' },
-];
+function visitClock(totalMinutes: number): string {
+  const hours24 = Math.floor(totalMinutes / 60);
+  const minutes = String(totalMinutes % 60).padStart(2, '0');
+  const suffix = hours24 < 12 ? 'AM' : 'PM';
+  const hours12 = hours24 % 12 || 12;
+  return `${hours12}:${minutes} ${suffix}`;
+}
+
+// 9:00 AM–5:00 PM, each option a 30-minute window. Last window ends at 5:00 PM.
+export const VISIT_TIMES: FieldOption[] = Array.from({ length: 16 }, (_, index) => {
+  const start = 9 * 60 + index * 30;
+  const end = start + 30;
+  const startValue = `${String(Math.floor(start / 60)).padStart(2, '0')}:${String(start % 60).padStart(2, '0')}`;
+  const endValue = `${String(Math.floor(end / 60)).padStart(2, '0')}:${String(end % 60).padStart(2, '0')}`;
+  return { value: `${startValue}-${endValue}`, label: `${visitClock(start)} – ${visitClock(end)}` };
+});
 
 export const VISITOR_COUNTS: FieldOption[] = [
   { value: '1', label: '1' },

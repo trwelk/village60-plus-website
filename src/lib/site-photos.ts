@@ -89,7 +89,6 @@ const SERENITY_SCENES: Shot[] = [
     src: '/homes/serenity/serenity-verandah.jpg',
     alt: 'The verandah at Serenity in the evening light, with purple bougainvillea along the roofline',
   },
-  PEOPLE_PHOTOS.lounge,
   {
     src: '/homes/serenity/serenity-walker-path.jpg',
     alt: 'A caregiver supporting a resident with a walker along a stone path at Serenity',

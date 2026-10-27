@@ -106,12 +106,6 @@ export const CLIENT_PHOTOS = {
     caption: 'The verandah',
     people: false,
   },
-  'serenity-garden-walk': {
-    file: 'serenity-garden-walk.jpg',
-    alt: 'A nurse sitting with a resident in the lounge',
-    caption: 'In the lounge',
-    people: true,
-  },
   'serenity-walker-path': {
     file: 'serenity-walker-path.jpg',
     alt: 'A caregiver supporting a resident with a walker along a stone path at Serenity',
@@ -168,7 +162,6 @@ export const HOUSE_ON_THE_HILL_GALLERY: ClientPhotoKey[] = ['house-on-the-hill-e
 /** Photographs taken at Serenity, supplied October 2026. */
 export const SERENITY_GALLERY: ClientPhotoKey[] = [
   'serenity-verandah',
-  'serenity-garden-walk',
   'serenity-walker-path',
   'serenity-courtyard',
   'serenity-pool',

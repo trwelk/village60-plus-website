@@ -75,7 +75,7 @@ describe('processEnquiry', () => {
         name: 'Anjali Fernando',
         phone: '+94771234567',
         preferredDate: '2026-10-20',
-        preferredTime: 'morning',
+        preferredTime: '09:00-09:30',
         visitors: '2',
         privacy: 'on',
       }),

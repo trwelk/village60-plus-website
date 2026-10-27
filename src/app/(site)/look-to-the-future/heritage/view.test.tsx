@@ -35,6 +35,7 @@ describe('HeritageView', () => {
     expect(screen.getByRole('link', { name: /Discover the Heritage/ })).toHaveAttribute('href', '#estate');
     expect(screen.getByRole('link', { name: /Explore our services/ })).toHaveAttribute('href', '/living-and-care');
     expect(screen.getByRole('img', { name: /colonial bungalow and gardens/ })).toHaveAttribute('src', '/look-to-the-future/heritage.jpg');
+    expect(screen.getByRole('img', { name: /red-tiled roof/ })).toHaveAttribute('src', '/look-to-the-future/heritage-house.jpg');
   });
 
   it('opens a Heritage enquiry from the launch band', async () => {
