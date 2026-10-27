@@ -44,63 +44,63 @@ export function AwardRecognition() {
       <div className="mx-auto w-full max-w-site lg:flex lg:max-w-none lg:items-stretch">
         {/* lg:contents drops the card frame so the photo and copy become the desktop split. */}
         <article className="flex flex-col rounded-panel bg-paper p-3 lg:contents">
-        <div ref={mediaRef} className="relative aspect-[4/5] w-full overflow-hidden rounded-[14px] lg:aspect-[600/682] lg:h-[760px] lg:w-auto lg:shrink-0 lg:rounded-none">
-          <picture className="absolute inset-0">
-            <source srcSet="/home/excellence-award.webp" type="image/webp" />
-            <img
-              src="/home/excellence-award.jpg"
-              alt="The Global Business Excellence Awards 2026 trophy for Excellence in Elder Care, presented to Village 60 Plus."
-              width={600}
-              height={682}
-              loading="lazy"
-              decoding="async"
-              sizes="(min-width: 1200px) 42vw, 100vw"
-              className="h-full w-full object-cover object-center"
-            />
-          </picture>
-        </div>
-        <div className="flex flex-col gap-2 px-2 pt-4 pb-2 lg:relative lg:min-w-0 lg:flex-1 lg:items-center lg:justify-center lg:gap-0 lg:px-14 lg:py-16 xl:px-20 xl:py-20">
-          <Botanical />
-          <div className="lg:relative lg:w-full lg:max-w-[28rem]">
-            <Lockup />
-            <p className="text-[14px] text-bronze lg:mt-8 lg:font-sans lg:text-[12px] lg:font-medium lg:tracking-[0.26em] lg:uppercase">
-              Global recognition
-            </p>
-            <h2
-              id="home-recognition"
-              className="text-[22px] leading-tight text-green lg:mt-3 lg:font-display lg:text-[clamp(2.15rem,3.6vw,3.15rem)] lg:leading-[1.08] lg:font-medium lg:tracking-[-0.02em]"
-            >
-              Excellence <span className="lg:block">in Elder Care</span>
-            </h2>
-            <p className="text-[15px] leading-snug text-charcoal/80 lg:mt-4 lg:text-[18px] lg:leading-[1.6] lg:text-charcoal">
-              We are honoured to have received the Global Business Excellence Awards 2026 for Excellence in Elder Care,
-              recognising our commitment to providing exceptional care, dignity and quality of life for our residents.
-            </p>
-            <ul className="mt-8 hidden items-start lg:flex">
-              {PILLARS.map((pillar, index) => (
-                <li
-                  key={pillar.label}
-                  className={index > 0 ? 'min-w-0 flex-1 border-l border-stone' : 'min-w-0 flex-1'}
-                >
-                  <div className="flex flex-col items-center gap-2.5 px-2 text-center">
-                    <PillarIcon name={pillar.icon} />
-                    <span className="font-sans text-[11px] leading-snug font-medium tracking-[0.14em] text-bronze uppercase sm:text-[12px] sm:tracking-[0.16em]">
-                      {'lines' in pillar ? (
-                        <>
-                          {pillar.lines[0]}
-                          <br />
-                          {pillar.lines[1]}
-                        </>
-                      ) : (
-                        pillar.label
-                      )}
-                    </span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+          <div ref={mediaRef} className="relative aspect-[4/5] w-full overflow-hidden rounded-[14px] lg:aspect-[600/682] lg:h-[760px] lg:w-auto lg:shrink-0 lg:rounded-none">
+            <picture className="absolute inset-0">
+              <source srcSet="/home/excellence-award.webp" type="image/webp" />
+              <img
+                src="/home/excellence-award.jpg"
+                alt="The Global Business Excellence Awards 2026 trophy for Excellence in Elder Care, presented to Village 60 Plus."
+                width={600}
+                height={682}
+                loading="lazy"
+                decoding="async"
+                sizes="(min-width: 1200px) 42vw, 100vw"
+                className="h-full w-full object-cover object-center"
+              />
+            </picture>
           </div>
-        </div>
+          <div className="flex flex-col gap-2 px-2 pt-4 pb-2 lg:relative lg:min-w-0 lg:flex-1 lg:items-center lg:justify-center lg:gap-0 lg:px-14 lg:py-16 xl:px-20 xl:py-20">
+            <Botanical />
+            <div className="lg:relative lg:w-full lg:max-w-[28rem]">
+              <Lockup />
+              <p className="text-[14px] text-bronze lg:mt-8 lg:font-sans lg:text-[12px] lg:font-medium lg:tracking-[0.26em] lg:uppercase">
+                Global recognition
+              </p>
+              <h2
+                id="home-recognition"
+                className="text-[22px] leading-tight text-green lg:mt-3 lg:font-display lg:text-[clamp(2.15rem,3.6vw,3.15rem)] lg:leading-[1.08] lg:font-medium lg:tracking-[-0.02em]"
+              >
+                Excellence <span className="lg:block">in Elder Care</span>
+              </h2>
+              <p className="text-[15px] leading-snug text-charcoal/80 lg:mt-4 lg:text-[18px] lg:leading-[1.6] lg:text-charcoal">
+                We are honoured to have received the Global Business Excellence Awards 2026 for Excellence in Elder Care,
+                recognising our commitment to providing exceptional care, dignity and quality of life for our residents.
+              </p>
+              <ul className="mt-8 hidden items-start lg:flex">
+                {PILLARS.map((pillar, index) => (
+                  <li
+                    key={pillar.label}
+                    className={index > 0 ? 'min-w-0 flex-1 border-l border-stone' : 'min-w-0 flex-1'}
+                  >
+                    <div className="flex flex-col items-center gap-2.5 px-2 text-center">
+                      <PillarIcon name={pillar.icon} />
+                      <span className="font-sans text-[11px] leading-snug font-medium tracking-[0.14em] text-bronze uppercase sm:text-[12px] sm:tracking-[0.16em]">
+                        {'lines' in pillar ? (
+                          <>
+                            {pillar.lines[0]}
+                            <br />
+                            {pillar.lines[1]}
+                          </>
+                        ) : (
+                          pillar.label
+                        )}
+                      </span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </article>
       </div>
     </section>
