@@ -45,7 +45,8 @@ describe('withResidencePhotos', () => {
   });
 
   it('shows the lawn and verandah on Enchanted Fields', () => {
-    const residence = withResidencePhotos({ slug: 'enchanted-fields', heroImage: noPhoto(), gallery: [], rooms: [] });
+    const gallery: Array<CmsImage | null> = [];
+    const residence = withResidencePhotos({ slug: 'enchanted-fields', heroImage: noPhoto(), gallery, rooms: [] });
     expect((residence.gallery ?? []).map((image) => image?.asset?.url)).toContain('/homes/enchanted-fields/verandah.jpg');
   });
 });
