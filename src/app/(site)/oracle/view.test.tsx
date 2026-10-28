@@ -49,7 +49,8 @@ describe('OracleView', () => {
       'hero', 'rooms', 'daily-life', 'highlights', 'spaces', 'everyday', 'optional', 'independence', 'map', 'life', 'visit',
     ]);
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
-    expect(screen.getByRole('heading', { level: 1, name: 'Oracle' })).toHaveAttribute('id', 'page-title');
+    expect(screen.getByRole('heading', { level: 1, name: 'Oracle by Village 60 Plus' })).toHaveAttribute('id', 'page-title');
+    expect(screen.getByRole('img', { name: 'Oracle by Village 60 Plus' })).toHaveAttribute('src', '/brand/oracle-logo.png');
     expect(screen.getByRole('img', { name: 'Jade' })).toBeInTheDocument();
     expect(screen.getByText('Jade')).toBeInTheDocument();
     expect(screen.getByText('Pearl')).toBeInTheDocument();

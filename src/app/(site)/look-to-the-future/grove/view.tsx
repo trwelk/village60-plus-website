@@ -10,6 +10,8 @@ const scriptFace = '[font-family:var(--font-grove-script,cursive)]';
 
 const ENTRANCE = '/look-to-the-future/grove.jpg';
 const AERIAL = '/look-to-the-future/grove-aerial.jpg';
+const GARDEN = '/look-to-the-future/grove-garden.jpg';
+const CLUBHOUSE = '/look-to-the-future/grove-clubhouse.jpg';
 
 function Arrow() {
   return (
@@ -152,18 +154,18 @@ export function GroveView({ scriptFontClassName = '' }: { scriptFontClassName?: 
         </div>
       </section>
 
-      <section data-grove-section="grounds" aria-labelledby="grounds-title" className="relative flex min-h-[560px] items-center overflow-hidden bg-night text-ivory on-dark">
-        <img src={ENTRANCE} alt="Timber gates at The Grove, opening onto the garden" className="absolute inset-0 h-full w-full object-cover object-[8%_center]" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/80 via-night/45 to-transparent" />
-        <div className="relative z-10 mx-auto grid w-full max-w-[1520px] items-center gap-10 gutter py-16 lg:py-24">
-          <div className="max-w-[34rem]">
-            <h2 id="grounds-title" className="font-display text-[clamp(2.6rem,4.2vw,4rem)] leading-none font-medium text-ivory italic">
-              A warm welcome every day.
-            </h2>
-            <p className="mt-5 text-[16px] leading-relaxed text-ivory/95 md:text-[17px]">
-              A gated entrance, a central garden, and a clubhouse among the landscaping. Green, open and peaceful — with room to relax, socialise and enjoy.
-            </p>
-            <aside className="mt-8 w-full max-w-[26rem] rounded-2xl bg-[#0e2433]/82 p-7 backdrop-blur-md sm:p-8">
+      <section data-grove-section="grounds" aria-labelledby="grounds-title" className="bg-night text-ivory on-dark">
+        <div className="mx-auto w-full max-w-[1520px] gutter py-16 lg:py-24">
+          <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+            <div className="max-w-[40rem]">
+              <h2 id="grounds-title" className="font-display text-[clamp(2.6rem,4.2vw,4rem)] leading-none font-medium text-ivory italic">
+                A warm welcome every day.
+              </h2>
+              <p className="mt-5 text-[16px] leading-relaxed text-ivory/95 md:text-[17px]">
+                A gated entrance, a central garden, and a clubhouse among the landscaping. Green, open and peaceful — with room to relax, socialise and enjoy.
+              </p>
+            </div>
+            <aside className="w-full max-w-[26rem] rounded-2xl bg-[#0e2433] p-7 sm:p-8 lg:justify-self-end">
               <h3 className="flex items-center gap-2.5 font-display text-[1.7rem] font-medium text-ivory">
                 <Line className="size-6 text-pale-gold">
                   <path d="M16 27s6.5-6.4 6.5-11a6.5 6.5 0 1 0-13 0c0 4.6 6.5 11 6.5 11z" />
@@ -177,6 +179,10 @@ export function GroveView({ scriptFontClassName = '' }: { scriptFontClassName?: 
                 <li>Clubhouse & amenities — relax, socialise and enjoy</li>
               </ul>
             </aside>
+          </div>
+          <div className="mt-10 grid gap-3 sm:grid-cols-2 md:mt-12">
+            <img src={GARDEN} alt="Central garden at The Grove, a landscaped court with a stone path between the two buildings" className="aspect-[2/1] w-full object-cover" />
+            <img src={CLUBHOUSE} alt="Clubhouse and swimming pool at The Grove, with loungers and dining beyond the glass" className="aspect-[2/1] w-full object-cover" />
           </div>
         </div>
       </section>

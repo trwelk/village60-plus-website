@@ -88,6 +88,12 @@ export const CLIENT_PHOTOS = {
     caption: 'The lawn',
     people: false,
   },
+  'enchanted-fields-verandah': {
+    file: 'enchanted-fields-verandah.jpg',
+    alt: 'The lawn and verandah at Enchanted Fields, with white buildings, green roofs and tropical planting',
+    caption: 'The lawn and verandah',
+    people: false,
+  },
   'house-on-the-hill-entrance': {
     file: 'house-on-the-hill-entrance.jpg',
     alt: 'House on the Hill at dusk, with the illuminated entrance sign and driveway up to the white residence',
@@ -124,12 +130,6 @@ export const CLIENT_PHOTOS = {
     caption: 'The pool',
     people: false,
   },
-  'serenity-grounds': {
-    file: 'serenity-grounds.jpg',
-    alt: 'The lawn and verandah at Serenity, with white buildings, green roofs and tropical planting',
-    caption: 'The grounds',
-    people: false,
-  },
   'serenity-bedroom': {
     file: 'serenity-bedroom.jpg',
     alt: 'A bright bedroom at Serenity with a wooden ceiling, terracotta floor tiles and white linens',
@@ -154,7 +154,7 @@ export const TRANQUILITY_GALLERY: ClientPhotoKey[] = [
 ];
 
 /** Photographs taken at Enchanted Fields, supplied October 2026. */
-export const ENCHANTED_FIELDS_GALLERY: ClientPhotoKey[] = ['enchanted-fields-front', 'enchanted-fields-lawn'];
+export const ENCHANTED_FIELDS_GALLERY: ClientPhotoKey[] = ['enchanted-fields-front', 'enchanted-fields-verandah', 'enchanted-fields-lawn'];
 
 /** Photographs taken at House on the Hill, supplied October 2026. */
 export const HOUSE_ON_THE_HILL_GALLERY: ClientPhotoKey[] = ['house-on-the-hill-entrance', 'house-on-the-hill-courtyard'];
@@ -165,6 +165,5 @@ export const SERENITY_GALLERY: ClientPhotoKey[] = [
   'serenity-walker-path',
   'serenity-courtyard',
   'serenity-pool',
-  'serenity-grounds',
   'serenity-bedroom',
 ];

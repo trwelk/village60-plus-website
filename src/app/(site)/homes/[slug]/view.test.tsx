@@ -78,7 +78,7 @@ describe('ResidenceView', () => {
     expect(screen.getByText('Care team on site')).toBeInTheDocument();
     expect(screen.queryByRole('img', { name: 'A nurse holding hands with a resident' })).not.toBeInTheDocument();
     expect(screen.queryByRole('img', { name: 'A nurse sitting with a resident in the lounge' })).not.toBeInTheDocument();
-    expect(screen.getByRole('img', { name: 'The lawn and verandah at Serenity, with white buildings, green roofs and tropical planting' })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'The swimming pool at Serenity, with clear blue water beside the white residence' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Explore care & support' })).toHaveAttribute('href', '/living-and-care#health');
     expect(screen.getByText('Meals')).toBeInTheDocument();
     expect(screen.getByRole('img', { name: 'A dining table beside open doors to the garden' })).toBeInTheDocument();

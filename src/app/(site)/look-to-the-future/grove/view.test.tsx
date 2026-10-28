@@ -37,6 +37,8 @@ describe('GroveView', () => {
     expect(screen.getByRole('link', { name: /Explore living & care/ })).toHaveAttribute('href', '/living-and-care');
     expect(screen.getByRole('img', { name: /timber gates and an illuminated sign/ })).toHaveAttribute('src', '/look-to-the-future/grove.jpg');
     expect(screen.getByRole('img', { name: /two long buildings/ })).toHaveAttribute('src', '/look-to-the-future/grove-aerial.jpg');
+    expect(screen.getByRole('img', { name: /Central garden at The Grove/ })).toHaveAttribute('src', '/look-to-the-future/grove-garden.jpg');
+    expect(screen.getByRole('img', { name: /Clubhouse and swimming pool/ })).toHaveAttribute('src', '/look-to-the-future/grove-clubhouse.jpg');
   });
 
   it('opens a Grove enquiry from the launch band', async () => {

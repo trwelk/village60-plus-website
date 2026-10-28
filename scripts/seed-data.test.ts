@@ -32,18 +32,16 @@ describe('seed data', () => {
     expect(ids.every((id) => /^[a-zA-Z0-9.-]+$/.test(id))).toBe(true);
   });
 
-  it('pins the four published care homes and leaves Oracle and The Grove unpinned', () => {
-    const pinned = ['tranquility', 'serenity', 'house-on-the-hill', 'enchanted-fields'];
+  it('pins the published homes and leaves The Grove unpinned', () => {
+    const pinned = ['tranquility', 'serenity', 'house-on-the-hill', 'enchanted-fields', 'oracle'];
     for (const slug of pinned) {
       const home = ofType('residence').find((d) => (d.slug as { current: string }).current === slug);
       const location = (home?.address as { location?: { lat?: number; lng?: number } } | undefined)?.location;
       expect(location?.lat, slug).toEqual(expect.any(Number));
       expect(location?.lng, slug).toEqual(expect.any(Number));
     }
-    for (const slug of ['oracle', 'the-grove']) {
-      const home = ofType('residence').find((d) => (d.slug as { current: string }).current === slug);
-      expect((home?.address as { location?: unknown } | undefined)?.location, slug).toBeUndefined();
-    }
+    const grove = ofType('residence').find((d) => (d.slug as { current: string }).current === 'the-grove');
+    expect((grove?.address as { location?: unknown } | undefined)?.location).toBeUndefined();
   });
 
   it('includes retirement villas copy on Enchanted Fields', () => {
@@ -96,6 +94,7 @@ describe('seed data', () => {
     expect(grove?.comingSoonNote).toBeTruthy();
     expect(grove?.formKind).toBe('grove-interest');
     expect(oracle?.formKind).toBe('oracle-visit');
+    expect(oracle?.address).toMatchObject({ line1: 'No 25, 1st Lane', city: 'Nedimala', country: 'Sri Lanka' });
   });
 
   it('covers the five care services, three offerings and every page', () => {

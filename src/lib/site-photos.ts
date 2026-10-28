@@ -79,6 +79,10 @@ const ENCHANTED_FIELDS_SCENES: Shot[] = [
     alt: 'Enchanted Fields retirement villas on a sunny afternoon, with a green roof, white verandah and wide lawn',
   },
   {
+    src: '/homes/enchanted-fields/verandah.jpg',
+    alt: 'The lawn and verandah at Enchanted Fields, with white buildings, green roofs and tropical planting',
+  },
+  {
     src: '/homes/enchanted-fields/lawn.jpg',
     alt: 'The lawn at Enchanted Fields, with outdoor seating and chalet buildings among tropical trees',
   },
@@ -100,10 +104,6 @@ const SERENITY_SCENES: Shot[] = [
   {
     src: '/homes/serenity/serenity-pool.jpg',
     alt: 'The swimming pool at Serenity, with clear blue water beside the white residence',
-  },
-  {
-    src: '/homes/serenity/serenity-grounds.jpg',
-    alt: 'The lawn and verandah at Serenity, with white buildings, green roofs and tropical planting',
   },
   {
     src: '/homes/serenity/serenity-bedroom.jpg',

@@ -536,8 +536,8 @@ export function ResidenceView({
                 residence.slug === 'serenity'
                   ? {
                       ...CARE_BAND,
-                      imageSrc: '/homes/serenity/serenity-grounds.jpg',
-                      imageAlt: 'The lawn and verandah at Serenity, with white buildings, green roofs and tropical planting',
+                      imageSrc: '/homes/serenity/serenity-pool.jpg',
+                      imageAlt: 'The swimming pool at Serenity, with clear blue water beside the white residence',
                     }
                   : CARE_BAND
               }

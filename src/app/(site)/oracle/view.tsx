@@ -409,12 +409,17 @@ export function OracleView({
                   <p className="text-[12px] font-semibold tracking-[0.28em] text-ivory/80 uppercase">Introducing</p>
                   {status && status !== 'available' ? <StatusBadge status={status} tone="dark" /> : null}
                 </div>
-                <h1 id="page-title" className="mt-4 font-display text-[clamp(4.5rem,8vw,7.25rem)] leading-[0.88] font-normal tracking-[-0.03em] text-ivory uppercase">
-                  {residence.name}
+                <h1 id="page-title" className="mt-6">
+                  <img
+                    src="/brand/oracle-logo.png"
+                    alt={`${residence.name} by Village 60 Plus`}
+                    width={640}
+                    height={619}
+                    className="h-auto w-auto max-h-[11.5rem] max-w-full sm:max-h-[15rem] lg:max-h-[18rem]"
+                    decoding="async"
+                  />
                 </h1>
-                <span className="mt-5 block h-0.5 w-44 bg-gold" aria-hidden="true" />
-                <p className="mt-4 text-[12px] font-semibold tracking-[0.22em] text-ivory/80 uppercase">By Village 60 Plus</p>
-                <p className="mt-6 max-w-[12ch] font-display text-[clamp(1.7rem,2.8vw,2.35rem)] leading-[1.15] font-normal text-ivory">
+                <p className="mt-8 max-w-[12ch] font-display text-[clamp(1.7rem,2.8vw,2.35rem)] leading-[1.15] font-normal text-ivory">
                   A new standard of living.
                 </p>
                 <p className="mt-4 max-w-[36ch] text-[16px] leading-relaxed text-ivory/90">

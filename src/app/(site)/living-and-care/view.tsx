@@ -591,9 +591,6 @@ export function LivingCareView() {
             <div className="mt-6">
               <Checklist items={ACTIVE} onDark />
             </div>
-            <div className="mt-8">
-              <GoldLink href="#staying-active">Explore activities</GoldLink>
-            </div>
           </div>
         </Container>
       </section>

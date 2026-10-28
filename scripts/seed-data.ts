@@ -387,13 +387,14 @@ function residenceHero(slug: ResidenceSlug) {
 /**
  * Pins already published on village60plus.lk/retirement-villages.
  * Tranquility is the head-office street address. The other three are the area pins on that map.
- * Oracle and The Grove are not on it.
+ * Oracle is the centre of 1st Lane, Nedimala. The Grove is not pinned.
  */
 const MAP_PINS: Partial<Record<ResidenceSlug, { lat: number; lng: number; line1?: string; line2?: string; city?: string }>> = {
   tranquility: { lat: 6.8901495, lng: 79.8801168, line1: '133/19 Nawala Road', line2: 'Narahenpita', city: 'Colombo 05' },
   serenity: { lat: 6.8814717, lng: 79.8763476 },
   'house-on-the-hill': { lat: 6.8649081, lng: 79.8996789 },
   'enchanted-fields': { lat: 6.8432762, lng: 80.0031833 },
+  oracle: { lat: 6.8439889, lng: 79.8833509, line1: 'No 25, 1st Lane', city: 'Nedimala' },
 };
 
 const residences = residenceSeeds.map((r) => {
