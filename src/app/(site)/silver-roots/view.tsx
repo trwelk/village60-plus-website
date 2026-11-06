@@ -163,8 +163,8 @@ const SERVICES: Array<{ title: string; body: string; href: string; src: string; 
     title: 'Transport & Appointments',
     body: 'Assistance for medical appointments, shopping, social outings and more.',
     href: '/living-and-care#health',
-    src: '/people/walker.jpg',
-    alt: 'A caregiver supporting a resident with a walker along a garden path',
+    src: '/silver-roots/transport.jpg',
+    alt: 'A caregiver helping a resident into a car',
   },
   {
     title: 'Everyday Services',

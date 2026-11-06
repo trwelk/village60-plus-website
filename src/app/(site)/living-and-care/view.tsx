@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { EnquiryButton } from '@/components/forms/EnquiryPanel';
 import { Container } from '@/components/ui/Container';
 import { Heading } from '@/components/ui/Heading';
 import { careServicePath } from '@/lib/routes';
@@ -10,23 +11,7 @@ const HERO_TITLE = 'Support That Changes With You.';
 const HERO_INTRO =
   'Different people. Different needs. The same purpose, to help you live well, with the right level of support around you.';
 
-type IconName =
-  | 'home'
-  | 'building'
-  | 'clock'
-  | 'bed'
-  | 'walk'
-  | 'meal'
-  | 'linen'
-  | 'heart'
-  | 'people'
-  | 'car'
-  | 'sprout'
-  | 'shield'
-  | 'bell'
-  | 'lotus'
-  | 'pin'
-  | 'diamond';
+type IconName = 'home' | 'building' | 'clock' | 'bed' | 'walk' | 'sprout' | 'lotus' | 'pin' | 'diamond';
 
 const PORTRAIT = PEOPLE_PHOTOS.hands.src;
 const WALK = PEOPLE_PHOTOS.courtyard.src;
@@ -61,7 +46,7 @@ const SERVICES: Array<{
     strip: 'Respite\nCare',
     blurb: 'Short-term stays for family breaks, recovery or additional support.',
     icon: 'clock',
-    src: '/homes/serenity/serenity-bedroom.jpg',
+    src: '/homes/tranquility/ward.jpg',
   },
   {
     slug: 'recovery',
@@ -81,122 +66,248 @@ const SERVICES: Array<{
   },
 ];
 
-const PROVIDES: Array<{ label: string; icon: IconName; href?: string }> = [
-  { label: 'Meals & Dining', icon: 'meal', href: '#good-food' },
-  { label: 'Housekeeping & Laundry', icon: 'linen' },
-  { label: 'Health & Wellbeing', icon: 'heart', href: '#health' },
-  { label: 'Staying Active', icon: 'walk', href: '#staying-active' },
-  { label: 'Family Connection', icon: 'people', href: '#beyond' },
-  { label: 'Transport & Appointments', icon: 'car', href: '#health' },
-  { label: 'Platinum 60 Concierge', icon: 'bell', href: '#private-concierge' },
-  { label: 'Personal Services via Silver Roots', icon: 'sprout', href: '/silver-roots' },
-  { label: 'Technology & Safety', icon: 'shield' },
-];
-
-const MEALS = [
-  'Breakfast, lunch and dinner',
-  'Tea and refreshments',
-  'Special dietary requirements',
-  'Meal assistance if required',
-  'Guest meals and celebrations',
-  'A sociable dining experience',
-];
-
-const HEALTH = [
-  'Doctor and hospital appointments',
-  'Prescription collection/delivery',
-  'Medication support',
-  'Transport to appointments',
-  'Professional nursing support',
-  'Discreet personal assistance',
-  'Physiotherapy, spa, fitness and relaxation',
-  'Beauty and grooming',
-  'Health assessments',
-  'Wellbeing checks',
-  'Family updates',
-];
-
-const ACTIVE = [
-  'Gentle exercise and walking',
-  'Gardening and outdoor areas',
-  'Games, music, movies and entertainment',
-  'Cultural and spiritual activities',
-  'Excursions and social occasions',
-  'Choice and flexibility',
-];
-
-const EXPERIENCE: Array<{
+type EverydaySection = {
   id: string;
+  kicker: string;
+  watermark: string;
   title: string;
-  body: string;
-  icon: IconName;
-  links?: Array<{ href: string; label: string }>;
-}> = [
+  intro: string;
+  items?: string[];
+  note?: string;
+  src: string;
+  alt: string;
+  ctaHref?: string;
+  ctaLabel: string;
+};
+
+const EVERYDAY: EverydaySection[] = [
   {
-    id: 'elegant-living',
-    title: 'Elegant Living',
-    body: 'Private residences, beautifully furnished accommodation, inviting surroundings and the freedom to live on your own terms.',
-    icon: 'home',
-    links: [{ href: '/homes', label: 'Our homes' }],
+    id: 'everyday-living',
+    kicker: 'Living & Care',
+    watermark: 'Living',
+    title: 'Everyday Living at Village 60 Plus',
+    intro:
+      'Life inside Village 60 Plus comes with a range of organised activities, social experiences, hospitality services and personal assistance designed to make everyday living enjoyable and convenient.',
+    src: '/silver-roots/everyday.jpg',
+    alt: 'A nurse sitting with a resident in the lounge',
+    ctaLabel: 'Speak with our team',
   },
   {
-    id: 'exceptional-care',
-    title: 'Exceptional Care',
-    body: 'Discreet personal assistance, professional nursing support, health coordination and individually tailored care.',
-    icon: 'heart',
-    links: [{ href: '#residential-care', label: 'Residential care' }],
-  },
-  {
-    id: 'fine-living',
-    title: 'Fine Living & Dining',
-    body: 'Thoughtfully curated menus, personalised dining preferences, daily comforts and attentive hospitality.',
-    icon: 'meal',
-    links: [{ href: '#good-food', label: 'Meals and dining' }],
-  },
-  {
-    id: 'wellness',
-    title: 'Wellness & Rejuvenation',
-    body: 'Spa experiences, physiotherapy, fitness, relaxation, beauty and wellness services designed for your wellbeing.',
-    icon: 'lotus',
-    links: [{ href: '#health', label: 'Health and wellbeing' }],
-  },
-  {
-    id: 'leisure',
-    title: 'Leisure & Experiences',
-    body: 'Social occasions, entertainment, cultural experiences, excursions and opportunities to discover something new.',
-    icon: 'people',
-    links: [{ href: '#staying-active', label: 'Activities' }],
-  },
-  {
-    id: 'private-concierge',
-    title: 'Private Concierge',
-    body: 'From personal shopping and grooming to chauffeur arrangements, appointments and travel, our Platinum 60 concierge services attend to the finer details.',
-    icon: 'bell',
-    links: [{ href: '/contact', label: 'Enquire' }],
-  },
-  {
-    id: 'recovery-respite',
-    title: 'Recovery & Respite',
-    body: 'Comfortable short-term stays, rehabilitation assistance and personalised support during recovery.',
-    icon: 'bed',
-    links: [{ href: '#respite-care', label: 'Short stays' }],
-  },
-  {
-    id: 'beyond-residences',
-    title: 'Living Beyond Our Residences',
-    body: 'Enjoy the Village 60 Plus standard of service in your own home or through our Destination Retirement experiences.',
-    icon: 'pin',
-    links: [
-      { href: '/silver-roots', label: 'Care at home' },
-      { href: '/destination-retirement', label: 'Destination Retirement' },
+    id: 'social-life',
+    kicker: '01',
+    watermark: 'Social',
+    title: 'Social Life & Community Activities',
+    intro: 'There is always an opportunity to meet, interact and enjoy time with others.',
+    items: [
+      'Weekly social gatherings and resident meet-ups',
+      'Community lunches and group dining',
+      'Afternoon tea parties',
+      'Coffee mornings',
+      'Movie afternoons',
+      'Music, singing and entertainment',
+      'Board games, cards and indoor recreation',
+      'Reading circles and discussion groups',
+      'Garden gatherings and outdoor activities',
+      'Group outings and excursions',
     ],
+    src: '/homes/tranquility/garden.jpg',
+    alt: 'Two residents playing chess on the lawn',
+    ctaLabel: 'Ask about community life',
+  },
+  {
+    id: 'celebrations',
+    kicker: '02',
+    watermark: 'Events',
+    title: 'Celebrations & Events Calendar',
+    intro: "We organise occasions throughout the year to bring residents together and celebrate life's special moments.",
+    items: [
+      "International Day of Older Persons – Elders' Day",
+      'Individual birthday celebrations',
+      'Birthday parties and anniversary gatherings',
+      'Sinhala and Tamil New Year celebrations',
+      'Christmas celebrations',
+      'New Year parties',
+      'Vesak celebrations',
+      "Valentine's Day gatherings",
+      'Cultural and religious events',
+      'Special themed lunches and dinners',
+      'Family appreciation days',
+    ],
+    src: PEOPLE_PHOTOS.social.src,
+    alt: PEOPLE_PHOTOS.social.alt,
+    ctaLabel: 'Ask about celebrations',
+  },
+  {
+    id: 'good-food',
+    kicker: '03',
+    watermark: 'Dining',
+    title: 'Dining & Refreshments',
+    intro: 'Dining is an important part of the Village 60 Plus experience.',
+    items: [
+      'Daily freshly prepared meals',
+      'Breakfast, lunch and dinner',
+      'Morning and afternoon refreshments',
+      'Special community lunches',
+      'Afternoon tea with refreshments and treats',
+      'Birthday and celebration menus',
+      'Special occasion dinners',
+      'Individual dietary arrangements',
+      'Family dining arrangements',
+    ],
+    src: '/home/living-room.jpg',
+    alt: 'A dining table beside open doors to the garden',
+    ctaLabel: 'Ask about dining',
+  },
+  {
+    id: 'staying-active',
+    kicker: '04',
+    watermark: 'Active',
+    title: 'Activities, Fitness & Recreation',
+    intro: 'Residents can participate in activities according to their interests, preferences and abilities.',
+    items: [
+      'Gentle exercise sessions',
+      'Stretching and mobility activities',
+      'Yoga and relaxation',
+      'Physiotherapy coordination',
+      'Arts, painting and crafts',
+      'Gardening and planting',
+      'Music and singing sessions',
+      'Dance and cultural activities',
+      'Memory games and puzzles',
+      'Educational workshops',
+      'Indoor and outdoor recreational activities',
+    ],
+    src: '/homes/serenity/serenity-pool.jpg',
+    alt: 'The swimming pool at Serenity, with clear blue water beside the white residence',
+    ctaLabel: 'Ask about activities',
+  },
+  {
+    id: 'personal-care',
+    kicker: '05',
+    watermark: 'Care',
+    title: 'Personal Care & Grooming',
+    intro: 'Assistance with everyday personal requirements can be arranged according to individual needs.',
+    items: [
+      'Haircuts and hairdressing appointments',
+      'Personal grooming',
+      'Barber services',
+      'Nail care',
+      'Laundry and clothing care',
+      'Personal hygiene assistance',
+      'Dressing assistance',
+      'Individual care routines',
+    ],
+    src: '/people/hands.jpg',
+    alt: PEOPLE_PHOTOS.hands.alt,
+    ctaLabel: 'Ask about personal care',
+  },
+  {
+    id: 'housekeeping',
+    kicker: '06',
+    watermark: 'Home',
+    title: 'Hospitality & Housekeeping',
+    intro: 'Our residential services include practical support to keep everyday living comfortable and organised.',
+    items: [
+      'Regular room cleaning',
+      'Bed making and linen changes',
+      'Laundry arrangements',
+      'Fresh bedding and towels',
+      'Room maintenance coordination',
+      'Meal service',
+      'Assistance with daily routines',
+      'Personal belongings organisation',
+    ],
+    src: '/homes/serenity/serenity-bedroom.jpg',
+    alt: 'A bright bedroom at Serenity with a wooden ceiling, terracotta floor tiles and white linens',
+    ctaLabel: 'Ask about housekeeping',
+  },
+  {
+    id: 'health',
+    kicker: '07',
+    watermark: 'Well',
+    title: 'Medical & Wellness Coordination',
+    intro: 'We help residents organise and access the healthcare support they require.',
+    items: [
+      'Medical appointment arrangements',
+      'Doctor visits and consultations coordination',
+      'Hospital appointment transportation',
+      'Medication assistance and administration according to care plans',
+      'Prescription collection coordination',
+      'Physiotherapy arrangements',
+      'Health monitoring according to individual care requirements',
+      'Recovery and respite care arrangements',
+      'Family communication regarding care',
+    ],
+    src: PEOPLE_PHOTOS.walker.src,
+    alt: PEOPLE_PHOTOS.walker.alt,
+    ctaLabel: 'Ask about medical support',
+  },
+  {
+    id: 'transport',
+    kicker: '08',
+    watermark: 'Travel',
+    title: 'Transport & Personal Concierge',
+    intro: 'Residents can request assistance with everyday errands and arrangements.',
+    items: [
+      'Transportation for medical appointments',
+      'Shopping trips',
+      'Personal errands',
+      'Salon and grooming appointments',
+      'Family visits and outings',
+      'Special occasion arrangements',
+      'Assistance with external service bookings',
+      'Personal requests and coordination',
+    ],
+    src: '/silver-roots/transport.jpg',
+    alt: 'A caregiver walking a resident to a waiting car',
+    ctaLabel: 'Ask about transport',
+  },
+  {
+    id: 'family',
+    kicker: '09',
+    watermark: 'Family',
+    title: 'Family & Special Arrangements',
+    intro: "We recognise that family remains an important part of every resident's life.",
+    items: [
+      'Family visits and gatherings',
+      'Special family lunches',
+      'Birthday celebrations with loved ones',
+      'Private dining arrangements',
+      'Family updates and communication',
+      'Assistance coordinating special occasions',
+      'Arrangements for outings with family',
+    ],
+    src: '/story/verandah.jpg',
+    alt: 'A residence verandah shaded by bougainvillea',
+    ctaLabel: 'Plan a family visit',
+  },
+  {
+    id: 'care-options',
+    kicker: '10',
+    watermark: 'Live',
+    title: 'Our Residential & Care Options',
+    intro: 'Village 60 Plus offers different residential arrangements to accommodate individual living and care requirements.',
+    items: [
+      'Permanent residential living',
+      'Assisted living and daily personal assistance',
+      'Short-term stays',
+      'Respite accommodation',
+      'Post-hospital recovery accommodation',
+      'Individual care arrangements',
+      'Couple accommodation, where available',
+    ],
+    note: 'Services and activities vary according to the residence, availability and individual care requirements.',
+    src: '/homes/serenity/serenity-verandah.jpg',
+    alt: 'The verandah at Serenity in the evening light, with purple bougainvillea along the roofline',
+    ctaHref: '#our-services',
+    ctaLabel: 'See care options',
   },
 ];
 
 const PATHWAYS: Array<{ icon: IconName; title: string; detail?: string; href?: string }> = [
   { icon: 'lotus', title: 'The privilege of living well.' },
   { icon: 'home', title: 'Our Homes', detail: 'Inspired Living', href: '/homes' },
-  { icon: 'diamond', title: 'Platinum 60', detail: 'Personal Concierge', href: '#private-concierge' },
+  { icon: 'diamond', title: 'Platinum 60', detail: 'Personal Concierge', href: '#transport' },
   { icon: 'sprout', title: 'Silver Roots', detail: 'Family Connection', href: '/silver-roots' },
   { icon: 'pin', title: 'Destination Retirement', detail: 'Explore More', href: '/destination-retirement' },
 ];
@@ -237,41 +348,8 @@ function iconPaths(name: IconName): ReactNode {
           <path d="M8 21l2.2-5.2 2.3 1.6L14 21M10.2 15.8 8.5 12l-3 .8M10.2 15.8 13 13l3.2 1.2M13 13l.6-3.2-2.4-1.2" />
         </>
       );
-    case 'meal':
-      return (
-        <>
-          <path d="M6 3v7a2 2 0 0 0 2 2V21" />
-          <path d="M6 3v5M8 3v5M16 3v7c1.6 0 3-1.6 3-4.5S17.6 3 16 3z" />
-          <path d="M16 10v11" />
-        </>
-      );
-    case 'linen':
-      return <path d="M6 4h12l-1 16H7L6 4zm2 4h8M8.4 12h7.2" />;
-    case 'heart':
-      return <path d="M12 19s-7-4.4-7-9a3.8 3.8 0 0 1 7-2 3.8 3.8 0 0 1 7 2c0 4.6-7 9-7 9z" />;
-    case 'people':
-      return (
-        <>
-          <circle cx="9" cy="8" r="2.2" />
-          <circle cx="16" cy="9" r="1.8" />
-          <path d="M4.5 19c.4-2.6 2.3-4 4.5-4s4.1 1.4 4.5 4M14 15.2c1.4-.4 2.8.1 3.6 1.3.6.9.9 1.8 1 2.5" />
-        </>
-      );
-    case 'car':
-      return <path d="M4 15v2h2.2M18 17H20v-2M4 15l1.6-4.2A2 2 0 0 1 7.5 9.5h9a2 2 0 0 1 1.9 1.3L20 15M4 15h16M7 17.5a1.2 1.2 0 1 0 0 .1M17 17.5a1.2 1.2 0 1 0 0 .1" />;
     case 'sprout':
       return <path d="M12 21V11M12 14c-3.5-.2-6-2.4-6-5.5 3.2 0 5.5 1.6 6 5.5zM12 12c3.2-.4 5.5-2.6 5.5-5.5-3 0-5.2 1.8-5.5 5.5z" />;
-    case 'shield':
-      return <path d="M12 3.5 19 6.5v5.2c0 4.2-2.8 7.2-7 8.8-4.2-1.6-7-4.6-7-8.8V6.5z" />;
-    case 'bell':
-      return (
-        <>
-          <path d="M6.5 16h11" />
-          <path d="M8 16V10.5a4 4 0 0 1 8 0V16" />
-          <path d="M10 16a2 2 0 0 0 4 0" />
-          <path d="M12 6.5V5" />
-        </>
-      );
     case 'lotus':
       return (
         <>
@@ -307,41 +385,31 @@ function Arrow({ down = false }: { down?: boolean }) {
   );
 }
 
+const goldPill =
+  'inline-flex min-h-11 items-center gap-2 rounded-full bg-gold px-6 py-3 text-[13px] font-semibold tracking-[0.14em] text-night uppercase no-underline transition-colors duration-(--duration-fast) hover:bg-bronze hover:text-ivory';
+
 function GoldLink({ href, children, down = false, bar = false }: { href: string; children: ReactNode; down?: boolean; bar?: boolean }) {
-  return (
-    <Link
-      href={href}
-      className={
-        bar
-          ? 'inline-flex min-h-12 items-center gap-2.5 rounded-[4px] bg-pale-gold px-5 text-[12px] font-semibold tracking-[0.14em] text-night uppercase no-underline transition-colors duration-(--duration-fast) hover:bg-gold'
-          : 'inline-flex min-h-11 items-center gap-2 rounded-full bg-gold px-6 py-3 text-[13px] font-semibold tracking-[0.14em] text-night uppercase no-underline transition-colors duration-(--duration-fast) hover:bg-bronze hover:text-ivory'
-      }
-    >
+  const className = bar
+    ? 'inline-flex min-h-12 items-center gap-2.5 rounded-[4px] bg-pale-gold px-5 text-[12px] font-semibold tracking-[0.14em] text-night uppercase no-underline transition-colors duration-(--duration-fast) hover:bg-gold'
+    : goldPill;
+  const content = (
+    <>
       {children}
       <Arrow down={down} />
+    </>
+  );
+  // Same-page hashes need a native anchor. Next Link skips the scroll when html has smooth scrolling.
+  if (href.startsWith('#')) {
+    return (
+      <a href={href} className={className}>
+        {content}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className}>
+      {content}
     </Link>
-  );
-}
-
-function Check() {
-  return (
-    <svg viewBox="0 0 20 20" className="mt-0.5 size-5 shrink-0 text-gold" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-      <circle cx="10" cy="10" r="7.25" />
-      <path d="M6.5 10.2 8.8 12.5 13.5 7.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function Checklist({ items, onDark = false }: { items: string[]; onDark?: boolean }) {
-  return (
-    <ul className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
-      {items.map((item) => (
-        <li key={item} className={cn('flex items-start gap-3 text-[16px] leading-snug', onDark ? 'text-ivory' : 'text-charcoal/90')}>
-          <Check />
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
   );
 }
 
@@ -360,9 +428,55 @@ function Cover({ src, alt = '', className, priority = false }: { src: string; al
 
 function Photo({ src, alt, className, imageClassName }: { src: string; alt: string; className?: string; imageClassName?: string }) {
   return (
-    <div className={cn('relative overflow-hidden rounded-panel bg-sand', className)}>
+    <div className={cn('relative overflow-hidden rounded-[1.75rem] bg-sand', className)}>
       <Cover src={src} alt={alt} className={imageClassName} />
     </div>
+  );
+}
+
+function EverydayBand({ section, imageLeft }: { section: EverydaySection; imageLeft: boolean }) {
+  const headingId = `${section.id}-title`;
+  return (
+    <section id={section.id} aria-labelledby={headingId} className={cn('section-space scroll-mt-8 overflow-hidden border-t border-stone/80', imageLeft ? 'bg-ivory' : 'bg-paper')}>
+      <Container>
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-24">
+          <div className={cn('relative', imageLeft && 'lg:order-2')}>
+            <p aria-hidden="true" className="pointer-events-none absolute -top-2 left-0 font-display text-[clamp(4.5rem,8vw,7.25rem)] leading-none font-medium tracking-[-0.045em] text-charcoal/[0.06] select-none">
+              {section.watermark}
+            </p>
+            <div className="relative pt-10 lg:pt-14">
+              <p className="text-[13px] font-semibold tracking-[0.18em] text-bronze uppercase">{section.kicker}</p>
+              <h2 id={headingId} className="mt-3 font-display text-[clamp(2.15rem,3.3vw,3.35rem)] leading-[1.02] font-medium tracking-[-0.025em] text-charcoal">
+                {section.title}
+              </h2>
+              <p className="mt-4 max-w-[38rem] text-[17px] leading-relaxed text-charcoal/80">{section.intro}</p>
+              {section.items ? (
+                <ul className="mt-6 grid gap-2.5">
+                  {section.items.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-[16px] leading-snug text-charcoal/90">
+                      <span aria-hidden="true" className="mt-[0.55rem] size-1.5 shrink-0 rounded-full bg-gold" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+              {section.note ? <p className="mt-5 max-w-[38rem] text-[15px] leading-snug text-charcoal/70">{section.note}</p> : null}
+              <div className="mt-8">
+                {section.ctaHref ? (
+                  <GoldLink href={section.ctaHref}>{section.ctaLabel}</GoldLink>
+                ) : (
+                  <EnquiryButton kind="general" context={`Living & Care: ${section.title}`} className={goldPill}>
+                    {section.ctaLabel}
+                    <Arrow />
+                  </EnquiryButton>
+                )}
+              </div>
+            </div>
+          </div>
+          <Photo src={section.src} alt={section.alt} className={cn('aspect-[4/3] lg:aspect-[5/4]', imageLeft && 'lg:order-1')} />
+        </div>
+      </Container>
+    </section>
   );
 }
 
@@ -398,13 +512,13 @@ export function LivingCareView() {
               key={service.slug}
               className="border-stone/80 max-lg:border-b max-lg:odd:border-r max-lg:last:col-span-2 max-lg:last:border-r-0! max-lg:last:border-b-0! lg:border-l lg:first:border-l-0"
             >
-              <Link
+              <a
                 href={`#${service.slug}`}
                 className="flex h-full flex-col items-center px-4 py-10 text-center text-charcoal no-underline transition-colors duration-(--duration-fast) hover:text-bronze lg:py-14"
               >
                 <Icon name={service.icon} className="size-8 text-gold" />
                 <span className="mt-4 max-w-[11rem] font-display text-[17px] leading-snug whitespace-pre-line">{service.strip}</span>
-              </Link>
+              </a>
             </li>
           ))}
         </ul>
@@ -452,185 +566,12 @@ export function LivingCareView() {
         </Container>
       </section>
 
-      <section id="experience" aria-labelledby="experience-title" className="section-space scroll-mt-8 bg-sand">
-        <Container>
-          <Heading as="h2" id="experience-title" eyebrow="The Village 60 Plus experience" titleClassName="text-green" className="max-w-3xl">
-            A Distinguished Way of Life.
-          </Heading>
-          <div className="mt-4 max-w-3xl space-y-3 text-charcoal/85">
-            <p>At Village 60 Plus, we believe retirement should be a celebration of life, not a compromise.</p>
-            <p>Discover a world where refined living, personalised attention and exceptional hospitality come together.</p>
-            <p>
-              From beautifully appointed residences and thoughtfully prepared dining to dedicated care, wellness and lifestyle experiences, every detail is considered around you.
-            </p>
-          </div>
-          <h3 className="mt-12 font-display text-[28px] leading-tight text-green">The Village 60 Plus Experience</h3>
-          <ul className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-            {EXPERIENCE.map((item) => (
-              <li key={item.id} id={item.id} className="scroll-mt-8">
-                <article className="flex h-full flex-col rounded-card border border-stone/80 bg-paper p-5 shadow-panel">
-                  <span className="inline-flex size-11 items-center justify-center rounded-full bg-sand text-gold">
-                    <Icon name={item.icon} className="size-6" />
-                  </span>
-                  <h3 className="mt-4 font-display text-[22px] leading-tight text-green">{item.title}</h3>
-                  <p className="mt-2 text-[15px] leading-snug text-charcoal/80">{item.body}</p>
-                  {item.links?.length ? (
-                    <p className="mt-auto flex flex-wrap gap-x-4 gap-y-2 pt-4">
-                      {item.links.map((link) => (
-                        <Link key={link.href} href={link.href} className="inline-flex items-center gap-1.5 text-[12px] font-semibold tracking-[0.12em] text-bronze uppercase no-underline hover:text-green">
-                          {link.label}
-                          <Arrow />
-                        </Link>
-                      ))}
-                    </p>
-                  ) : null}
-                </article>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </section>
+      {EVERYDAY.map((section, index) => (
+        <EverydayBand key={section.id} section={section} imageLeft={index % 2 === 1} />
+      ))}
 
-      <section aria-labelledby="more-than-a-room" className="relative overflow-hidden bg-green text-ivory on-dark section-space">
-        <div className="absolute inset-0" aria-hidden="true">
-          <Cover src={WALK} className="opacity-40" />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-br from-green/92 via-green/86 to-night/80" aria-hidden="true" />
-        <Container className="relative">
-          <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
-            <div className="max-w-xl">
-              <Heading as="h2" id="more-than-a-room" eyebrow="What we provide" onDark titleClassName="text-ivory">
-                More Than a Room.
-              </Heading>
-              <p className="mt-4 text-ivory/90">
-                Living well is about more than just accommodation. It&apos;s the everyday things that make life comfortable, safe and enjoyable.
-              </p>
-            </div>
-            <GoldLink href="#our-services">View all services</GoldLink>
-          </div>
-          <ul className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
-            {PROVIDES.map((item) => {
-              const body = (
-                <>
-                  <Icon name={item.icon} className="size-6 text-gold" />
-                  <span className="text-[15px] leading-snug font-medium text-ivory">{item.label}</span>
-                </>
-              );
-              return (
-                <li key={item.label}>
-                  {item.href ? (
-                    <Link href={item.href} className="flex h-full min-h-24 flex-col items-start justify-center gap-3 rounded-card border border-ivory/15 bg-night/25 px-4 py-4 no-underline transition-colors hover:bg-night/40">
-                      {body}
-                    </Link>
-                  ) : (
-                    <div className="flex h-full min-h-24 flex-col items-start justify-center gap-3 rounded-card border border-ivory/15 bg-night/25 px-4 py-4">
-                      {body}
-                    </div>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </Container>
-      </section>
-
-      <section id="good-food" aria-labelledby="good-food-title" className="section-space scroll-mt-8 bg-paper">
-        <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <Photo src="/home/living-room.jpg" alt="A dining table beside open doors to the garden" className="aspect-[4/3] lg:aspect-[5/4]" imageClassName="object-[78%_center]" />
-            <div>
-              <Heading as="h2" id="good-food-title" titleClassName="text-green" className="max-w-none">
-                Good Food Is Part of Good Living.
-              </Heading>
-              <p className="mt-4 max-w-prose-site text-charcoal/85">
-                Thoughtfully curated menus and nutritious, home-cooked meals prepared fresh, with personalised dining preferences and individual dietary requirements. Enjoy meals in our dining spaces or in the comfort of your own room, with attentive hospitality.
-              </p>
-              <div className="mt-6">
-                <Checklist items={MEALS} />
-              </div>
-              <div className="mt-8">
-                <GoldLink href="#good-food">Explore meals &amp; dining</GoldLink>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section id="health" aria-labelledby="health-title" className="section-space scroll-mt-8 bg-ivory">
-        <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <div className="lg:order-1">
-              <Heading as="h2" id="health-title" eyebrow="Health & wellbeing" titleClassName="text-green" className="max-w-none">
-                Your Health Matters.
-              </Heading>
-              <p className="mt-4 max-w-prose-site text-charcoal/85">
-                We support your wider health and wellbeing by coordinating appointments, medication and other healthcare services.
-              </p>
-              <div className="mt-6">
-                <Checklist items={HEALTH} />
-              </div>
-            </div>
-            <Photo src={PORTRAIT} alt={PEOPLE_PHOTOS.hands.alt} className="aspect-[4/3] lg:order-2 lg:aspect-[5/4]" />
-          </div>
-        </Container>
-      </section>
-
-      <section id="staying-active" aria-labelledby="staying-active-title" className="relative scroll-mt-8 overflow-hidden bg-green text-ivory on-dark">
-        <div className="absolute inset-0">
-          <Cover src={WALK} alt="" />
-        </div>
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/10 via-night/35 to-night/75" />
-        <Container className="relative flex min-h-[34rem] items-center py-16 lg:min-h-[40rem] lg:py-24">
-          <div className="ml-auto w-full max-w-xl">
-            <Heading as="h2" id="staying-active-title" eyebrow="Staying active" onDark titleClassName="text-ivory" className="max-w-none">
-              Live Well. Stay Active.
-            </Heading>
-            <p className="mt-4 text-ivory/90">
-              From gentle exercise to social activities and outings, there are many ways to stay engaged, connected and active.
-            </p>
-            <div className="mt-6">
-              <Checklist items={ACTIVE} onDark />
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section id="beyond" aria-labelledby="connected-title" className="section-space scroll-mt-8 bg-paper">
-        <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <Photo src="/silver-roots/sunset.jpg" alt="Warm evening light across the garden" className="aspect-[4/3] lg:aspect-[5/4]" />
-            <div>
-              <Heading as="h2" id="connected-title" eyebrow="Silver Roots" titleClassName="text-green" className="max-w-none">
-                Seamlessly Connected
-              </Heading>
-              <p className="mt-4 max-w-prose-site text-charcoal/85">
-                Through Silver Roots and our integrated service network, your care, lifestyle arrangements and family communication come together effortlessly.
-              </p>
-              <p className="mt-3 max-w-prose-site text-charcoal/85">
-                Living beyond our residences, the same standard of service can continue in your own home or through Destination Retirement.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <GoldLink href="/silver-roots">Silver Roots</GoldLink>
-                <GoldLink href="/destination-retirement">Destination Retirement</GoldLink>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section aria-labelledby="without-compromise" className="border-t border-stone/80 bg-ivory">
-        <Container className="section-space">
-          <div className="mx-auto max-w-3xl text-center">
-            <Heading as="h2" id="without-compromise" titleClassName="text-green" className="mx-auto max-w-3xl text-center">
-              A Life Without Compromise.
-            </Heading>
-            <p className="mt-4 text-[18px] leading-snug text-charcoal">Your preferences. Your pace. Your way of life.</p>
-            <p className="mx-auto mt-3 max-w-2xl text-charcoal/85">
-              At Village 60 Plus, we take care of the details, so you can enjoy what matters most.
-            </p>
-          </div>
-        </Container>
-        <nav aria-label="Ways to live with Village 60 Plus" className="border-t border-stone/80">
+      <section className="border-t border-stone/80 bg-ivory">
+        <nav aria-label="Ways to live with Village 60 Plus">
           <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
             {PATHWAYS.map((item) => {
               const inner = (
@@ -645,9 +586,15 @@ export function LivingCareView() {
               return (
                 <li key={item.title} className="border-stone/80 max-lg:border-b max-lg:odd:border-r lg:border-l lg:first:border-l-0">
                   {item.href ? (
-                    <Link href={item.href} className="flex h-full flex-col items-center px-4 py-8 text-center text-charcoal no-underline transition-colors hover:text-bronze lg:py-10">
-                      {inner}
-                    </Link>
+                    item.href.startsWith('#') ? (
+                      <a href={item.href} className="flex h-full flex-col items-center px-4 py-8 text-center text-charcoal no-underline transition-colors hover:text-bronze lg:py-10">
+                        {inner}
+                      </a>
+                    ) : (
+                      <Link href={item.href} className="flex h-full flex-col items-center px-4 py-8 text-center text-charcoal no-underline transition-colors hover:text-bronze lg:py-10">
+                        {inner}
+                      </Link>
+                    )
                   ) : (
                     <div className="flex h-full flex-col items-center px-4 py-8 text-center lg:py-10">{inner}</div>
                   )}

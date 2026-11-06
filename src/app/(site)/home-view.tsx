@@ -17,6 +17,7 @@ import { StatusBadge } from '@/components/ui/StatusBadge';
 import type { SiteContact } from '@/lib/contact';
 import { isContentStatus, isFuture, isOperating } from '@/lib/content-status';
 import { GROVE_SLUG, offeringPath } from '@/lib/routes';
+import { oracleHomeSummary } from '@/lib/oracle-copy';
 import { sitePhoto } from '@/lib/site-photos';
 
 export type HomePageFields = {
@@ -110,7 +111,7 @@ export function HomeView({ home, residences, careServices, offerings, contact, o
       <Region name="oracle">
         <OracleSpotlight
           name={oracle?.name}
-          summary={oracle?.summary || 'Oracle is the flagship residence. The team confirms what is available today.'}
+          summary={oracleHomeSummary(oracle?.summary)}
           images={oracleImages?.length ? oracleImages : oracle?.heroImage ? [oracle.heroImage] : []}
         />
       </Region>
@@ -173,7 +174,9 @@ export function HomeView({ home, residences, careServices, offerings, contact, o
                   image={item.heroImage}
                   fill={item.slug === 'sage' ? 'bg-night' : 'bg-leaf'}
                 >
-                  {isContentStatus(item.status) && !isOperating(item.status) ? <StatusBadge status={item.status} /> : null}
+                  {item.slug !== 'destination-retirement' && isContentStatus(item.status) && !isOperating(item.status) ? (
+                    <StatusBadge status={item.status} />
+                  ) : null}
                 </PreviewCard>
               </li>
             ))}

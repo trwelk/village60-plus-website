@@ -2,7 +2,8 @@ import { PreviewCard, type PreviewCardSurface } from '@/components/content/Previ
 import { Chip } from '@/components/ui/Chip';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { isContentStatus } from '@/lib/content-status';
-import { residencePath } from '@/lib/routes';
+import { oracleHomeSummary } from '@/lib/oracle-copy';
+import { ORACLE_SLUG, residencePath } from '@/lib/routes';
 import type { CmsImage } from '@/components/media/SanityImage';
 
 export type ResidenceCardData = {
@@ -19,14 +20,15 @@ export type ResidenceCardData = {
 export function ResidenceCard({ residence, surface = 'paper' }: { residence: ResidenceCardData; surface?: PreviewCardSurface }) {
   if (!residence.name || !residence.slug) return null;
   const cares = (residence.careTypes ?? []).filter((care): care is { _id: string; name: string } => Boolean(care?.name));
+  const summary = residence.slug === ORACLE_SLUG ? oracleHomeSummary(residence.summary) : residence.summary;
   return (
     <PreviewCard
       href={residencePath(residence.slug)}
       title={residence.name}
       eyebrow={residence.shortLocation || 'Residence'}
-      description={residence.summary}
+      description={summary}
       image={residence.heroImage}
-      overlay={residence.summary}
+      overlay={summary}
       surface={surface}
     >
       {isContentStatus(residence.status) ? <StatusBadge status={residence.status} /> : null}

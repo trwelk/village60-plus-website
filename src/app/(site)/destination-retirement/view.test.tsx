@@ -21,22 +21,36 @@ function renderPage() {
   );
 }
 
+const services = [
+  'Comfortable Accommodation',
+  'Nutritious Meals',
+  'Personal Care and Assistance',
+  'Recreation and Activities',
+  'Peaceful Environment',
+  'Community and Companionship',
+];
+
 describe('DestinationRetirementView', () => {
-  it('follows the landing layout and keeps one heading', () => {
+  it('shows the welcome and the services the residence provides', () => {
     renderPage();
-    expect(screen.getByRole('heading', { level: 1, name: /Your Next Chapter/ })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: /Welcome to Destination Retirement, where comfort, care and peace of mind come together/ })).toBeInTheDocument();
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+    expect(document.querySelector('[data-dr-section="hero"] img')).toHaveAttribute('src', '/destination-retirement/hero.jpg');
+    expect(screen.getByText(/you are choosing a lifestyle, a community and a place to relax/)).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'A cliffside pool looking out to the ocean' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'What We Provide' })).toBeInTheDocument();
+    for (const name of services) {
+      expect(screen.getByRole('heading', { name })).toBeInTheDocument();
+    }
     const order = [...document.querySelectorAll('[data-dr-section]')].map((node) => node.getAttribute('data-dr-section'));
-    expect(order).toEqual(['hero', 'destinations', 'promises', 'lifestyle', 'places', 'wellness', 'support', 'trial']);
-    expect(screen.getByRole('heading', { name: 'Sri Lanka' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /Explore destinations/ })).toHaveAttribute('href', '#destinations');
-    expect(screen.getByRole('link', { name: /Connected Services via Silver Roots/ })).toHaveAttribute('href', '/silver-roots');
-    expect(screen.getByRole('link', { name: /Explore our services/ })).toHaveAttribute('href', '/silver-roots');
+    expect(order).toEqual(['hero', 'intro', 'provide']);
+    expect(screen.queryByRole('heading', { name: 'Sri Lanka' })).not.toBeInTheDocument();
+    expect(screen.queryByText(/Wellness & Spa/)).not.toBeInTheDocument();
   });
 
-  it('opens the stay enquiry from the hero', async () => {
+  it('opens the enquiry from the hero', async () => {
     renderPage();
-    await userEvent.click(screen.getByRole('button', { name: /Plan your stay/ }));
+    await userEvent.click(screen.getByRole('button', { name: /Send an enquiry/ }));
     expect(screen.getByRole('heading', { name: 'Plan a stay' })).toBeInTheDocument();
   });
 });

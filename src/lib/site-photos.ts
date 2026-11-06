@@ -43,14 +43,15 @@ export const PEOPLE_PHOTOS = {
   hands: { src: '/people/hands.jpg', alt: 'A nurse holding hands with a resident' },
   courtyard: { src: '/people/courtyard.jpg', alt: 'A caregiver walking with a resident across the courtyard' },
   walker: { src: '/people/walker.jpg', alt: 'A caregiver supporting a resident with a walker along a garden path' },
+  social: { src: '/people/social.jpg', alt: 'Residents singing together at a celebration' },
 } as const satisfies Record<string, Shot>;
 
 const CARE_PHOTOS: Record<CareServiceSlug, Shot> = {
   'independent-living': PEOPLE_PHOTOS.lounge,
   'residential-care': PEOPLE_PHOTOS.hands,
   'respite-care': {
-    src: '/homes/serenity/serenity-bedroom.jpg',
-    alt: 'A bright bedroom at Serenity with a wooden ceiling, terracotta floor tiles and white linens',
+    src: '/homes/tranquility/ward.jpg',
+    alt: 'The ward at Tranquility with partitioned beds along tall windows',
   },
   recovery: PEOPLE_PHOTOS.walker,
   rehabilitation: PEOPLE_PHOTOS.courtyard,

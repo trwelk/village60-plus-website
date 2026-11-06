@@ -112,9 +112,8 @@ describe('ResidenceView', () => {
     expect(screen.queryByRole('heading', { name: /^The team$/ })).not.toBeInTheDocument();
   });
 
-  it('explains missing rooms and still lists shared spaces', () => {
+  it('lists shared spaces when rooms are empty', () => {
     renderResidence({ ...operating, rooms: [] });
-    expect(screen.getByText(/published once they are verified/i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Shared spaces' })).toBeInTheDocument();
     expect(screen.getByText('Dining room')).toBeInTheDocument();
   });

@@ -44,6 +44,21 @@ describe('seed data', () => {
     expect((grove?.address as { location?: unknown } | undefined)?.location).toBeUndefined();
   });
 
+  it('lists the swimming pool among Serenity shared spaces', () => {
+    const home = ofType('residence').find((d) => (d.slug as { current: string }).current === 'serenity');
+    expect(home?.sharedSpaces).toEqual(['Living room', 'Dining room', 'Garden or terrace', 'Swimming pool']);
+  });
+
+  it('lists lift access among Tranquility shared spaces', () => {
+    const home = ofType('residence').find((d) => (d.slug as { current: string }).current === 'tranquility');
+    expect(home?.sharedSpaces).toEqual(['Living room', 'Dining room', 'Garden or terrace', 'Lift access']);
+  });
+
+  it('lists the private theatre among Oracle shared spaces', () => {
+    const home = ofType('residence').find((d) => (d.slug as { current: string }).current === 'oracle');
+    expect(home?.sharedSpaces).toEqual(['Living room', 'Dining room', 'Garden or terrace', 'Private Theatre room']);
+  });
+
   it('includes retirement villas copy on Enchanted Fields', () => {
     const home = ofType('residence').find((d) => (d.slug as { current: string }).current === 'enchanted-fields');
     const text = JSON.stringify(home);

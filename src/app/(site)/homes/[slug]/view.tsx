@@ -505,9 +505,7 @@ export function ResidenceView({
                 </li>
               ))}
             </ul>
-          ) : (
-            <p className="mt-4 max-w-prose-site">Room details and photographs are published once they are verified.</p>
-          )}
+          ) : null}
           {spaces.length > 0 ? (
             <div className={rooms.length > 0 ? 'mt-12' : 'mt-10'}>
               <h3 className="text-[22px] leading-snug md:text-[24px]">

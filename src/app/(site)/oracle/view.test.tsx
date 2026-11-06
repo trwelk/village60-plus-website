@@ -80,6 +80,7 @@ describe('OracleView', () => {
     expect(screen.getAllByRole('heading', { name: 'Arrange a private visit' })).toHaveLength(1);
     expect(screen.getByRole('heading', { name: 'Arrange a private visit' })).toHaveAttribute('id', 'oracle-visit');
     expect(screen.queryByText(/international standard/i)).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Private Theatre room' })).toBeInTheDocument();
   });
 
   it('calls a full Oracle list ten rooms and ten identities', () => {

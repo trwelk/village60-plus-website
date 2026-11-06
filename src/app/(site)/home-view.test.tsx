@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { EnquiryProvider } from '@/components/forms/EnquiryPanel';
 import { contactFixture } from '@/test/contact-fixture';
 import { HOME_PORTRAITS } from '@/lib/site-photos';
+import { ORACLE_HOME_SUMMARY } from '@/lib/oracle-copy';
 import { imageFixture } from '@/test/fixtures';
 import { HomeView, type HomeOffering, type HomeViewProps } from './home-view';
 
@@ -12,7 +13,13 @@ vi.mock('@/lib/forms/submit', () => ({
 
 const offerings: HomeOffering[] = [
   { slug: 'silver-roots', name: 'Silver Roots', summary: 'A services platform in development. The team helps by phone today.', status: 'in-development' },
-  { slug: 'destination-retirement', name: 'Destination Retirement', summary: 'A planned stay concept. Nothing is bookable yet.', status: 'planned' },
+  {
+    slug: 'destination-retirement',
+    name: 'Destination Retirement',
+    summary:
+      'Where comfort, care and peace of mind come together. We believe retirement should be a beautiful new chapter in life, filled with happiness, companionship, relaxation and meaningful experiences.',
+    status: 'planned',
+  },
   { slug: 'sage', name: 'SAGE', summary: 'Technology that stays in the background.', status: 'pilot' },
 ];
 
@@ -76,6 +83,21 @@ describe('HomeView', () => {
     expect(within(recognition as HTMLElement).getByText(/Global Business Excellence Awards 2026/)).toBeInTheDocument();
   });
 
+  it('shows ten rooms in the Oracle spotlight when CMS still says eight', () => {
+    const { container } = renderHome({
+      residences: [
+        {
+          ...props.residences[0],
+          summary:
+            'Eight individually designed rooms within a private residence for independent adults, with shared spaces and support quietly available.',
+        },
+        props.residences[1],
+      ],
+    });
+    const spotlight = container.querySelector('[data-home-section="oracle"]') as HTMLElement;
+    expect(within(spotlight).getByText(ORACLE_HOME_SUMMARY)).toBeInTheDocument();
+  });
+
   it('overlaps the two tallest Oracle photographs', () => {
     const wide = imageFixture('Oracle exterior');
     wide.asset.url = 'https://cdn.sanity.io/images/testproject/test/wide-1600x1000.jpg';
@@ -127,7 +149,7 @@ describe('HomeView', () => {
     const sage = screen.getByRole('link', { name: /SAGE/ });
     expect(sage).toHaveAttribute('href', '/sage');
     expect(sage.closest('li')).toHaveClass('hidden', 'md:block');
-    expect(screen.getByText('Planned')).toBeInTheDocument();
+    expect(screen.queryByText('Planned')).not.toBeInTheDocument();
     expect(screen.getByText('Pilot')).toBeInTheDocument();
   });
 

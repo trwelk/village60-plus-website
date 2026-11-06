@@ -1,9 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import type { CmsImage } from '@/components/media/SanityImage';
-import { photoForResidence, withResidencePhotos } from './site-photos';
+import { photoForCare, photoForResidence, withResidencePhotos } from './site-photos';
 
 const noPhoto = (): CmsImage | null => null;
 const room = (name: string): { name: string; image: CmsImage | null } => ({ name, image: noPhoto() });
+
+describe('photoForCare', () => {
+  it('shows the Tranquility ward on Respite Care', () => {
+    expect(photoForCare('respite-care')?.asset?.url).toBe('/homes/tranquility/ward.jpg');
+  });
+});
 
 describe('photoForResidence', () => {
   it('uses the Grove aerial wherever a residence card shows The Grove', () => {

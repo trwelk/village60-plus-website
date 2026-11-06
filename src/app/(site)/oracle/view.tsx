@@ -39,6 +39,14 @@ const ORACLE_ROOMS = [
 
 const PUBLISHED_EIGHT = ['Jade', 'Onyx', 'Ruby', 'Ivory', 'Amber', 'Sapphire', 'Opal', 'Emerald'];
 
+const ORACLE_SHARED_SPACES = ['Private Theatre room'] as const;
+
+function completeOracleSharedSpaces(spaces: string[]): string[] {
+  const have = new Set(spaces.map((space) => space.trim().toLowerCase()));
+  const missing = ORACLE_SHARED_SPACES.filter((space) => !have.has(space.toLowerCase()));
+  return missing.length ? [...spaces, ...missing] : spaces;
+}
+
 function roomsCopy(count: number): { heading: string; body: string } {
   if (count === 10) {
     return {
@@ -373,7 +381,7 @@ export function OracleView({
 
   const future = isContentStatus(residence.status) && isFuture(residence.status);
   const rooms = completeOracleRooms((residence.rooms ?? []).filter((room): room is Room => Boolean(room?.name)));
-  const spaces = (residence.sharedSpaces ?? []).filter((space): space is string => Boolean(space));
+  const spaces = completeOracleSharedSpaces((residence.sharedSpaces ?? []).filter((space): space is string => Boolean(space)));
   const fit = (residence.audienceFit ?? []).filter((item): item is string => Boolean(item));
   const optional = (residence.careAndSupport ?? []).filter((item) => item?.title && item.provision && item.provision !== 'included');
   const gallery = (residence.gallery ?? []).filter(hasPhoto);

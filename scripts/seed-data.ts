@@ -4,6 +4,7 @@
  * Nothing here may reach production without client confirmation (spec §20).
  */
 import type { ContentStatus } from '@/lib/content-status';
+import { ORACLE_HOME_SUMMARY } from '@/lib/oracle-copy';
 import type { FormKind } from '@/lib/forms/kinds';
 import { type CareServiceSlug, type OfferingSlug, type PageSlug, type ResidenceSlug } from '@/lib/routes';
 import {
@@ -296,7 +297,7 @@ const residenceSeeds: ResidenceSeed[] = [
     status: 'limited',
     isFlagship: true,
     shortLocation: 'Pepiliyana',
-    summary: 'Ten individually designed rooms within a private residence for independent adults, with shared spaces and support quietly available.',
+    summary: ORACLE_HOME_SUMMARY,
     careTypes: ['independent-living'],
     audienceFit: strings('Independent adults who want privacy without isolation', 'People who would like everyday chores taken care of', 'Those planning ahead so support can grow with them'),
     formKind: 'oracle-visit',
@@ -422,7 +423,16 @@ const residences = residenceSeeds.map((r) => {
         ? clientImage(room.photo, room.name)
         : stockImage(ORACLE_ROOM_PHOTOS[index % ORACLE_ROOM_PHOTOS.length], room.name),
     })),
-    sharedSpaces: r.status === 'coming-soon' ? undefined : strings('Living room', 'Dining room', 'Garden or terrace'),
+    sharedSpaces:
+      r.status === 'coming-soon'
+        ? undefined
+        : r.slug === 'serenity'
+          ? strings('Living room', 'Dining room', 'Garden or terrace', 'Swimming pool')
+          : r.slug === 'oracle'
+            ? strings('Living room', 'Dining room', 'Garden or terrace', 'Private Theatre room')
+            : r.slug === 'tranquility'
+              ? strings('Living room', 'Dining room', 'Garden or terrace', 'Lift access')
+              : strings('Living room', 'Dining room', 'Garden or terrace'),
     careAndSupport: r.status === 'coming-soon' ? undefined : [
       capability('Care team on site', r.isFlagship ? 'Everyday assistance on request, with care arranged as needs change.' : 'A care team on hand day and night.'),
       capability('Medication reminders', 'Prompts and support with medication the resident already takes, as agreed with their doctor.'),
@@ -486,11 +496,14 @@ const residences = residenceSeeds.map((r) => {
     ],
     sharedSpaces: strings(
       'Community lounge',
+      'Community center',
       'Library',
       'Wellness clinic',
       'Weekly outings',
       'Swimming pool',
       'Walking path',
+      'Terraced walking track',
+      'Nature access',
       'Gymnasium',
     ),
     careAndSupport: [
@@ -559,7 +572,8 @@ const offeringSeeds: OfferingSeed[] = [
     status: 'planned',
     tagline: 'Longer stays in Sri Lanka, not fast tourism.',
     distinction: 'Destination Retirement is a stay concept for people living abroad; it is not a residence and nothing is bookable yet.',
-    summary: 'A planned concept for extended stays in Sri Lanka with practical support. Enquiries are welcome; no properties, packages, healthcare, visas or insurance are offered at this stage.',
+    summary:
+      'Where comfort, care and peace of mind come together. We believe retirement should be a beautiful new chapter in life, filled with happiness, companionship, relaxation and meaningful experiences.',
     heroTone: 'ivory',
     formKind: 'destination-retirement',
     current: [],
