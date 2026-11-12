@@ -6,6 +6,7 @@
 import type { ContentStatus } from '@/lib/content-status';
 import { ORACLE_HOME_SUMMARY } from '@/lib/oracle-copy';
 import type { FormKind } from '@/lib/forms/kinds';
+import { RESIDENCE_VERIFIED_ADDRESSES } from '@/lib/residence-addresses';
 import { type CareServiceSlug, type OfferingSlug, type PageSlug, type ResidenceSlug } from '@/lib/routes';
 import {
   CLIENT_GALLERY,
@@ -385,17 +386,16 @@ function residenceHero(slug: ResidenceSlug) {
   return clientHero ? clientImage(clientHero, slug) : stockImage(RESIDENCE_PHOTO[slug].hero, slug);
 }
 
-/**
- * Map pins and verified street addresses (village60plus.lk/retirement-villages).
- * Tranquility matches head office. Oracle is the centre of 1st Lane, Nedimala. The Grove is not pinned.
- */
-const MAP_PINS: Partial<Record<ResidenceSlug, { lat: number; lng: number; line1?: string; line2?: string; city?: string }>> = {
-  tranquility: { lat: 6.8901495, lng: 79.8801168, line1: '133/19, Nawala Road', line2: 'Narahenpita', city: 'Colombo 05' },
-  serenity: { lat: 6.8814717, lng: 79.8763476, line1: '32/10, Railway Avenue', city: 'Nugegoda' },
-  'house-on-the-hill': { lat: 6.8649081, lng: 79.8996789, line1: '235/15, Wijaya Kumaratunga Mawatha', line2: 'Polhengoda', city: 'Kirulapone' },
-  'enchanted-fields': { lat: 6.8432762, lng: 80.0031833, line1: '7th Lane, Kulasiri Kumarage Mawatha', city: 'Homagama' },
-  oracle: { lat: 6.8439889, lng: 79.8833509, line1: 'No 25, 1st Lane', city: 'Nedimala' },
-};
+/** Tranquility matches head office. Oracle is the centre of 1st Lane, Nedimala. The Grove is not pinned. */
+const MAP_PINS: Partial<Record<ResidenceSlug, { lat: number; lng: number; line1?: string; line2?: string; city?: string }>> =
+  Object.fromEntries(
+    Object.entries(RESIDENCE_VERIFIED_ADDRESSES).flatMap(([slug, address]) => {
+      const lat = address.location?.lat;
+      const lng = address.location?.lng;
+      if (typeof lat !== 'number' || typeof lng !== 'number') return [];
+      return [[slug, { lat, lng, line1: address.line1 ?? undefined, line2: address.line2 ?? undefined, city: address.city ?? undefined }]];
+    }),
+  ) as Partial<Record<ResidenceSlug, { lat: number; lng: number; line1?: string; line2?: string; city?: string }>>;
 
 const residences = residenceSeeds.map((r) => {
   const base = {

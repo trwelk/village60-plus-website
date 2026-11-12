@@ -5,6 +5,7 @@ import { isSanityProjectConfigured } from '@/lib/sanity-project';
 import { docTag } from '@/lib/revalidation';
 import { RESIDENCE_SLUGS } from '@/lib/routes';
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo';
+import { verifiedResidenceAddress } from '@/lib/residence-addresses';
 import { contactFromSettings } from '@/lib/site-settings';
 import { fetchPublished } from '@/sanity/fetch';
 import { sitePhoto } from '@/lib/site-photos';
@@ -60,7 +61,11 @@ export default async function ContactPage() {
         emergencyNotice={settings?.emergencyNotice}
         headOffice={settings?.headOffice}
         mapsKey={mapsKey}
-        residences={residences.flatMap((residence) => (residence?.name ? [{ name: residence.name, slug: residence.slug, address: residence.address ?? null }] : []))}
+        residences={residences.flatMap((residence) =>
+          residence?.name
+            ? [{ name: residence.name, slug: residence.slug, address: verifiedResidenceAddress(residence.slug, residence.address) }]
+            : [],
+        )}
       />
     </>
   );

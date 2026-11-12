@@ -5,6 +5,7 @@ import { getPublicEnv } from '@/lib/env';
 import { isSanityProjectConfigured } from '@/lib/sanity-project';
 import { docTag } from '@/lib/revalidation';
 import { breadcrumbJsonLd, localBusinessJsonLd, pageMetadata } from '@/lib/seo';
+import { verifiedResidenceAddress } from '@/lib/residence-addresses';
 import { contactFromSettings } from '@/lib/site-settings';
 import { GROVE_PATH, GROVE_SLUG, ORACLE_SLUG, RESIDENCE_SLUGS, residencePath, residenceStaticParams } from '@/lib/routes';
 import { fetchPublished } from '@/sanity/fetch';
@@ -69,7 +70,7 @@ export default async function ResidencePage({ params }: { params: Promise<{ slug
     everydayLife: doc.everydayLife,
     gallery: doc.gallery,
     team: doc.team,
-    address: doc.address,
+    address: verifiedResidenceAddress(doc.slug, doc.address),
     faqs: doc.faqs as ResidenceContent['faqs'],
     formKind: doc.formKind,
     comingSoonNote: doc.comingSoonNote,
