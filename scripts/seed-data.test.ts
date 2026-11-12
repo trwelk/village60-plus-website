@@ -32,6 +32,21 @@ describe('seed data', () => {
     expect(ids.every((id) => /^[a-zA-Z0-9.-]+$/.test(id))).toBe(true);
   });
 
+  it('uses verified street addresses on the four established homes', () => {
+    const addressOf = (slug: string) =>
+      ofType('residence').find((d) => (d.slug as { current: string }).current === slug)?.address as
+        | { line1?: string; line2?: string; city?: string }
+        | undefined;
+    expect(addressOf('tranquility')).toMatchObject({ line1: '133/19, Nawala Road', line2: 'Narahenpita', city: 'Colombo 05' });
+    expect(addressOf('serenity')).toMatchObject({ line1: '32/10, Railway Avenue', city: 'Nugegoda' });
+    expect(addressOf('house-on-the-hill')).toMatchObject({
+      line1: '235/15, Wijaya Kumaratunga Mawatha',
+      line2: 'Polhengoda',
+      city: 'Kirulapone',
+    });
+    expect(addressOf('enchanted-fields')).toMatchObject({ line1: '7th Lane, Kulasiri Kumarage Mawatha', city: 'Homagama' });
+  });
+
   it('pins the published homes and leaves The Grove unpinned', () => {
     const pinned = ['tranquility', 'serenity', 'house-on-the-hill', 'enchanted-fields', 'oracle'];
     for (const slug of pinned) {

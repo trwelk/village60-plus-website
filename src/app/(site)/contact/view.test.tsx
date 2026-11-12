@@ -7,7 +7,7 @@ vi.mock('@/lib/forms/submit', () => ({
   submitEnquiry: vi.fn(),
 }));
 
-const office = { line1: '133/19 Nawala Road', line2: 'Narahenpita', city: 'Colombo 05', country: 'Sri Lanka' };
+const office = { line1: '133/19, Nawala Road', line2: 'Narahenpita', city: 'Colombo 05', country: 'Sri Lanka' };
 
 describe('ContactView', () => {
   it('shows the office, a residence directions link and the general form', () => {

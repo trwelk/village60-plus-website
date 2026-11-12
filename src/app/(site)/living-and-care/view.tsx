@@ -10,6 +10,7 @@ import { cn } from '@/lib/cn';
 const HERO_TITLE = 'Support That Changes With You.';
 const HERO_INTRO =
   'Different people. Different needs. The same purpose, to help you live well, with the right level of support around you.';
+const HERO_IMAGE = '/living-and-care/hero.jpg';
 
 type IconName = 'home' | 'building' | 'clock' | 'bed' | 'walk' | 'sprout' | 'lotus' | 'pin' | 'diamond';
 
@@ -197,8 +198,8 @@ const EVERYDAY: EverydaySection[] = [
       'Dressing assistance',
       'Individual care routines',
     ],
-    src: '/people/hands.jpg',
-    alt: PEOPLE_PHOTOS.hands.alt,
+    src: PEOPLE_PHOTOS.lounge.src,
+    alt: PEOPLE_PHOTOS.lounge.alt,
     ctaLabel: 'Ask about personal care',
   },
   {
@@ -297,8 +298,8 @@ const EVERYDAY: EverydaySection[] = [
       'Couple accommodation, where available',
     ],
     note: 'Services and activities vary according to the residence, availability and individual care requirements.',
-    src: '/homes/serenity/serenity-verandah.jpg',
-    alt: 'The verandah at Serenity in the evening light, with purple bougainvillea along the roofline',
+    src: '/homes/serenity/serenity-front.jpg',
+    alt: 'Serenity residence front entrance with a terracotta roof and stone path through the garden',
     ctaHref: '#our-services',
     ctaLabel: 'See care options',
   },
@@ -484,7 +485,7 @@ export function LivingCareView() {
   return (
     <main id="main">
       <section aria-labelledby="page-title" className="relative flex min-h-[100svh] items-center overflow-hidden bg-night text-ivory on-dark">
-        <Cover src={PORTRAIT} alt="" priority className="object-[72%_center]" />
+        <Cover src={HERO_IMAGE} alt="" priority />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/78 via-night/32 to-transparent" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/35 via-transparent to-night/45" />
         <div className="relative z-10 w-full pt-32 pb-16">

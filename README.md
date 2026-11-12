@@ -100,16 +100,16 @@ Public details to verify before they are treated as fact:
 - [ ] Phone `+94 11 250 4838`
 - [ ] WhatsApp `+94 74 100 3994`
 - [ ] Email `enquiries@village60plus.org`
-- [ ] Head office `133/19 Nawala Road, Narahenpita, Colombo 05`
+- [x] Head office `133/19, Nawala Road, Narahenpita, Colombo 05`
 
 Must be confirmed:
 
 - [ ] Founded in 2008 or 2009
 - [ ] Official spelling and location for every residence
-- [ ] Serenity: Railway Avenue, Kirulapone, or Nugegoda
+- [x] Serenity: `32/10, Railway Avenue, Nugegoda`
 - [ ] House on the Hill versus Hope on the Hill
-- [ ] House on the Hill location: Kirulapone or Nugegoda
-- [ ] Enchanted Field versus Enchanted Fields
+- [x] House on the Hill: `235/15, Wijaya Kumaratunga Mawatha, Polhengoda, Kirulapone`
+- [x] Enchanted Fields: `7th Lane, Kulasiri Kumarage Mawatha, Homagama`
 - [ ] Oracle opening and operating status
 - [ ] Oracle room names, capacity, services, and visit availability
 - [ ] The Grove timeline, and whether it is all or part of the 80-room expansion

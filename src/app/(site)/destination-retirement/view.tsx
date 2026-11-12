@@ -91,8 +91,8 @@ export function DestinationRetirementView() {
       <section data-dr-section="intro" aria-labelledby="intro-title" className="bg-ivory">
         <div className="mx-auto grid w-full max-w-[1520px] items-center gap-10 gutter py-16 lg:grid-cols-2 lg:gap-16 lg:py-24">
           <div>
-            <p className="text-[15px] font-medium text-bronze">Destination Retirement</p>
-            <h2 id="intro-title" className="mt-3 max-w-[14ch] font-display text-[clamp(2.75rem,4.6vw,4.25rem)] leading-[1.02] font-medium tracking-[-0.03em] text-charcoal">
+            <p className="font-sans text-[15px] font-semibold text-gold">Destination Retirement</p>
+            <h2 id="intro-title" className="mt-3 max-w-[14ch] font-display text-[clamp(2.35rem,3.4vw,3.35rem)] leading-[1.08] font-medium tracking-[-0.02em] text-charcoal">
               Welcome to Destination Retirement
             </h2>
             <ul aria-label="What we provide" className="mt-6 flex list-none flex-wrap gap-2 p-0">

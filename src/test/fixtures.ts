@@ -36,7 +36,7 @@ export const siteSettingsFixture: SiteSettings = {
   emergencyNotice: null,
   headOffice: {
     _type: 'address',
-    line1: '133/19 Nawala Road',
+    line1: '133/19, Nawala Road',
     line2: 'Narahenpita',
     city: 'Colombo 05',
     country: 'Sri Lanka',

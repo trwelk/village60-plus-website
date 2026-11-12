@@ -149,15 +149,15 @@ const SERVICES: Array<{ title: string; body: string; href: string; src: string; 
     title: 'Home Care',
     body: 'Nursing, personal care, meals, housekeeping and more.',
     href: '/living-and-care',
-    src: '/people/lounge.jpg',
-    alt: 'A nurse sitting with a resident in the lounge',
+    src: '/people/hands.jpg',
+    alt: 'A nurse holding hands with a resident',
   },
   {
     title: 'Health & Wellbeing',
     body: 'Acupuncture, physiotherapy, medicine delivery and wellness services.',
     href: '/living-and-care#health',
-    src: '/people/hands.jpg',
-    alt: 'A nurse holding hands with a resident',
+    src: '/people/walker.jpg',
+    alt: 'A caregiver supporting a resident with a walker along a garden path',
   },
   {
     title: 'Transport & Appointments',
@@ -170,8 +170,8 @@ const SERVICES: Array<{ title: string; body: string; href: string; src: string; 
     title: 'Everyday Services',
     body: 'Groceries, errands, deliveries, concierge and lifestyle support.',
     href: '/contact',
-    src: '/people/lounge.jpg',
-    alt: 'A nurse sitting with a resident in the lounge',
+    src: '/people/social.jpg',
+    alt: 'Residents singing together at a celebration',
   },
 ];
 
@@ -273,13 +273,13 @@ export function SilverRootsView() {
     <main id="main">
       <section aria-labelledby="page-title" data-silver-section="hero" className="relative flex min-h-[100svh] items-center overflow-hidden bg-night text-ivory on-dark">
         <img
-          src="/people/hands.jpg"
-          alt="A nurse holding hands with a resident"
+          src="/people/walker.jpg"
+          alt="A caregiver supporting a resident with a walker along a garden path"
           fetchPriority="high"
-          className="absolute inset-0 h-full w-full object-cover object-[70%_center]"
+          className="absolute inset-0 h-full w-full object-cover object-[55%_center]"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/78 via-night/32 to-transparent" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/35 via-transparent to-night/45" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/62 via-night/22 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/28 via-transparent to-night/30" />
         <div className="relative z-10 w-full pt-32 pb-16">
           <div className="mx-auto w-full max-w-[1520px] gutter">
             <div className="max-w-[40rem]">

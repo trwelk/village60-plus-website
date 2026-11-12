@@ -18,7 +18,7 @@ describe('site settings helpers', () => {
     expect(recipientsFor({ formRecipients: null }, 'general', 'fallback@example.com')).toEqual(['fallback@example.com']);
   });
   it('formats a postal address on separate lines without empty parts', () => {
-    expect(formatAddress(siteSettingsFixture.headOffice)).toBe('133/19 Nawala Road\nNarahenpita\nColombo 05\nSri Lanka');
+    expect(formatAddress(siteSettingsFixture.headOffice)).toBe('133/19, Nawala Road\nNarahenpita\nColombo 05\nSri Lanka');
     expect(formatAddress(null)).toBe('');
   });
 });

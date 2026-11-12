@@ -9,7 +9,7 @@ import { contactFixture } from '@/test/contact-fixture';
 
 describe('Footer', () => {
   it('lists legal links, contact details and the legal name', () => {
-    render(<Footer contact={contactFixture} legalName="Village 60 Plus (Pvt) Ltd" address="133/19 Nawala Road, Narahenpita, Colombo 05" />);
+    render(<Footer contact={contactFixture} legalName="Village 60 Plus (Pvt) Ltd" address="133/19, Nawala Road, Narahenpita, Colombo 05" />);
     expect(screen.getByRole('link', { name: 'Privacy' })).toHaveAttribute('href', '/privacy');
     expect(screen.getByRole('link', { name: 'Feedback' })).toHaveAttribute('href', '/feedback');
     expect(screen.getByRole('link', { name: 'Accessibility' })).toHaveAttribute('href', '/accessibility');

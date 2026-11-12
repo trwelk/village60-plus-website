@@ -41,6 +41,9 @@ describe('SilverRootsView', () => {
     expect(screen.getByRole('link', { name: 'Explore all services' })).toHaveAttribute('href', '#services');
     expect(screen.getByRole('link', { name: /Care Homes/ })).toHaveAttribute('href', '/homes');
     expect(screen.getByRole('link', { name: /Home Care/ })).toHaveAttribute('href', '/living-and-care');
+    expect(screen.getByRole('img', { name: 'A nurse holding hands with a resident' })).toHaveAttribute('src', '/people/hands.jpg');
+    expect(screen.getByRole('img', { name: 'Residents singing together at a celebration' })).toHaveAttribute('src', '/people/social.jpg');
+    expect(screen.queryByRole('img', { name: 'A nurse sitting with a resident in the lounge' })).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Health & Wellbeing/ })).toHaveAttribute('href', '/living-and-care#health');
     expect(screen.getByRole('button', { name: 'Learn more' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Get started' })).toBeInTheDocument();

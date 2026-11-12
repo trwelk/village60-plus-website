@@ -105,7 +105,7 @@ const siteSettings = {
   responseTime: 'within one working day',
   headOffice: {
     _type: 'address',
-    line1: '133/19 Nawala Road',
+    line1: '133/19, Nawala Road',
     line2: 'Narahenpita',
     city: 'Colombo 05',
     country: 'Sri Lanka',
@@ -260,7 +260,7 @@ const residenceSeeds: ResidenceSeed[] = [
     slug: 'serenity',
     name: 'Serenity',
     status: 'available',
-    shortLocation: 'Railway Avenue',
+    shortLocation: 'Railway Avenue, Nugegoda',
     summary: 'A smaller home built around comfort and familiarity, where people settle in, build relationships and feel known.',
     careTypes: ['residential-care', 'respite-care'],
     audienceFit: strings('People who prefer a small household', 'Those who value calm and routine', 'Families looking for a close-knit team'),
@@ -270,7 +270,7 @@ const residenceSeeds: ResidenceSeed[] = [
     slug: 'house-on-the-hill',
     name: 'House on the Hill',
     status: 'available',
-    shortLocation: 'Kirulapone, Colombo',
+    shortLocation: 'Polhengoda, Kirulapone',
     summary: 'A quieter residence with the warmth and character of a traditional home, set within a residential neighbourhood.',
     careTypes: ['residential-care', 'recovery', 'rehabilitation'],
     audienceFit: strings('People who want a home with character rather than a facility', 'Those recovering after hospital', 'Families seeking a quiet neighbourhood setting'),
@@ -386,15 +386,14 @@ function residenceHero(slug: ResidenceSlug) {
 }
 
 /**
- * Pins already published on village60plus.lk/retirement-villages.
- * Tranquility is the head-office street address. The other three are the area pins on that map.
- * Oracle is the centre of 1st Lane, Nedimala. The Grove is not pinned.
+ * Map pins and verified street addresses (village60plus.lk/retirement-villages).
+ * Tranquility matches head office. Oracle is the centre of 1st Lane, Nedimala. The Grove is not pinned.
  */
 const MAP_PINS: Partial<Record<ResidenceSlug, { lat: number; lng: number; line1?: string; line2?: string; city?: string }>> = {
-  tranquility: { lat: 6.8901495, lng: 79.8801168, line1: '133/19 Nawala Road', line2: 'Narahenpita', city: 'Colombo 05' },
-  serenity: { lat: 6.8814717, lng: 79.8763476 },
-  'house-on-the-hill': { lat: 6.8649081, lng: 79.8996789 },
-  'enchanted-fields': { lat: 6.8432762, lng: 80.0031833 },
+  tranquility: { lat: 6.8901495, lng: 79.8801168, line1: '133/19, Nawala Road', line2: 'Narahenpita', city: 'Colombo 05' },
+  serenity: { lat: 6.8814717, lng: 79.8763476, line1: '32/10, Railway Avenue', city: 'Nugegoda' },
+  'house-on-the-hill': { lat: 6.8649081, lng: 79.8996789, line1: '235/15, Wijaya Kumaratunga Mawatha', line2: 'Polhengoda', city: 'Kirulapone' },
+  'enchanted-fields': { lat: 6.8432762, lng: 80.0031833, line1: '7th Lane, Kulasiri Kumarage Mawatha', city: 'Homagama' },
   oracle: { lat: 6.8439889, lng: 79.8833509, line1: 'No 25, 1st Lane', city: 'Nedimala' },
 };
 
