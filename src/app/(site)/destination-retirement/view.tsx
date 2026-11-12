@@ -41,8 +41,8 @@ const services: Array<{ title: string; body: string; src: string; alt: string; f
     title: 'Personal Care and Assistance',
     body: "Friendly support with everyday activities, according to each resident's individual needs.",
     src: '/destination-retirement/personal-care.jpg',
-    alt: 'Care staff assisting residents near the Village 60 Plus lift',
-    focus: 'object-[62%_center]',
+    alt: 'A caregiver reading with a resident on a shaded veranda',
+    focus: 'object-[55%_center]',
   },
   {
     title: 'Recreation and Activities',
