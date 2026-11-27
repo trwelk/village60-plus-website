@@ -53,6 +53,12 @@ const ORACLE_ROOM_PHOTOS: Record<(typeof ORACLE_ROOM_ORDER)[number], Shot> = {
 };
 
 export const ORACLE_STORY: Shot = {
+  src: '/oracle/room-coral.jpg',
+  alt: 'The Coral room at Oracle',
+};
+
+/** Home page (`/`) full-bleed hero. */
+export const ORACLE_HOME_PAGE_HERO: Shot = {
   src: '/oracle/lounge.jpg',
   alt: 'The shared lounge and dining room at Oracle',
 };
