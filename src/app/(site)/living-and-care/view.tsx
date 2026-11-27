@@ -4,6 +4,7 @@ import { EnquiryButton } from '@/components/forms/EnquiryPanel';
 import { Container } from '@/components/ui/Container';
 import { Heading } from '@/components/ui/Heading';
 import { careServicePath } from '@/lib/routes';
+import { ORACLE_HERO, ORACLE_INDEPENDENT_LIVING, ORACLE_RESIDENTIAL_CARE, ORACLE_STORY } from '@/lib/oracle-photos';
 import { PEOPLE_PHOTOS } from '@/lib/site-photos';
 import { cn } from '@/lib/cn';
 
@@ -31,7 +32,7 @@ const SERVICES: Array<{
     strip: 'Independent\nLiving',
     blurb: 'A comfortable, secure home with the freedom to live your life, your way.',
     icon: 'home',
-    src: PEOPLE_PHOTOS.lounge.src,
+    src: ORACLE_INDEPENDENT_LIVING.src,
   },
   {
     slug: 'residential-care',
@@ -89,8 +90,8 @@ const EVERYDAY: EverydaySection[] = [
     title: 'Everyday Living at Village 60 Plus',
     intro:
       'Life inside Village 60 Plus comes with a range of organised activities, social experiences, hospitality services and personal assistance designed to make everyday living enjoyable and convenient.',
-    src: '/silver-roots/everyday.jpg',
-    alt: 'A nurse sitting with a resident in the lounge',
+    src: ORACLE_STORY.src,
+    alt: ORACLE_STORY.alt,
     ctaLabel: 'Speak with our team',
   },
   {
@@ -155,8 +156,8 @@ const EVERYDAY: EverydaySection[] = [
       'Individual dietary arrangements',
       'Family dining arrangements',
     ],
-    src: '/home/living-room.jpg',
-    alt: 'A dining table beside open doors to the garden',
+    src: '/oracle/kitchen.jpg',
+    alt: 'The kitchen at Oracle with wood cabinetry and a central island',
     ctaLabel: 'Ask about dining',
   },
   {
@@ -218,8 +219,8 @@ const EVERYDAY: EverydaySection[] = [
       'Assistance with daily routines',
       'Personal belongings organisation',
     ],
-    src: '/homes/serenity/serenity-bedroom.jpg',
-    alt: 'A bright bedroom at Serenity with a wooden ceiling, terracotta floor tiles and white linens',
+    src: ORACLE_RESIDENTIAL_CARE.src,
+    alt: ORACLE_RESIDENTIAL_CARE.alt,
     ctaLabel: 'Ask about housekeeping',
   },
   {
@@ -298,8 +299,8 @@ const EVERYDAY: EverydaySection[] = [
       'Couple accommodation, where available',
     ],
     note: 'Services and activities vary according to the residence, availability and individual care requirements.',
-    src: '/homes/serenity/serenity-front.jpg',
-    alt: 'Serenity residence front entrance with a terracotta roof and stone path through the garden',
+    src: ORACLE_HERO.src,
+    alt: ORACLE_HERO.alt,
     ctaHref: '#our-services',
     ctaLabel: 'See care options',
   },

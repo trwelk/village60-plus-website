@@ -12,6 +12,7 @@ import { cn } from '@/lib/cn';
 import type { SiteContact } from '@/lib/contact';
 import { isContentStatus, isFuture } from '@/lib/content-status';
 import type { ResidenceContent } from '../homes/[slug]/view';
+import { ORACLE_INDEPENDENCE, ORACLE_LIFE_PHOTOS } from '@/lib/oracle-photos';
 import { RoomFilmstrip, type FilmstripRoom } from './room-filmstrip';
 
 function Region({ name, children }: { name: string; children: ReactNode }) {
@@ -133,29 +134,6 @@ const HIGHLIGHTS: Array<{ label: string; icon: 'house' | 'leaf' | 'cup' | 'lotus
 ];
 
 type EverydayIconName = 'meal' | 'linen' | 'laundry' | 'home' | 'people' | 'shield' | 'lounge' | 'sprout';
-
-const LIFE_PHOTOS: Array<{ src: string; alt: string; caption: string }> = [
-  {
-    src: '/home/living-room.jpg',
-    alt: 'A light-filled living room opening onto a tropical garden',
-    caption: 'The lounge',
-  },
-  {
-    src: '/homes/court.jpg',
-    alt: 'The Oracle residence by day, with the pool and planted courtyard',
-    caption: 'The garden',
-  },
-  {
-    src: '/homes/sitting.jpg',
-    alt: 'A private sitting room beside the garden',
-    caption: 'A quiet corner',
-  },
-  {
-    src: '/homes/bedroom.jpg',
-    alt: 'A private bedroom opening onto the garden',
-    caption: 'Your own room',
-  },
-];
 
 const EVERYDAY: Array<{ label: string; icon: EverydayIconName; href?: string }> = [
   { label: 'Dining & Meals', icon: 'meal' },
@@ -298,7 +276,7 @@ function LifeGallery() {
           Garden mornings, a shared meal, the lounge, and time that is yours.
         </p>
         <ul className="mt-10 grid list-none gap-3 p-0 sm:grid-cols-2">
-          {LIFE_PHOTOS.map((photo) => (
+          {ORACLE_LIFE_PHOTOS.map((photo) => (
             <li key={photo.src} className="relative aspect-[4/3] overflow-hidden bg-sand">
               <figure className="absolute inset-0 m-0">
                 <img src={photo.src} alt={photo.alt} width={1600} height={1200} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
@@ -587,7 +565,7 @@ export function OracleView({
         <Region name="independence">
           <section aria-labelledby="oracle-independence" className="relative scroll-mt-24 overflow-hidden bg-green text-ivory on-dark">
             <div className="absolute inset-0">
-              <img src="/home/oracle-sign.jpg" alt="" className="absolute inset-0 h-full w-full object-cover object-[62%_center]" loading="lazy" decoding="async" />
+              <img src={ORACLE_INDEPENDENCE.src} alt="" className="absolute inset-0 h-full w-full object-cover object-[62%_center]" loading="lazy" decoding="async" />
             </div>
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/85 via-night/55 to-night/25" />
             <div className="relative mx-auto flex min-h-[34rem] w-full max-w-[1400px] items-center gutter py-16 lg:min-h-[40rem] lg:py-24">

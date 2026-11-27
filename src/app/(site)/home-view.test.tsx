@@ -120,8 +120,8 @@ describe('HomeView', () => {
     const { container } = renderHome({ oracleImages: HOME_PORTRAITS });
     const spotlight = container.querySelector('[data-home-section="oracle"]') as HTMLElement;
     expect(within(spotlight).getAllByRole('img').map((photo) => photo.getAttribute('src'))).toEqual([
-      '/home/oracle-sign.jpg',
-      '/homes/court.jpg',
+      '/oracle/hero.jpg',
+      '/oracle/exterior.jpg',
     ]);
   });
 

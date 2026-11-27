@@ -8,7 +8,7 @@ import { breadcrumbJsonLd, localBusinessJsonLd, pageMetadata } from '@/lib/seo';
 import { contactFromSettings } from '@/lib/site-settings';
 import { fetchPublished } from '@/sanity/fetch';
 import { RESIDENCE_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/queries';
-import { withResidencePhotos } from '@/lib/site-photos';
+import { withOraclePagePhotos } from '@/lib/oracle-photos';
 import type { ResidenceContent } from '../homes/[slug]/view';
 import { OracleView } from './view';
 
@@ -44,7 +44,7 @@ export default async function OraclePage() {
     }
   }
   const contact = contactFromSettings(settings);
-  const residence: ResidenceContent | null = doc?.name && doc.slug ? withResidencePhotos({
+  const residence: ResidenceContent | null = doc?.name && doc.slug ? withOraclePagePhotos({
     name: doc.name,
     slug: doc.slug,
     status: doc.status,

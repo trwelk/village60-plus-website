@@ -59,10 +59,10 @@ describe('OracleView', () => {
     expect(screen.getByRole('heading', { name: 'Live Your Day, Your Way.' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Discover life at Oracle' })).toHaveAttribute('href', '#oracle-life');
     expect(screen.getByRole('heading', { name: 'The day, in pictures.' })).toHaveAttribute('id', 'oracle-life-title');
-    expect(screen.getByRole('img', { name: 'A light-filled living room opening onto a tropical garden' })).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: 'The Oracle residence by day, with the pool and planted courtyard' })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'The shared lounge and dining room at Oracle' })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'The planted courtyard at Oracle, with pool and balconied wings' })).toBeInTheDocument();
     expect(screen.getByText('The garden')).toBeInTheDocument();
-    expect(container.querySelector('[aria-labelledby="oracle-independence"] img')).toHaveAttribute('src', '/home/oracle-sign.jpg');
+    expect(container.querySelector('[aria-labelledby="oracle-independence"] img')).toHaveAttribute('src', '/oracle/exterior.jpg');
     expect(container.innerHTML).not.toContain('/people/courtyard.jpg');
     expect(container.innerHTML).not.toContain('/people/lounge.jpg');
     expect(screen.getByRole('heading', { name: 'We take care of the rest.' })).toBeInTheDocument();

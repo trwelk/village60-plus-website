@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { EnquiryButton } from '@/components/forms/EnquiryPanel';
 import type { ResidenceCardData } from '@/components/content/ResidenceCard';
+import { ORACLE_HERO, ORACLE_HOMES_PAGE_HERO, ORACLE_HOMES_TILES } from '@/lib/oracle-photos';
 import { residencePath } from '@/lib/routes';
 
 const ESTABLISHED = ['tranquility', 'serenity', 'house-on-the-hill', 'enchanted-fields'] as const;
@@ -13,20 +14,15 @@ const ESTABLISHED_COPY: Record<(typeof ESTABLISHED)[number], string> = {
   'enchanted-fields': 'A greener setting with more space, nature and a slower rhythm of life.',
 };
 
-const HERO_PHOTO = { src: '/homes/hero.jpg', alt: 'A residence entrance at dusk, with warm light in the windows' };
-const ORACLE_PHOTO = { src: '/home/oracle-sign.jpg', alt: 'Oracle at dusk, with the illuminated residence sign' };
+const HERO_PHOTO = ORACLE_HOMES_PAGE_HERO;
+const ORACLE_PHOTO = ORACLE_HERO;
 const HERITAGE_PHOTO = {
   src: '/look-to-the-future/heritage.jpg',
   alt: 'The Heritage estate in Matara, a colonial bungalow and gardens above the coast at sunset',
 };
 const GUIDANCE_PHOTO = { src: '/people/lounge.jpg', alt: 'A nurse sitting with a resident in the lounge' };
 
-const ORACLE_TILES = [
-  { src: '/homes/bedroom.jpg', alt: 'A private bedroom opening onto the garden', caption: 'Ten unique rooms' },
-  { src: '/home/living-room.jpg', alt: 'A shared lounge looking onto palms', caption: 'Elegant shared spaces' },
-  { src: '/homes/court.jpg', alt: 'A quiet courtyard beside the residence', caption: 'Private and peaceful' },
-  { src: '/homes/sitting.jpg', alt: 'A private sitting room beside the garden', caption: 'Independent living' },
-] as const;
+const ORACLE_TILES = ORACLE_HOMES_TILES;
 
 const ESTABLISHED_PHOTOS: Record<(typeof ESTABLISHED)[number], { src: string; alt: string }> = {
   tranquility: {

@@ -1,4 +1,5 @@
 import { SplitAction, SplitFeature } from '@/components/content/SplitFeature';
+import { ORACLE_STORY } from '@/lib/oracle-photos';
 
 export function HomeStory() {
   return (
@@ -12,10 +13,7 @@ export function HomeStory() {
           A More Meaningful Tomorrow.
         </>
       }
-      image={{
-        src: '/home/living-room.jpg',
-        alt: 'A living room opening onto a tropical garden',
-      }}
+      image={ORACLE_STORY}
       action={<SplitAction href="/our-story">Read our story</SplitAction>}
     >
       <p>

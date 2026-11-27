@@ -142,8 +142,8 @@ const SERVICES: Array<{ title: string; body: string; href: string; src: string; 
     title: 'Care Homes',
     body: 'Independent living, residential care and specialised support.',
     href: '/homes',
-    src: '/people/courtyard.jpg',
-    alt: 'A caregiver walking with a resident across the courtyard',
+    src: '/oracle/courtyard.jpg',
+    alt: 'The planted courtyard at Oracle, with pool and balconied wings',
   },
   {
     title: 'Home Care',

@@ -1,20 +1,20 @@
 import type { CmsImage } from '@/components/media/SanityImage';
+import {
+  ORACLE_GALLERY_SCENES,
+  ORACLE_HERO,
+  ORACLE_INDEPENDENT_LIVING,
+  ORACLE_RESIDENTIAL_CARE,
+  ORACLE_SPOTLIGHT_PHOTOS,
+} from '@/lib/oracle-photos';
 import type { CareServiceSlug, OfferingSlug, ResidenceSlug } from '@/lib/routes';
+import { sitePhoto } from '@/lib/site-photo';
+
+export { sitePhoto } from '@/lib/site-photo';
 
 type Shot = { src: string; alt: string };
 
-export function sitePhoto(src: string, alt: string): CmsImage {
-  return {
-    alt,
-    asset: {
-      url: src,
-      metadata: { dimensions: { aspectRatio: 4 / 3, width: 1600, height: 1200 } },
-    },
-  };
-}
-
 const RESIDENCE_PHOTOS: Record<ResidenceSlug, Shot> = {
-  oracle: { src: '/home/oracle-sign.jpg', alt: 'Oracle at dusk, with the illuminated residence sign' },
+  oracle: ORACLE_HERO,
   'the-grove': {
     src: '/look-to-the-future/grove-aerial.jpg',
     alt: 'Aerial view of The Grove in Kottawa, two long buildings set in a landscaped garden',
@@ -47,8 +47,8 @@ export const PEOPLE_PHOTOS = {
 } as const satisfies Record<string, Shot>;
 
 const CARE_PHOTOS: Record<CareServiceSlug, Shot> = {
-  'independent-living': PEOPLE_PHOTOS.lounge,
-  'residential-care': PEOPLE_PHOTOS.hands,
+  'independent-living': ORACLE_INDEPENDENT_LIVING,
+  'residential-care': ORACLE_RESIDENTIAL_CARE,
   'respite-care': {
     src: '/homes/tranquility/ward.jpg',
     alt: 'The ward at Tranquility with partitioned beds along tall windows',
@@ -155,13 +155,8 @@ const SCENES: Shot[] = [
   PEOPLE_PHOTOS.lounge,
 ];
 
-/** Oracle stays on the residence itself. The courtyard walk and lounge portraits are used elsewhere. */
-const ORACLE_SCENES: Shot[] = [
-  { src: '/homes/bedroom.jpg', alt: 'A private bedroom opening onto the garden' },
-  { src: '/home/living-room.jpg', alt: 'A light-filled living room opening onto a tropical garden' },
-  { src: '/homes/sitting.jpg', alt: 'A private sitting room beside the garden' },
-  { src: '/homes/court.jpg', alt: 'The Oracle residence by day, with the pool and planted courtyard' },
-];
+/** Oracle photography only — no people portraits in this gallery. */
+const ORACLE_SCENES: Shot[] = [...ORACLE_GALLERY_SCENES];
 
 function shot(table: Record<string, Shot>, slug: string | null | undefined): CmsImage | null {
   if (!slug || !(slug in table)) return null;
@@ -185,10 +180,7 @@ export function scenePhotos(): CmsImage[] {
   return SCENES.map((photo) => sitePhoto(photo.src, photo.alt));
 }
 
-export const HOME_PORTRAITS: CmsImage[] = [
-  sitePhoto('/home/oracle-sign.jpg', 'Oracle at dusk, with the illuminated residence sign'),
-  sitePhoto('/homes/court.jpg', 'The Oracle residence by day, with the pool and planted courtyard'),
-];
+export const HOME_PORTRAITS: CmsImage[] = ORACLE_SPOTLIGHT_PHOTOS.map((photo) => sitePhoto(photo.src, photo.alt));
 
 type WithPhotos = {
   slug?: string | null;

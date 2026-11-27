@@ -33,8 +33,8 @@ describe('withResidencePhotos', () => {
     ];
     expect(urls).not.toContain('/people/courtyard.jpg');
     expect(urls).not.toContain('/people/lounge.jpg');
-    expect(residence.rooms?.find((entry) => entry?.name === 'Amber')?.image?.asset?.url).toBe('/homes/bedroom.jpg');
-    expect(residence.rooms?.find((entry) => entry?.name === 'Sapphire')?.image?.asset?.url).toBe('/home/living-room.jpg');
+    expect(residence.rooms?.find((entry) => entry?.name === 'Amber')?.image?.asset?.url).toBe('/oracle/kitchen.jpg');
+    expect(residence.rooms?.find((entry) => entry?.name === 'Sapphire')?.image?.asset?.url).toBe('/oracle/entrance.jpg');
   });
 
   it('leaves the lounge and hands portraits out of Serenity', () => {
